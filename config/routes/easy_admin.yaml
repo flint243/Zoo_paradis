@@ -1,0 +1,4 @@
+# config/routes/easy_admin.yaml
+admin_dashboard:
+    path: /admin
+    controller: App\Controller\Admin\DashboardController::index
