@@ -3,23 +3,23 @@ pgadmin
 firebase/serviceAccount.json
 
 # Ignore environment files
-# app/.env
-app/.env.test
-app/.env.local
-app/.env.local.php
-app/.env.*.local
-app/node_modules
+# zooparadis/.env
+zooparadis/.env.test
+zooparadis/.env.local
+zooparadis/.env.local.php
+zooparadis/.env.*.local
+zooparadis/node_modules
 
 # Ignore Symfony secrets and cache
-app/config/secrets/prod/prod.decrypt.private.php
-app/public/bundles/
-app/var/
-app/vendor/
+zooparadis/config/secrets/prod/prod.decrypt.private.php
+zooparadis/public/bundles/
+zooparadis/var/
+zooparadis/vendor/
 
 # Ignore PHPUnit configuration and cache
-app/phpunit.xml
-app/.phpunit.result.cache
+zooparadis/phpunit.xml
+zooparadis/.phpunit.result.cache
 
-# Ignore Symfony asset mapper generated files
-app/public/assets/
-app/assets/vendor/
+# Ignore Symfony asset generated files
+zooparadis/public/assets/
+zooparadis/assets/vendor/
