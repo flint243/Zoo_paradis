@@ -23,12 +23,14 @@
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
                         <a href="/" class="logo">
-                            <img src="assets/images/logo.png">
+                            <div class="col mt-4">
+                                <h4 class="text-success">Zoo paradis</h4>
+                            </div>
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="/" class="active">Accueil</a></li>
+                            <li class="scroll-to-section"><a href="/">Accueil</a></li>
                             <li class="scroll-to-section"><a href="index.html">Men's</a></li>
                             <li class="scroll-to-section"><a href="index.html">Women's</a></li>
                             <li class="scroll-to-section"><a href="index.html">Kid's</a></li>
@@ -91,32 +93,45 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="section-heading">
-                        <h2>Say Hello. Don't Be Shy!</h2>
+                        <h2>Laissez nous un message</h2>
                         <span>Details to details is what makes Hexashop different from the other themes.</span>
                     </div>
-                    <form id="contact" action="" method="post">
+                    {{ form_start(ContactForm, {'attr': {'class': 'form'}}
+					) }}
                         <div class="row">
                           <div class="col-lg-6">
                             <fieldset>
-                              <input name="name" type="text" id="name" placeholder="Your name" required="">
+                                {{ form_label(ContactForm.titre, null, {'label_attr': {'class': 'form-label'}}
+                                ) }}
+                                {{ form_widget(ContactForm.titre, {'attr': {'class': 'form-control'}}
+                                ) }}
+                                {{ form_errors(ContactForm.titre, {'attr': {'class': 'text-danger'}}
+                                ) }}
                             </fieldset>
                           </div>
                           <div class="col-lg-6">
                             <fieldset>
-                              <input name="email" type="text" id="email" placeholder="Your email" required="">
+                                {{ form_label(ContactForm.email, null, {'label_attr': {'class': 'form-label'}}
+                                ) }}
+                                {{ form_widget(ContactForm.email, {'attr': {'class': 'form-control'}}
+                                ) }}
+                                {{ form_errors(ContactForm.email, {'attr': {'class': 'text-danger'}}
+                                ) }}
                             </fieldset>
                           </div>
                           <div class="col-lg-12">
                             <fieldset>
-                              <textarea name="message" rows="6" id="message" placeholder="Your message" required=""></textarea>
+                                {{ form_label(ContactForm.description, null, {'label_attr': {'class': 'form-label'}}
+                                ) }}
+                                {{ form_widget(ContactForm.description, {'attr': {'class': 'form-control'}}
+                                ) }}
+                                {{ form_errors(ContactForm.description, {'attr': {'class': 'text-danger'}}
+                                ) }}
                             </fieldset>
                           </div>
-                          <div class="col-lg-12">
-                            <fieldset>
-                              <button type="submit" id="form-submit" class="main-dark-button"><i class="fa fa-paper-plane"></i></button>
-                          </div>
+                          
                         </div>
-                      </form>
+                      {{ form_end(ContactForm) }}
                 </div>
             </div>
         </div>
@@ -124,7 +139,7 @@
     <!-- ***** Contact Area Ends ***** -->
 
     <!-- ***** Subscribe Area Starts ***** -->
-    <div class="subscribe">
+    {#<div class="subscribe">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
@@ -172,22 +187,22 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>#}
     <!-- ***** Subscribe Area Ends ***** -->
 
-    <!-- ***** Footer Start ***** -->
+   <!-- ***** Footer Start ***** -->
     <footer>
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
                     <div class="first-item">
                         <div class="logo">
-                            <img src="assets/images/white-logo.png" alt="hexashop ecommerce templatemo">
+                            <img src="assets/images/white-logo.png" alt="Zoo paradis Brocéliand">
                         </div>
                         <ul>
-                            <li><a href="#">16501 Collins Ave, Sunny Isles Beach, FL 33160, United States</a></li>
-                            <li><a href="#">hexashop@company.com</a></li>
-                            <li><a href="#">010-020-0340</a></li>
+                            <li><a href="#">Forêt de Brocéliand</a></li>
+                            <li><a href="#">zoo-paradis@broceliand.com</a></li>
+                            <li><a href="#">05.24.77.43.11</a></li>
                         </ul>
                     </div>
                 </div>
@@ -200,7 +215,7 @@
                     </ul>
                 </div>
                 <div class="col-lg-3">
-                    <h4>Useful Links</h4>
+                    <h4>Liens éssentiels</h4>
                     <ul>
                         <li><a href="#">Homepage</a></li>
                         <li><a href="#">About Us</a></li>
@@ -209,9 +224,9 @@
                     </ul>
                 </div>
                 <div class="col-lg-3">
-                    <h4>Help &amp; Information</h4>
+                    <h4>Information</h4>
                     <ul>
-                        <li><a href="#">Help</a></li>
+                        <li><a href="#">Aide</a></li>
                         <li><a href="#">FAQ's</a></li>
                         <li><a href="#">Shipping</a></li>
                         <li><a href="#">Tracking ID</a></li>
@@ -219,11 +234,11 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="under-footer">
-                        <p>Copyright © 2022 HexaShop Co., Ltd. All Rights Reserved. 
+                        <p>Copyright © 2024 Zoo paradis., tout droit Réservés. 
                         
-                        <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a>
+                        <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">Limay</a>
 
-                        <br>Distributed By: <a href="https://themewagon.com" target="_blank" title="free & premium responsive templates">ThemeWagon</a></p>
+                        <br>Distribué par: <a href="https://themewagon.com" target="_blank" title="free & premium responsive templates">ASSOFAC MONTREUIL</a></p>
                         <ul>
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -233,6 +248,5 @@
                     </div>
                 </div>
             </div>
-        </div>
     </footer>
 {% endblock %}

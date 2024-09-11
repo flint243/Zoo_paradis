@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+	{% block title %}
+		Register
+	{% endblock %}
+
+	{% block body %}
+
+		<div class="container-fluid">
+			<div class="row m-0 justify-content-center">
+				<div class="col-6 py-3 mt-5 border border-grey rounded">
+					<h1>
+						Inscription
+					</h1>
+
+					{{ form_start(registrationForm, {'attr': {'class': 'form'}}
+					) }}
+
+					<div class="mb-3">
+						{{ form_label(registrationForm.pseudo, null, {'label_attr': {'class': 'form-label'}}
+						) }}
+						{{ form_widget(registrationForm.pseudo, {'attr': {'class': 'form-control'}}
+						) }}
+						{{ form_errors(registrationForm.pseudo, {'attr': {'class': 'text-danger'}}
+						) }}
+					</div>
+
+					<div class="mb-3">
+						{{ form_label(registrationForm.email, null, {'label_attr': {'class': 'form-label'}}
+						) }}
+						{{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}
+						) }}
+						{{ form_errors(registrationForm.email, {'attr': {'class': 'text-danger'}}
+						) }}
+					</div>
+
+					<div class="mb-3">
+						{{ form_label(registrationForm.plainPassword, 'Password', {'label_attr': {'class': 'form-label'}}
+						) }}
+						{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}
+						) }}
+						{{ form_errors(registrationForm.plainPassword, {'attr': {'class': 'text-danger'}}
+						) }}
+					</div>
+
+					<div class="mb-3">
+						{{ form_label(registrationForm.profileImage, 'Photo de profile', {'label_attr': {'class': 'form-label'}}
+						) }}
+						{{ form_widget(registrationForm.profileImage, {'attr': {'class': 'form-control'}}
+						) }}
+						{{ form_errors(registrationForm.profileImage, {'attr': {'class': 'text-danger'}}
+						) }}
+					</div>
+
+					<div class="mb-3 form-check">
+						{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}
+						) }}
+						{{ form_label(registrationForm.agreeTerms, null, {'label_attr': {'class': 'form-check-label'}}
+						) }}
+						{{ form_errors(registrationForm.agreeTerms, {'attr': {'class': 'text-danger'}}
+						) }}
+					</div>
+
+					<button type="submit" class="btn btn-primary">
+						S'inscrire
+					</button>
+
+					{{ form_end(registrationForm) }}
+				</div>
+			</div>
+		</div>
+
+	{% endblock %}

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: symfony-app
+  labels:
+    app: symfony
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: symfony
+  template:
+    metadata:
+      labels:
+        app: symfony
+    spec:
+      containers:
+      - name: symfony-container
+        image: php:8.3-apache
+        volumeMounts:
+        - name: symfony-code
+          mountPath: /var/www/html
+        ports:
+        - containerPort: 80
+        env:
+        - name: DATABASE_URL
+          value: "mysql://root:limaykongo@localhost:3306/zoo_db"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "500m"
+          limits:
+            memory: "256Mi"
+            cpu: "1"
+      volumes:
+      - name: symfony-code
+        hostPath:
+          path: /Users/limay/Desktop/CLASSROOM_DEV/SITES_WDM4/SYMFONY/zooparadis
+          type: DirectoryOrCreate

@@ -14,9 +14,6 @@ class Consultation
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date_consultation = null;
-
     #[ORM\Column(length: 255)]
     private ?string $etat_animal = null;
 
@@ -27,7 +24,7 @@ class Consultation
     private ?int $quantite = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $veteronaire_consultation = null;
+    private ?string $veterinaire_consultation = null;
 
     #[ORM\Column(length: 255)]
     private ?string $animal_consultation = null;
@@ -38,18 +35,6 @@ class Consultation
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getDateConsultation(): ?\DateTimeInterface
-    {
-        return $this->date_consultation;
-    }
-
-    public function setDateConsultation(\DateTimeInterface $date_consultation): static
-    {
-        $this->date_consultation = $date_consultation;
-
-        return $this;
     }
 
     public function getEtatAnimal(): ?string
@@ -90,12 +75,12 @@ class Consultation
 
     public function getVeteronaireConsultation(): ?string
     {
-        return $this->veteronaire_consultation;
+        return $this->veterinaire_consultation;
     }
 
-    public function setVeteronaireConsultation(string $veteronaire_consultation): static
+    public function setVeteronaireConsultation(string $veterinaire_consultation): static
     {
-        $this->veteronaire_consultation = $veteronaire_consultation;
+        $this->veterinaire_consultation = $veterinaire_consultation;
 
         return $this;
     }

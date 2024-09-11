@@ -6,10 +6,16 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface
+#[Vich\Uploadable]  // Annotaion Vich pour rendre l'entité "uploadable"
+#[UniqueEntity(fields: ['email'], message: 'Il y a déjà un compte avec cet email')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,25 +28,32 @@ class User implements UserInterface
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\ManyToOne(inversedBy: 'pseudo')]
-    private ?Avis $avis = null;
-
-    /**
-     * @var Collection<int, Donne>
-     */
-    #[ORM\OneToMany(targetEntity: Donne::class, mappedBy: 'id_Visiteur')]
-    private Collection $id_Avis;
-
     #[ORM\Column]
     private array $roles = ['ROLE_USER'];
 
     #[ORM\Column]
+    private ?string $password = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profileImage = null;
+
+    #[Vich\UploadableField(mapping: 'user_profile_image', fileNameProperty: 'profileImage')]
+    private ?File $profileImageFile = null;
+
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
+
+    #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\OneToMany(targetEntity: Avis::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private Collection $avis;
 
     public function __construct()
     {
-        $this->id_Avis = new ArrayCollection();
-        $this->createdAt = new \DateTimeImmutable(); // Initialisation de la date de création
+        $this->createdAt = new \DateTimeImmutable();
+        $this->avis = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -56,7 +69,6 @@ class User implements UserInterface
     public function setPseudo(string $pseudo): static
     {
         $this->pseudo = $pseudo;
-
         return $this;
     }
 
@@ -68,56 +80,12 @@ class User implements UserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getAvis(): ?Avis
-    {
-        return $this->avis;
-    }
-
-    public function setAvis(?Avis $avis): static
-    {
-        $this->avis = $avis;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Donne>
-     */
-    public function getIdAvis(): Collection
-    {
-        return $this->id_Avis;
-    }
-
-    public function addIdAvi(Donne $idAvi): static
-    {
-        if (!$this->id_Avis->contains($idAvi)) {
-            $this->id_Avis->add($idAvi);
-            $idAvi->setIdVisiteur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIdAvi(Donne $idAvi): static
-    {
-        if ($this->id_Avis->removeElement($idAvi)) {
-            // set the owning side to null (unless already changed)
-            if ($idAvi->getIdVisiteur() === $this) {
-                $idAvi->setIdVisiteur(null);
-            }
-        }
-
         return $this;
     }
 
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // Ajout du rôle par défaut "ROLE_USER" si ce n'est pas déjà présent
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -126,6 +94,55 @@ class User implements UserInterface
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    public function getProfileImageFile(): ?File
+    {
+        return $this->profileImageFile;
+    }
+
+    public function setProfileImageFile(?File $profileImageFile = null): void
+    {
+        $this->profileImageFile = $profileImageFile;
+
+        if ($profileImageFile) {
+            // Si un fichier est téléchargé, on met à jour updatedAt
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getProfileImage(): ?string
+    {
+        return $this->profileImage;
+    }
+
+    public function setProfileImage(?string $profileImage): self
+    {
+        $this->profileImage = $profileImage;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -138,14 +155,12 @@ class User implements UserInterface
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
 
-    // Méthodes requises par l'interface UserInterface
-
     /**
-     * Cette méthode remplace getUsername à partir de Symfony 5.3+.
+     * Cette méthode remplace getUsername() depuis Symfony 5.3.
+     * Elle retourne l'identifiant unique de l'utilisateur (email dans ce cas).
      */
     public function getUserIdentifier(): string
     {
@@ -153,10 +168,37 @@ class User implements UserInterface
     }
 
     /**
-     * Optionnel si vous n'avez pas de données sensibles à effacer après l'authentification.
+     * Cette méthode permet d'effacer des données sensibles après l'authentification.
+     * Ici, elle est vide car nous n'avons rien à effacer.
      */
     public function eraseCredentials(): void
     {
-        // Si vous avez des informations sensibles, vous pouvez les effacer ici
+        // Efface des informations sensibles si nécessaire (ex: mots de passe en clair).
+    }
+
+    public function getAvis(): Collection
+    {
+        return $this->avis;
+    }
+
+    public function addAvis(Avis $avis): static
+    {
+        if (!$this->avis->contains($avis)) {
+            $this->avis->add($avis);
+            $avis->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvis(Avis $avis): static
+    {
+        if ($this->avis->removeElement($avis)) {
+            if ($avis->getUser() === $this) {
+                $avis->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

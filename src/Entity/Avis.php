@@ -3,9 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\AvisRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AvisRepository::class)]
@@ -16,96 +13,72 @@ class Avis
     #[ORM\Column]
     private ?int $id = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'avis')]
-    private Collection $pseudo_visiteur;
+    #[ORM\Column(length: 255)]
+    private ?string $pseudo = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $text = null;
+    #[ORM\Column(type: 'text')]
+    private ?string $commentaire = null;
 
-    #[ORM\Column]
-    private ?int $valide = null;
+    #[ORM\Column(type: 'boolean')]
+    private bool $isValidated = false; // Indique si l'avis est validé
 
-    #[ORM\ManyToOne(inversedBy: 'Id_Avis')]
-    private ?Donne $donne = null;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'avis')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    public function __construct()
-    {
-        $this->pseudo_visiteur = new ArrayCollection();
-    }
+    // Getters and setters...
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getPseudoVisiteur(): Collection
+    public function getPseudo(): ?string
     {
-        return $this->pseudo_visiteur;
+        return $this->pseudo;
     }
 
-    public function addPseudoVisiteur(User $pseudoVisiteur): static
+    public function setPseudo(string $pseudo): static
     {
-        if (!$this->pseudo_visiteur->contains($pseudoVisiteur)) {
-            $this->pseudo_visiteur->add($pseudoVisiteur);
-            $pseudoVisiteur->setAvis($this);
-        }
+        $this->pseudo = $pseudo;
 
         return $this;
     }
 
-    public function removePseudoVisiteur(User $pseudoVisiteur): static
+    public function getCommentaire(): ?string
     {
-        if ($this->pseudo_visiteur->removeElement($pseudoVisiteur)) {
-            // set the owning side to null (unless already changed)
-            if ($pseudoVisiteur->getAvis() === $this) {
-                $pseudoVisiteur->setAvis(null);
-            }
-        }
+        return $this->commentaire;
+    }
+
+    public function setCommentaire(string $commentaire): static
+    {
+        $this->commentaire = $commentaire;
 
         return $this;
     }
 
-    public function getText(): ?string
+    public function getIsValidated(): bool
     {
-        return $this->text;
+        return $this->isValidated;
     }
 
-    public function setText(string $text): static
+    public function setIsValidated(bool $isValidated): static
     {
-        $this->text = $text;
-
+        $this->isValidated = $isValidated;
         return $this;
     }
 
-    public function getValide(): ?int
+    public function getUser(): ?User
     {
-        return $this->valide;
+        return $this->user;
     }
 
-    public function setValide(int $valide): static
+    public function setUser(?User $user): static
     {
-        $this->valide = $valide;
-
-        return $this;
-    }
-
-    public function getDonne(): ?Donne
-    {
-        return $this->donne;
-    }
-
-    public function setDonne(?Donne $donne): static
-    {
-        $this->donne = $donne;
+        $this->user = $user;
 
         return $this;
     }

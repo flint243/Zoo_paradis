@@ -15,9 +15,15 @@ class Employe
 
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
+    
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $mot_de_passe = null;
+    private ?string $prenom = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
 
     public function getId(): ?int
     {
@@ -36,14 +42,38 @@ class Employe
         return $this;
     }
 
-    public function getMotDePasse(): ?string
+    public function getEmail(): ?string
     {
-        return $this->mot_de_passe;
+        return $this->email;
     }
 
-    public function setMotDePasse(string $mot_de_passe): static
+    public function setEmail(string $email): static
     {
-        $this->mot_de_passe = $mot_de_passe;
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): static
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

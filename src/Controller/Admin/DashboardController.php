@@ -3,16 +3,28 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use App\Entity\Product;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
-use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use App\Entity\Animal;
+use App\Entity\Employe;
+use App\Entity\Habitat;
+use App\Entity\Veterinaire;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+
 
 class DashboardController extends AbstractDashboardController
 {
+    private UrlGeneratorInterface $urlGenerator;
+
+    public function __construct(UrlGeneratorInterface $urlGenerator)
+    {
+        $this->urlGenerator = $urlGenerator;
+    }
+
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
@@ -23,36 +35,50 @@ class DashboardController extends AbstractDashboardController
 
     public function configureDashboard(): Dashboard
     {
+        // Générer le lien vers la route 'Accueil'
+        $homeUrl = $this->urlGenerator->generate('Accueil');
+        
         return Dashboard::new()
-            ->setTitle('Mon Application Admin');
+        ->setTitle('<a href="' . $homeUrl . '">Zoo Paradis</a>')
+        ->setFaviconPath('favicon.ico'); // Optionnel : ajouter un favicon personnalisé
     }
 
     public function configureMenuItems(): iterable
     {
         // Lien vers le tableau de bord
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToRoute('Dashboard Admin', 'fa fa-home','Accueil');
 
-        // Section "Gestion des Utilisateurs"
-        yield MenuItem::section('Gestion des Utilisateurs');
-        yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-users', User::class);
+        // Section avec un sous-menu
+        yield MenuItem::section('Gestion');
+        yield MenuItem::subMenu('Utilisateurs', 'fas fa-users')->setSubItems([
+              MenuItem::linkToCrud('Voir les utilisateurs', 'fas fa-eye', User::class),
+              MenuItem::linkToCrud('Ajouter un utilisateur', 'fas fa-plus', User::class)->setAction('new'),
+    ]);
 
-        // Section "Gestion des Produits"
-        yield MenuItem::section('Gestion des Produits');
-        //yield MenuItem::linkToCrud('Produits', 'fas fa-box', Product::class);
+        // Section "Gestion du personnel"
+        yield MenuItem::section('Gestion du personnel');
+        yield MenuItem::linkToCrud('Nos employés', 'fas fa-users', Employe::class);
+
+        // Section "Gestion des Vétérinaires"
+        yield MenuItem::section('Gestion du des Vétérinaires');
+        yield MenuItem::linkToCrud('Nos Vétérinaires', 'fas fa-users', Veterinaire::class);
+
+        // Section "Gestion des Animaux"
+        yield MenuItem::section('Gestion des habitats');
+        yield MenuItem::linkToCrud('Nos habitats', 'fas fa-users', Habitat::class);
+
+        // Section "Gestion des Animaux"
+        yield MenuItem::section('Gestion des animaux');
+        yield MenuItem::linkToCrud('Nos animaux', 'fas fa-users', Animal::class);
 
         // Ajouter un lien vers une URL externe
         yield MenuItem::linkToUrl('Google', 'fas fa-external-link-alt', 'https://www.google.com');
 
         // Lien vers des actions spécifiques
-        yield MenuItem::linkToRoute('Retour au site', 'fas fa-arrow-left', 'homepage');
+        yield MenuItem::linkToRoute('Retour au site', 'fas fa-arrow-left', 'Accueil');
 
 
-    // Section avec un sous-menu
-    yield MenuItem::section('Gestion');
-    yield MenuItem::subMenu('Utilisateurs', 'fas fa-users')->setSubItems([
-        MenuItem::linkToCrud('Voir les utilisateurs', 'fas fa-eye', User::class),
-        MenuItem::linkToCrud('Ajouter un utilisateur', 'fas fa-plus', User::class)->setAction('new'),
-    ]);
+    
 
     yield MenuItem::subMenu('Produits', 'fas fa-box')->setSubItems([
         //MenuItem::linkToCrud('Voir les produits', 'fas fa-eye', Product::class),

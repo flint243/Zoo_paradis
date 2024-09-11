@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Animaux{% endblock %}
+{% block title %}Nos Services{% endblock %}
 
 {% block body %}
 <!-- ***** Preloader Start ***** -->
@@ -16,27 +16,57 @@
     
     <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky">
+                <div class="connexion">
+                    {% if app.user %}
+                            <div class="mb-3 userConnect">
+                                Bonjour {{ app.user.pseudo }}
+                                {% if app.user.profileImage %}
+                                    <img src="/images/profile/{{ app.user.profileImage }}" width="40px" height="35px" />
+                                {% else %}
+                                <img src="{{ asset('/assets/images/avatar/avatar2.jpg') }}" width="20px" />
+                                {% endif %}
+                            </div>
+
+                         <div class="deconnexionBtn">
+                            <a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a> 
+                         </div>
+                        
+                   {% else %}
+                        <a href="{{ path('app_register') }}" class="registerBtn">Pas encore inscrit c'est <span class="text-danger">ici</span> !</a>
+                        sinon
+                        <a href="{{ path('app_login') }}" class="connexionBtn">Connectez vous ici !</a>
+                    {% endif %}
+                </div> 
+                
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
+
+                
+                
                         <!-- ***** Logo Start ***** -->
                         <a href="/" class="logo">
-                            <img src="assets/images/logo.png">
+                        <div class="col mt-4">
+                            <h4 class="text-success">Zoo paradis</h4>
+                        </div>
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="btn btn-warning btn-small"><a href="/admin">Admin</a></li>
+                        {% endif %}
                             <li class="scroll-to-section"><a href="/" class="active">Accueil</a></li>
-                            <li class="scroll-to-section"><a href="index.html">Men's</a></li>
-                            <li class="scroll-to-section"><a href="index.html">Women's</a></li>
-                            <li class="scroll-to-section"><a href="index.html">Kid's</a></li>
+                            <li class="scroll-to-section"><a href="#men">Eau</a></li>
+                            <li class="scroll-to-section"><a href="#women">Terre</a></li>
+                            <li class="scroll-to-section"><a href="#kids">Ciel</a></li>
                             <li class="submenu">
                                 <a href="javascript:;">Pages</a>
                                 <ul>
                                     <li><a href="/about">A propos</a></li>
-                                    <li><a href="/products">Produits</a></li>
-                                    <li><a href="/single/product">Produit</a></li>
+                                    <li><a href="/products">Nos services</a></li>
+                                    <li><a href="/single/product">Les habitats</a></li>
                                     <li><a href="/contact/us">Contact</a></li>
                                 </ul>
                             </li>
@@ -49,16 +79,18 @@
                                     <li><a rel="nofollow" href="https://templatemo.com/page/4" target="_blank">Template Page 4</a></li>
                                 </ul>
                             </li>
-                            <li class="scroll-to-section"><a href="index.html">Explore</a></li>
-                        </ul>        
+                            <li class="scroll-to-section"><a href="#explore">Explore</a></li>
+                        </ul>   
+                        
                         <a class='menu-trigger'>
                             <span>Menu</span>
                         </a>
                         <!-- ***** Menu End ***** -->
                     </nav>
                 </div>
-            </div>
         </div>
+                   
+        </div> 
     </header>
     <!-- ***** Header Area End ***** -->
 
@@ -68,7 +100,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="inner-content">
-                        <h2>Check Our Products</h2>
+                        <h2>Nos services</h2>
                         <span>Awesome &amp; Creative HTML CSS layout by TemplateMo</span>
                     </div>
                 </div>
@@ -84,12 +116,13 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-heading">
-                        <h2>Our Latest Products</h2>
+                        <h2>Nos services</h2>
                         <span>Check out all of our products.</span>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-4">
@@ -97,16 +130,16 @@
                         <div class="thumb">
                             <div class="hover-content">
                                 <ul>
-                                    <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
+                                    <li><a href="/restauration"><i class="fa fa-eye"></i></a></li>
+                                    <li><a href="/restauration"><i class="fa fa-star"></i></a></li>
+                                    <li><a href="/restauration"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
-                            <img src="assets/images/men-01.jpg" alt="">
+                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
                         </div>
                         <div class="down-content">
-                            <h4>Classic Spring</h4>
-                            <span>$120.00</span>
+                            <h4>Restaurantion du loup</h4>
+                            <span>Resto</span>
                             <ul class="stars">
                                 <li><i class="fa fa-star"></i></li>
                                 <li><i class="fa fa-star"></i></li>
@@ -122,16 +155,16 @@
                         <div class="thumb">
                             <div class="hover-content">
                                 <ul>
-                                    <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
+                                    <li><a href="/habitats"><i class="fa fa-eye"></i></a></li>
+                                    <li><a href="/habitats"><i class="fa fa-star"></i></a></li>
+                                    <li><a href="/habitats"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
-                            <img src="assets/images/men-02.jpg" alt="">
+                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
                         </div>
                         <div class="down-content">
-                            <h4>Air Force 1 X</h4>
-                            <span>$90.00</span>
+                            <h4>Visites des habitats</h4>
+                            <span>habitats</span>
                             <ul class="stars">
                                 <li><i class="fa fa-star"></i></li>
                                 <li><i class="fa fa-star"></i></li>
@@ -147,12 +180,52 @@
                         <div class="thumb">
                             <div class="hover-content">
                                 <ul>
+                                    <li><a href="/zoo"><i class="fa fa-eye"></i></a></li>
+                                    <li><a href="/zoo"><i class="fa fa-star"></i></a></li>
+                                    <li><a href="/zoo"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
+                        </div>
+                        <div class="down-content">
+                            <h4>le p'tit train du paradis</h4>
+                            <span>Guide</span>
+                            <ul class="stars">
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {#} FIN DE SECTION {#}
+
+ {#}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading">
+                        <h2>Nos services2</h2>
+                        <span>Check out all of our products.</span>
+                    </div>
+                </div>
+            
+        
+                <div class="col-lg-4">
+                    <div class="item">
+                        <div class="thumb">
+                            <div class="hover-content">
+                                <ul>
                                     <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
                                     <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
                                     <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
-                            <img src="assets/images/men-03.jpg" alt="">
+                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
                         </div>
                         <div class="down-content">
                             <h4>Love Nana ‘20</h4>
@@ -167,6 +240,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-4">
                     <div class="item">
                         <div class="thumb">
@@ -177,7 +251,7 @@
                                     <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
-                            <img src="assets/images/women-01.jpg" alt="">
+                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
                         </div>
                         <div class="down-content">
                             <h4>New Green Jacket</h4>
@@ -202,7 +276,7 @@
                                     <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
-                            <img src="assets/images/women-02.jpg" alt="">
+                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
                         </div>
                         <div class="down-content">
                             <h4>Classic Dress</h4>
@@ -217,6 +291,19 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading">
+                        <h2>Nos services 3</h2>
+                        <span>Check out all of our products.</span>
+                    </div>
+                </div>
+            
                 <div class="col-lg-4">
                     <div class="item">
                         <div class="thumb">
@@ -227,7 +314,7 @@
                                     <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
-                            <img src="assets/images/women-03.jpg" alt="">
+                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
                         </div>
                         <div class="down-content">
                             <h4>Spring Collection</h4>
@@ -252,7 +339,7 @@
                                     <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
-                            <img src="assets/images/kid-01.jpg" alt="">
+                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
                         </div>
                         <div class="down-content">
                             <h4>School Collection</h4>
@@ -277,8 +364,15 @@
                                     <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
-                            <img src="assets/images/kid-02.jpg" alt="">
+                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
                         </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+       
                         <div class="down-content">
                             <h4>Summer Cap</h4>
                             <span>$12.00</span>
@@ -340,9 +434,16 @@
                 </div>
             </div>
         </div>
+      
     </section>
     <!-- ***** Products Area Ends ***** -->
-    
+     {#}
+<div class="row">
+    <div class="col mt-5 p-5">
+    </div>
+
+</div>
+
     <!-- ***** Footer Start ***** -->
     <footer>
         <div class="container">
@@ -350,12 +451,12 @@
                 <div class="col-lg-3">
                     <div class="first-item">
                         <div class="logo">
-                            <img src="assets/images/white-logo.png" alt="hexashop ecommerce templatemo">
+                            <img src="assets/images/white-logo.png" alt="Zoo paradis Brocéliand">
                         </div>
                         <ul>
-                            <li><a href="#">16501 Collins Ave, Sunny Isles Beach, FL 33160, United States</a></li>
-                            <li><a href="#">hexashop@company.com</a></li>
-                            <li><a href="#">010-020-0340</a></li>
+                            <li><a href="#">Forêt de Brocéliand</a></li>
+                            <li><a href="#">zoo-paradis@broceliand.com</a></li>
+                            <li><a href="#">05.24.77.43.11</a></li>
                         </ul>
                     </div>
                 </div>
@@ -368,7 +469,7 @@
                     </ul>
                 </div>
                 <div class="col-lg-3">
-                    <h4>Useful Links</h4>
+                    <h4>Liens éssentiels</h4>
                     <ul>
                         <li><a href="#">Homepage</a></li>
                         <li><a href="#">About Us</a></li>
@@ -377,9 +478,9 @@
                     </ul>
                 </div>
                 <div class="col-lg-3">
-                    <h4>Help &amp; Information</h4>
+                    <h4>Information</h4>
                     <ul>
-                        <li><a href="#">Help</a></li>
+                        <li><a href="#">Aide</a></li>
                         <li><a href="#">FAQ's</a></li>
                         <li><a href="#">Shipping</a></li>
                         <li><a href="#">Tracking ID</a></li>
@@ -387,11 +488,11 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="under-footer">
-                        <p>Copyright © 2022 HexaShop Co., Ltd. All Rights Reserved. 
+                        <p>Copyright © 2024 Zoo paradis., tout droit Réservés. 
                         
-                        <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a>
+                        <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">Limay</a>
 
-                        <br>Distributed By: <a href="https://themewagon.com" target="_blank" title="free & premium responsive templates">ThemeWagon</a></p>
+                        <br>Distribué par: <a href="https://themewagon.com" target="_blank" title="free & premium responsive templates">ASSOFAC MONTREUIL</a></p>
                         <ul>
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -401,6 +502,5 @@
                     </div>
                 </div>
             </div>
-        </div>
     </footer>
 {% endblock %}
