@@ -49,8 +49,8 @@ class RegistrationController extends AbstractController
                     $this->addFlash('danger', 'Erreur lors du téléchargement de l\'image.');
                 }
 
-                $user->setProfileImageFile($newFilename);
-                return $this->redirectToRoute('Accueil');
+                // Ici, on passe simplement le nom de fichier à la propriété 'profileImage' qui stocke le nom du fichier
+                $user->setProfileImage($newFilename);
             }
 
             // Encoder le mot de passe
@@ -61,19 +61,24 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            // Persister l'utilisateur
             $entityManager->persist($user);
             $entityManager->flush();
 
             // Connexion automatique après inscription
-            return $userAuthenticator->authenticateUser(
+            $response = $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,
                 $request
             );
+            // Si $response est null, on redirige vers une page par défaut
+            return $response ?? $this->redirectToRoute('Accueil');
         }
+        
 
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(), // Assure-toi de créer la vue correctement
+            'registrationForm' => $form->createView(), 
+            // Assure-toi de créer la vue correctement
         ]);
     }
 }

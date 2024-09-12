@@ -62,7 +62,7 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('profileImage', FileType::class, [
-                'label' => 'Profile Image (JPEG, PNG files)',
+                'label' => 'Profile Image (JPEG,jpeg, PNG, png, jpg, JPJ files)',
 
                 // Ne pas associer à une classe d'entité si c'est une nouvelle image
                 'mapped' => false,
@@ -73,12 +73,13 @@ class RegistrationFormType extends AbstractType
                 // Contraintes pour limiter les types de fichiers ou la taille
                 'constraints' => [
                     new File([
-                        'maxSize' => '1024k',
+                        'maxSize' => '2048k',
                         'mimeTypes' => [
                             'image/jpeg',
+                            'image/jpg',
                             'image/png',
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid JPEG or PNG image',
+                        'mimeTypesMessage' => 'Verifiez votre fichier',
                     ])
                 ],
             ])

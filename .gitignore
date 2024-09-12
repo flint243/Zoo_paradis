@@ -1,6 +1,6 @@
+#
 pgadmin
-
-firebase/serviceAccount.json
+#
 
 # Ignore environment files
 .env
@@ -27,4 +27,8 @@ phpunit.xml
 public/assets/
 assets/vendor/
 #
+
+#
+firebase/serviceAccount.json
 config/firebase_credentials.json
+#

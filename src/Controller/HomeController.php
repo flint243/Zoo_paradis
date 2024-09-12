@@ -19,59 +19,75 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'Accueil')]
-    public function index(AuthenticationUtils $authenticationUtils, 
+public function index(
+    AuthenticationUtils $authenticationUtils, 
     AvisRepository $avisRepository, 
     Request $request, 
     EntityManagerInterface $entityManager, 
     Security $security
-    ): Response {
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
+): Response {
+    // Récupérer l'erreur d'authentification (le cas échéant)
+    $error = $authenticationUtils->getLastAuthenticationError();
 
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-        $user = $security->getUser();
-        
-        $avis = new Avis();
-        //$user = new User();
-        $form = $this->createForm(AvisType::class, $avis);
+    // Dernier nom d'utilisateur saisi
+    $lastUsername = $authenticationUtils->getLastUsername();
+    
+    // Utilisateur connecté
+    $user = $security->getUser();
+    
+    // Création du formulaire d'avis
+    $avis = new Avis();
+    $form = $this->createForm(AvisType::class, $avis);
 
-        $form->handleRequest($request);
-        $avisList = $avisRepository->findAll();
+    // Gestion du formulaire
+    $form->handleRequest($request);
 
-        // Boucler sur les avis pour accéder aux données utilisateur et image de profil
-        foreach ($avisList as $avis) {
-            $profileImage = $avis->getUser()->getProfileImage(); // Récupère l'image de profil
-            // Vous pouvez maintenant utiliser $profileImage dans votre vue
+    // Récupérer tous les avis existants
+    $avisList = $avisRepository->findAll();
+
+    // Boucler sur les avis pour récupérer les images de profil
+    $avisProfileImages = [];
+    foreach ($avisList as $avisItem) {
+        if ($avisItem->getUser()) {
+            $profileImage = $avisItem->getUser()->getProfileImage(); // Récupérer l'image de profil
+            $avisProfileImages[$avisItem->getId()] = $profileImage;  // Stocker l'image pour chaque avis
         }
-        
-            $pseudo = $avis->getPseudo();
-        if ($form->isSubmitted() && $form->isValid()) {
-            /*if (!$user->getPseudo()) {
-                throw new \Exception('L\'utilisateur n\'a pas de pseudo défini.');
-            }*/
-            
-            $avis->setCreatedAt(new \DateTimeImmutable());
-            $avis->setIsValidated(true);
-            // Associer l'utilisateur connecté à l'avis
-            //$avis->setUser();
-            $avis->setPseudo($pseudo);
-            
-
-            $entityManager->persist($avis);
-            $entityManager->flush();
-
-            // Redirige après la soumission réussie
-            return $this->redirectToRoute('Accueil');
-        }
-        return $this->render('home/index.html.twig', [
-            'last_username' => $lastUsername,
-            'error'     => $error,
-            'user'      => $user,
-            'form'      => $form->createView(),
-            'avisList'  => $avisList,
-        ]);
     }
+    
+    // Vérifier si le formulaire a été soumis et est valide
+    if ($form->isSubmitted() && $form->isValid()) {
+        
+        // Associer l'utilisateur connecté à l'avis
+        if ($user) {
+            $avis->setUser($user); // Associe l'utilisateur connecté
+            $avis->setPseudo($user->getPseudo()); // Associe le pseudo de l'utilisateur
+        } else {
+            throw new \Exception('Aucun utilisateur connecté. Impossible de soumettre un avis.');
+        }
+
+        // Définir la date de création et marquer l'avis comme validé
+        $avis->setCreatedAt(new \DateTimeImmutable());
+        $avis->setIsValidated(true);
+
+        // Persister l'avis
+        $entityManager->persist($avis);
+        $entityManager->flush();
+
+        // Redirection après soumission
+        return $this->redirectToRoute('Accueil');
+    }
+
+    // Rendre la vue avec les données
+    return $this->render('home/index.html.twig', [
+        'last_username'   => $lastUsername,
+        'error'           => $error,
+        'user'            => $user,
+        'form'            => $form->createView(),
+        'avisList'        => $avisList,
+        'avisProfileImages' => $avisProfileImages, // Passer les images de profil à la vue
+    ]);
+}
+
 
     #[Route('/restauration', name: 'restauration')]
     public function resto(): Response
@@ -95,6 +111,26 @@ class HomeController extends AbstractController
     {
         // Récupère tous les avis
         $avisList = $avisRepository->findAll();
+
+         // Transforme les données en JSON
+         $avisData = [];
+         foreach ($avisList as $avis) {
+             $imagePath = $potentialPath = '/' . $avis->getPseudo();
+     
+             // Ensuite on vérifie si une image spécifique existe
+             foreach (['.jpg', '.png', '.jpeg'] as $extension) {
+                 
+                 if (file_exists($potentialPath)) {
+                     $imagePath = $potentialPath;
+                     break;
+                 }
+             }
+             $avisData[] = [
+                 'pseudo' => $avis->getPseudo(),
+                 'comnnetaire' => $avis->getCommentaire(),
+                 'image_habitat' => $imagePath,
+             ];
+         }
 
         return $this->render('home/index.html.twig', [
             'avisList' => $avisList,
