@@ -26,9 +26,9 @@
                             <div class="mb-3 userConnect">
                                 Bonjour {{ app.user.pseudo }}
                                 {% if app.user.profileImage %}
-                                    <img src="/images/profile/{{ app.user.profileImage }}" width="40px" height="35px" />
+                                    <img src="/images/profile/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px" />
                                 {% else %}
-                                <img src="{{ asset('/assets/images/avatar/avatar2.jpg') }}" width="20px" />
+                                <img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px" />
                                 {% endif %}
                             </div>
 
@@ -50,8 +50,8 @@
                 
                         <!-- ***** Logo Start ***** -->
                         <a href="/" class="mt-2 logo">
-                            <div class="row p-2 border border-2 rounded">
-                            <img src="{{ asset('/assets/images/avatar/avatar2.jpg') }}" width="20px" />
+                            <div class="row p-2 bg-light rounded">
+                            <img src="{{ asset('/assets/images/avatar/avatar2.png') }}"class="rounded-circle" width="30px" height="30px" />
                                 <h4 class="text-success font-weight-bold">Zoo paradis</h4>
                             </div>
                         </a>
@@ -105,7 +105,7 @@
                 <div class="col-lg-6 leftSide">
                     <div class="left-content p-1">
                         <div class="thumb">
-                            <div class="inner-content">
+                            <div class="inner-content text-center">
                                 <h4>Bienvenus au Zoo paradis</h4>
                                 <span>Un havre de paix pour nos les animaux</span>
                             </div>
@@ -552,7 +552,7 @@
                         {% for avis in avisList %}
                         {% if avis.id == 1 or avis.id == 2 or avis.id == 3  %}
                             <div class="slide">
-                                <img src="{{ asset('uploads/images/' ~ avis.user.profileImage) }}" name="slideImg" class="slideImg" alt="Image du Client" width="40px" height="35px">
+                                <img src="{{ asset('/images/profile/' ~ avis.user.profileImage) }}" name="slideImg" class="slideImg" alt="Image du Client" width="40px" height="35px">
                                 <i class="fa-solid fa-quote-left"></i>
                                 <p>
                                     "{{ avis.commentaire }}"
@@ -561,6 +561,8 @@
                                     <p>Date : {{ avis.createdAt|date('d-m-Y') }}</p>
                                     </p>
                             </div>
+                            {% else %}
+                              <img src="{{ asset('/assets/images/avatar/avatar2.png') }}" width="30px" height="25px" />
                              {% endif %}
                         {% endfor %}
                         <div id="bandeauColor">
@@ -682,7 +684,11 @@
                             {# Le reste du formulaire d'avis #}
                             {{ form_row(form.commentaire, {'attr': {'class': 'form-control'}}) }}
                         </div>
+                        {% if app.user %}
                             <button class="btn btn-success mb-3" type="submit">Envoyer</button>
+                        {% else %}
+                        <h6 class="text-warning">Veuillez vous connecter pour poster !</h6>
+                         {% endif %}
                         {{ form_end(form) }}
                     </form>
                 </div>

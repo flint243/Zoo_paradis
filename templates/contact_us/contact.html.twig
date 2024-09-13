@@ -17,29 +17,56 @@
     
     <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky">
+                <div class="connexion">
+                    {% if app.user %}
+                            <div class="mb-3 userConnect">
+                                Bonjour {{ app.user.pseudo }}
+                                {% if app.user.profileImage %}
+                                    <img src="/images/profile/{{ app.user.profileImage }}" width="40px" height="35px" />
+                                {% else %}
+                                <img src="{{ asset('/assets/images/avatar/avatar2.jpg') }}" width="20px" />
+                                {% endif %}
+                            </div>
+
+                         <div class="deconnexionBtn">
+                            <a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a> 
+                         </div>
+                        
+                   {% else %}
+                        <a href="{{ path('app_register') }}" class="registerBtn">Pas encore inscrit c'est ici !</a>
+                        sinon
+                        <a href="{{ path('app_login') }}" class="connexionBtn">Connectez vous ici !</a>
+                    {% endif %}
+                </div> 
+                
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
+                
                         <!-- ***** Logo Start ***** -->
-                        <a href="/" class="logo">
-                            <div class="col mt-4">
-                                <h4 class="text-success">Zoo paradis</h4>
+                        <a href="/" class="mt-2 logo">
+                            <div class="row p-2 border border-2 rounded">
+                            <img src="{{ asset('/assets/images/avatar/avatar2.jpg') }}" width="20px" />
+                                <h4 class="text-success font-weight-bold">Zoo paradis</h4>
                             </div>
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="/">Accueil</a></li>
-                            <li class="scroll-to-section"><a href="index.html">Men's</a></li>
-                            <li class="scroll-to-section"><a href="index.html">Women's</a></li>
-                            <li class="scroll-to-section"><a href="index.html">Kid's</a></li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="btn btn-warning btn-small"><a href="/admin">Admin</a></li>
+                        {% endif %}
+                            <li class="scroll-to-section"><a href="/" class="active">Accueil</a></li>
+                            <li class="scroll-to-section"><a href="#men">Eau</a></li>
+                            <li class="scroll-to-section"><a href="#women">Terre</a></li>
+                            <li class="scroll-to-section"><a href="#kids">Ciel</a></li>
                             <li class="submenu">
                                 <a href="javascript:;">Pages</a>
                                 <ul>
                                     <li><a href="/about">A propos</a></li>
-                                    <li><a href="/products">Produits</a></li>
-                                    <li><a href="/single/product">Produit</a></li>
+                                    <li><a href="/products">Nos services</a></li>
+                                    <li><a href="/habitats">Les habitats</a></li>
                                     <li><a href="/contact/us">Contact</a></li>
                                 </ul>
                             </li>
@@ -52,16 +79,18 @@
                                     <li><a rel="nofollow" href="https://templatemo.com/page/4" target="_blank">Template Page 4</a></li>
                                 </ul>
                             </li>
-                            <li class="scroll-to-section"><a href="index.html">Explore</a></li>
-                        </ul>        
+                            <li class="scroll-to-section"><a href="#explore">Explore</a></li>
+                        </ul>   
+                        
                         <a class='menu-trigger'>
                             <span>Menu</span>
                         </a>
                         <!-- ***** Menu End ***** -->
                     </nav>
                 </div>
-            </div>
         </div>
+                   
+        </div> 
     </header>
     <!-- ***** Header Area End ***** -->
 
