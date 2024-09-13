@@ -28,12 +28,12 @@ public/assets/
 assets/vendor/
 #
 
-#
+##
 firebase/serviceAccount.json
 config/firebase_credentials.json
-#
+##
 
-#
+##
 app-deployment.yaml
 app-service.yaml
 db-deployment.yaml
@@ -41,12 +41,12 @@ db-service.yaml
 phpmyadmin-deployment.yaml
 phpmyadmin-service.yaml
 pvc.yaml
-#
+##
 
-#
+##
 docker-compose.yml
-#
+##
 
-#
+##
 phpunit.xml.dist
-#
+##
