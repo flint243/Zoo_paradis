@@ -15,6 +15,8 @@ class VeterinaireCrudController extends AbstractCrudController
         return Veterinaire::class;
     }
 
+   
+
     /*
     public function configureFields(string $pageName): iterable
     {

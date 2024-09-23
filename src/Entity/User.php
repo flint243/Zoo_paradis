@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\HasLifecycleCallbacks()]
 #[Vich\Uploadable]  // Annotaion Vich pour rendre l'entité "uploadable"
 #[UniqueEntity(fields: ['email'], message: 'Il y a déjà un compte avec cet email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -23,7 +25,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $pseudo = null;
+    private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
@@ -34,10 +36,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    private $passwordHasher;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $profileImage = null;
 
-    #[Vich\UploadableField(mapping: 'user_profile_image', fileNameProperty: 'profileImage')]
+    #[Vich\UploadableField(mapping: 'user_uploads_images', fileNameProperty: 'profileImage')]
     private ?File $profileImageFile = null;
 
 
@@ -50,6 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Avis::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
     private Collection $avis;
 
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -61,14 +66,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getPseudo(): ?string
+    public function getNom(): ?string
     {
-        return $this->pseudo;
+        return $this->nom;
     }
 
-    public function setPseudo(string $pseudo): static
+    public function setNom(string $nom): static
     {
-        $this->pseudo = $pseudo;
+        $this->nom = $nom;
         return $this;
     }
 
@@ -95,6 +100,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->roles = $roles;
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function hashPassword(): void
+    {
+        if ($this->password) {
+            $hashedPassword = $this->passwordHasher->hashPassword($this, $this->password);
+            $this->setPassword($hashedPassword);
+        }
     }
 
     public function getPassword(): ?string

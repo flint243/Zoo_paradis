@@ -19,9 +19,9 @@
                 <div class="connexion">
                     {% if app.user %}
                             <div class="mb-3 userConnect">
-                                Bonjour {{ app.user.pseudo }}
+                                Bonjour {{ app.user.nom }}
                                 {% if app.user.profileImage %}
-                                    <img src="/images/profile/{{ app.user.profileImage }}" width="40px" height="35px" />
+                                    <img src="/uploads/images/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px" />
                                 {% else %}
                                 <img src="{{ asset('/assets/images/avatar/avatar2.jpg') }}" width="20px" />
                                 {% endif %}
@@ -116,8 +116,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-heading">
-                        <h2>L'habitat Aquatique</h2>
-                        <span>Le paradis du Zoo dispose de deux services de restaurantion situés pour l'un, coté Nord et l'autre au sud</span>
+                        <h2>Nos habitats</h2>
+                        <span>Ici nous vous présentons les differents habitats de nos animaux. Cliquez sur une image pour voir les detailles</span>
                     </div>
                 </div>
             </div>
@@ -126,37 +126,53 @@
         <div class="container">
             <div class="row">
                 <!-- slider -->
-                    <div id="slideShowHabitat">
-                        {% for image in habitats %}
-                            {% if image.id == 1 or image.id == 2 or image.id == 3  %}
-                                <div id="sliderHabitat" class="slidereHabitat">
-                                    <img src="{{ asset('uploads/images/' ~ image.imagesHabitat) }}" name="slideImgHabitat" class="slideImgHabitat" alt="Image du slider">
-                                    <div class=" ">{{ image.nom }}</div>
-                                    <div class=" ">{{ image.descriptionHabitat }}</div>
-                                    <p></p>
-                                    <div id="bandeauColorHabitat">
-                                        <div id="InfoSliderHabitat"></div>
-                                    </div>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
+        <div id="slideShowHabitat">
+        {% for image in habitats %}
+            {% if image.id in [1, 2, 3, 4] %}
+                <div id="sliderHabitat" class="slidereHabitat">
+                    <h2 class="mb-3 ">{{ image.nom }}</h2>
+
+                    {# Définition de la route spécifique en fonction de l'ID #}
+                    {% set detailPath = '' %}
+                    {% if image.id == 1 %}
+                        {% set detailPath = path('animal_show_celeste', {id: image.id}) %}
+                    {% elseif image.id == 2 %}
+                        {% set detailPath = path('animal_show', {id: image.id}) %}
+                    {% elseif image.id == 3 %}
+                        {% set detailPath = path('animal_show_aquatique', {id: image.id}) %}
+                    {% elseif image.id == 4 %}
+                        {% set detailPath = path('detail_page4', {id: image.id}) %}
+                    {% endif %}
+
+                    <a href="{{ detailPath }}">
+                        <img src="{{ asset('uploadHabitats/imagesHabitats/' ~ image.habitatimage) }}" name="slideImgHabitat" class="slideImgHabitat" alt="Image du slider">
+                    </a>        
+                    <div id="bandeauColorHabitat">
+                        <div id="InfoSliderHabitat">
+                            <h5 class="">{{ image.description }}</h5>
+                        </div>
                     </div>
-            </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+        </div>
     </section>
 
-    <!-- ***** Footer Start ***** -->
+     <!-- ***** Footer Start ***** -->
     <footer>
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
                     <div class="first-item">
-                        <div class="logo">
-                            <img src="assets/images/white-logo.png" alt="hexashop ecommerce templatemo">
-                        </div>
+                            <div class="row logo justify-content-around">
+                            <img src="{{ asset('/assets/images/avatar/avatar2.png') }}" width="30px" height="30px" />
+                                <h3 class="text-success font-weight-bold">Zoo paradis</h3>
+                            </div>
                         <ul>
-                            <li><a href="#">Forêt de Brosseliand</a></li>
-                            <li><a href="#">hexashop@company.com</a></li>
-                            <li><a href="#">010-020-0340</a></li>
+                            <li><a href="#">Forêt de Brocéliand</a></li>
+                            <li><a href="#">zoo-paradis@broceliand.com</a></li>
+                            <li><a href="#">05.24.77.43.11</a></li>
                         </ul>
                     </div>
                 </div>

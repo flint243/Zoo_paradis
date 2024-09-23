@@ -7,6 +7,8 @@ use App\Entity\User;
 use App\Form\AvisType;
 use App\Service\FirebaseService;
 use App\Repository\AvisRepository;
+use App\Repository\HabitatRepository;
+use App\Repository\ServicesZooRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +23,9 @@ class HomeController extends AbstractController
     #[Route('/', name: 'Accueil')]
 public function index(
     AuthenticationUtils $authenticationUtils, 
-    AvisRepository $avisRepository, 
+    AvisRepository $avisRepository,
+    ServicesZooRepository $serviceszooRepository,
+    HabitatRepository $habitatRepository, 
     Request $request, 
     EntityManagerInterface $entityManager, 
     Security $security
@@ -33,7 +37,7 @@ public function index(
     $lastUsername = $authenticationUtils->getLastUsername();
     
     // Utilisateur connecté
-    $user = $security->getUser();
+    //$user = $security->getUser();
     
     // Création du formulaire d'avis
     $avis = new Avis();
@@ -45,25 +49,29 @@ public function index(
     // Récupérer tous les avis existants
     $avisList = $avisRepository->findAll();
 
-    // Boucler sur les avis pour récupérer les images de profil
-    $avisProfileImages = [];
-    foreach ($avisList as $avisItem) {
-        if ($avisItem->getUser()) {
-            $profileImage = $avisItem->getUser()->getProfileImage(); // Récupérer l'image de profil
-            $avisProfileImages[$avisItem->getId()] = $profileImage;  // Stocker l'image pour chaque avis
-        }
-    }
-    
+    // Récupérer tous les services existants
+    $habitat = $habitatRepository->findBy(['nom'=> 'celeste']);
+    $habitat2 = $habitatRepository->findBy(['nom'=> 'terrestre']);
+    $habitat3 = $habitatRepository->findBy(['nom'=> 'aquatique']);
+
+    //Récupérer tous les services existants
+    $services = $serviceszooRepository->findBy(['nom'=> 'Restauration']);
+    $services2 = $serviceszooRepository->findBy(['nom'=> 'Habitats']);
+    $services3 = $serviceszooRepository->findBy(['nom'=> 'Visites']);
+
+   
+       
+        
     // Vérifier si le formulaire a été soumis et est valide
     if ($form->isSubmitted() && $form->isValid()) {
         
         // Associer l'utilisateur connecté à l'avis
-        if ($user) {
+       /* if ($user) {
             $avis->setUser($user); // Associe l'utilisateur connecté
             $avis->setPseudo($user->getPseudo()); // Associe le pseudo de l'utilisateur
         } else {
             throw new \Exception('Aucun utilisateur connecté. Impossible de soumettre un avis.');
-        }
+        }*/
 
         // Définir la date de création et marquer l'avis comme validé
         $avis->setCreatedAt(new \DateTimeImmutable());
@@ -81,29 +89,20 @@ public function index(
     return $this->render('home/index.html.twig', [
         'last_username'   => $lastUsername,
         'error'           => $error,
-        'user'            => $user,
+        //'user'            => $user,
         'form'            => $form->createView(),
         'avisList'        => $avisList,
-        'avisProfileImages' => $avisProfileImages, // Passer les images de profil à la vue
+        /*'avisProfileImages' => $avisProfileImages, // Passer les images de profil à la vue*/
+        'services'    => $services,
+        'services2'    => $services2,
+        'services3'    => $services3,
+
+        'habitat'    => $habitat,
+        'habitat2'    => $habitat2,
+        'habitat3'    => $habitat3,
     ]);
 }
 
-
-    #[Route('/restauration', name: 'restauration')]
-    public function resto(): Response
-    {
-       
-
-        return $this->render('home/restauration.html.twig');
-    }
-
-    #[Route('/zoo', name: 'zoo')]
-    public function zoo(): Response
-    {
-       
-
-        return $this->render('home/zoo.html.twig');
-    }
 
 
     #[Route('/api/avis', name: 'api_avis_list')]
@@ -115,7 +114,7 @@ public function index(
          // Transforme les données en JSON
          $avisData = [];
          foreach ($avisList as $avis) {
-             $imagePath = $potentialPath = '/' . $avis->getPseudo();
+             $imagePath = $potentialPath = '/' . $avis->getNom();
      
              // Ensuite on vérifie si une image spécifique existe
              foreach (['.jpg', '.png', '.jpeg'] as $extension) {
@@ -126,7 +125,7 @@ public function index(
                  }
              }
              $avisData[] = [
-                 'pseudo' => $avis->getPseudo(),
+                 //'pseudo' => $avis->getPseudo(),
                  'comnnetaire' => $avis->getCommentaire(),
                  'image_habitat' => $imagePath,
              ];
@@ -142,7 +141,7 @@ public function index(
 
 
 
-private $firebaseService;
+/*private $firebaseService;
 
 public function __construct(FirebaseService $firebaseService)
 {
@@ -182,5 +181,6 @@ public function getReviews(): Response
     // Optionnel : formater les données pour les afficher dans une vue ou une réponse JSON
     return $this->json($reviews);
 }
+    */
 
 }

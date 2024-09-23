@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Aquatique{% endblock %}
+{% block title %}Habitat aquatique{% endblock %}
 
 {% block body %}
 <!-- ***** Preloader Start ***** -->
@@ -19,9 +19,9 @@
                 <div class="connexion">
                     {% if app.user %}
                             <div class="mb-3 userConnect">
-                                Bonjour {{ app.user.pseudo }}
+                                Bonjour {{ app.user.nom }}
                                 {% if app.user.profileImage %}
-                                    <img src="/images/profile/{{ app.user.profileImage }}" width="40px" height="35px" />
+                                    <img src="/uploads/images/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px" />
                                 {% else %}
                                 <img src="{{ asset('/assets/images/avatar/avatar2.jpg') }}" width="20px" />
                                 {% endif %}
@@ -42,9 +42,6 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
-
-                
-                
                         <!-- ***** Logo Start ***** -->
                         <a href="/" class="logo">
                         <div class="col mt-4">
@@ -100,7 +97,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="inner-content">
-                        <h2>L'habitat Aquatique</h2>
+                        <h2>Voici le détail de l'habitat aquatique</h2>
                         <span>Awesome &amp; Creative HTML CSS layout by TemplateMo</span>
                     </div>
                 </div>
@@ -110,50 +107,66 @@
     </div>
     <!-- ***** Main Banner Area End ***** -->
 
-    <!-- ***** Products Area Starts ***** -->
-    <section class="section" id="products">
+    <!-- ***** Habitat aquatique Starts ***** -->
+    <section class="section" id="men">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="section-heading">
-                        <h2>L'habitat Aquatique</h2>
-                        <span>Le paradis du Zoo dispose de deux services de restaurantion situés pour l'un, coté Nord et l'autre au sud</span>
+                        <h2>L'habitat aquatique</h2>
+                        <span>Explorez les détails du monde aquatique.</span>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="container">
             <div class="row">
-            <!-- slider -->
-                <div id="slideShowHabitat">
-                    <div id="sliderHabitat" class="slidereHabitat">
-                    
-                        <img src="" name="slideImgHabitat" class="slideImgHabitat" alt="Image du slider">
-                        <i class="fa-solid fa-quote-left"></i>
-                        <p></p>
-                    <div id="bandeauColorHabitat">
-                    <div id="InfoSliderHabitat"></div>
+                <div class="col-lg-12">
+                    <div class="men-item-carousel">
+                        <div class="owl-men-item owl-carousel">
+                       {% for aquatique in aquatique %}
+                                <div class="item">
+                                    <div class="thumb">
+                                        <div class="hover-content">
+                                            <ul>
+                                                <li>
+                                                    <a href="{{ path('animal_show_aquatique', {id: aquatique.id}) }}">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <img src="{{ asset('uploadsAnimals/imagesAnimals/' ~ aquatique.imagesAnimal) }}" alt="Image de {{ aquatique.nom }}">
+                                        {{ aquatique.nom }}
+                                    </div>
+                                    <div class="down-content">
+                                        <h4>{{ aquatique.race }}</h4>
+                                        <span>{{ loop.index }}</span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
-                
-                
-            </div>
+        </div>
     </section>
+    <!-- ***** Habitat aquatique Ends ***** -->
 
-    <!-- ***** Footer Start ***** -->
+     <!-- ***** Footer Start ***** -->
     <footer>
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
                     <div class="first-item">
-                        <div class="logo">
-                            <img src="assets/images/white-logo.png" alt="hexashop ecommerce templatemo">
-                        </div>
+                            <div class="row logo justify-content-around">
+                            <img src="{{ asset('/assets/images/avatar/avatar2.png') }}" width="30px" height="30px" />
+                                <h3 class="text-success font-weight-bold">Zoo paradis</h3>
+                            </div>
                         <ul>
-                            <li><a href="#">Forêt de Brosseliand</a></li>
-                            <li><a href="#">hexashop@company.com</a></li>
-                            <li><a href="#">010-020-0340</a></li>
+                            <li><a href="#">Forêt de Brocéliand</a></li>
+                            <li><a href="#">zoo-paradis@broceliand.com</a></li>
+                            <li><a href="#">05.24.77.43.11</a></li>
                         </ul>
                     </div>
                 </div>

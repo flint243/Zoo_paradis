@@ -11,17 +11,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ReviewController extends AbstractController
 {
-    private $firebaseService;
+    /*private $firebaseService;
 
     public function __construct(FirebaseService $firebaseService)
     {
         $this->firebaseService = $firebaseService;
-    }
+    }*/
 
     /**
      * @Route("/review/add", name="add_review")
      */
-    public function addReview(Request $request): Response
+   /* public function addReview(Request $request): Response
     {
         $reviewData = [
             'user' => $request->request->get('user'),
@@ -32,5 +32,5 @@ class ReviewController extends AbstractController
         $this->firebaseService->addReview($reviewData);
 
         return new Response('Review added successfully.');
-    }
+    }*/
 }

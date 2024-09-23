@@ -119,18 +119,19 @@
                                 </div>
 
                                 <div id="container-2">
-                                    {% for image in imagesHabitat %}
-                                        {% if image.id == 2 %}
+                                    {% if servicesImage is not empty %}
+                                        {% for service in servicesImage %}
                                             <div>
-                                                <h3>{{ image.nom }}</h3>
-                                                <img src="{{ asset('uploads/images/' ~ image.imagesHabitat) }}" alt="">
+                                                <h3>{{ service.nom }}</h3>
+                                                <img src="{{ asset('uploads/images/' ~ service.servicesImage) }}" alt="">
                                             </div>
-                                        {% endif %}
+                                        {% endfor %}
                                     {% else %}
                                         <div>
                                             <img src="{{ asset('/assets/images/aquatique/manchot.jpeg') }}" alt="">
                                         </div>
-                                    {% endfor %}
+                                    {% endif %}
+
                                 </div>
 
                                 <div id="container-3">
@@ -223,9 +224,10 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="first-item">
-                        <div class="logo">
-                            <img src="assets/images/white-logo.png" alt="hexashop ecommerce templatemo">
-                        </div>
+                        <div class="row logo justify-content-around">
+                            <img src="{{ asset('/assets/images/avatar/avatar2.png') }}" width="30px" height="30px" />
+                                <h3 class="text-success font-weight-bold">Zoo paradis</h3>
+                            </div>
                         <ul>
                             <li><a href="#">Forêt de Brosseliand</a></li>
                             <li><a href="#">hexashop@company.com</a></li>

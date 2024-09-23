@@ -1,0 +1,471 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos Services{% endblock %}
+
+{% block body %}
+<!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
+    
+    
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+                <div class="connexion">
+                    {% if app.user %}
+                            <div class="mb-3 userConnect">
+                                Bonjour {{ app.user.nom }}
+                                {% if app.user.profileImage %}
+                                    <img src="/uploads/images/{{ app.user.profileImage }}" width="40px" height="35px" />
+                                {% else %}
+                                <img src="{{ asset('/assets/images/avatar/avatar2.jpg') }}" width="20px" />
+                                {% endif %}
+                            </div>
+
+                         <div class="deconnexionBtn">
+                            <a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a> 
+                         </div>
+                        
+                   {% else %}
+                        <a href="{{ path('app_register') }}" class="registerBtn">Pas encore inscrit c'est <span class="text-danger">ici</span> !</a>
+                        sinon
+                        <a href="{{ path('app_login') }}" class="connexionBtn">Connectez vous ici !</a>
+                    {% endif %}
+                </div> 
+                
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+
+                
+                
+                        <!-- ***** Logo Start ***** -->
+                        <a href="/" class="logo">
+                        <div class="col mt-4">
+                            <h4 class="text-success">Zoo paradis</h4>
+                        </div>
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="btn btn-warning btn-small"><a href="/admin">Admin</a></li>
+                        {% endif %}
+                            <li class="scroll-to-section"><a href="/">Accueil</a></li>
+                            <li class="scroll-to-section"><a href="/about">Apropos</a></li>
+                            <li class="scroll-to-section"><a href="/services" class="active">Nos services</a></li>
+                            <li class="scroll-to-section"><a href="/contact/us">Contact</a></li>
+                            
+                        </ul>   
+                        
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+        </div>
+                   
+        </div> 
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <!-- ***** Main Banner Area Start ***** -->
+    <div class="page-heading" id="top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="inner-content">
+                        <h2>Nos services</h2>
+                        <span>Awesome &amp; Creative HTML CSS layout by TemplateMo</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Main Banner Area End ***** -->
+
+
+    <!-- ***** Products Area Starts ***** -->
+    <section class="section" id="products">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading">
+                        <h2>Nos services</h2>
+                        <span>Check out all of our products.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="item">
+                        <div class="thumb">
+                                {% for services in services %}
+									{# Ici, tu n'accèdes plus à .id car services est une chaîne #}
+										<div>
+											<a href="/restauration"><img src="{{ asset('uploads/services/' ~ services.servicesImages) }}" height="300px" alt=""></a>
+										</div>
+										<div class="down-content">
+											<h4>
+												{{ services.nom }}
+											</h4>
+											<span>
+												{{ services.description }}
+											</span>
+										</div>
+								{% endfor %}
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="item">
+                        <div class="thumb">
+                                {% for services2 in services2 %}
+									{# Ici, tu n'accèdes plus à .id car services est une chaîne #}
+										<div>
+											<a href="/habitats"><img src="{{ asset('uploads/services/' ~ services2.servicesImages) }}" height="300px" alt=""></a>
+										</div>
+										<div class="down-content">
+											<h4>
+												{{ services2.nom }}
+											</h4>
+											<span>
+												{{ services2.description }}
+											</span>
+										</div>
+								{% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="item">
+                        <div class="thumb">
+                                {% for services3 in services3 %}
+									{# Ici, tu n'accèdes plus à .id car services est une chaîne #}
+										<div>
+											<a href="/visites_guidees"><img src="{{ asset('uploads/services/' ~ services3.servicesImages) }}" height="300px" alt=""></a>
+										</div>
+										<div class="down-content">
+											<h4>
+												{{ services3.nom }}
+											</h4>
+											<span>
+												{{ services3.description }}
+											</span>
+										</div>
+								{% endfor %}
+                        </div>
+                    </div>
+                </div>
+        </div>
+        {#} FIN DE CONTAINER {#}
+
+        {#}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading">
+                        <h2>Nos services2</h2>
+                        <span>Check out all of our products.</span>
+                    </div>
+                </div>
+            
+        
+                <div class="col-lg-4">
+                    <div class="item">
+                        <div class="thumb">
+                            <div class="hover-content">
+                                <ul>
+                                    <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+                                    <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
+                                    <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
+                        </div>
+                        <div class="down-content">
+                            <h4>Love Nana ‘20</h4>
+                            <span>$150.00</span>
+                            <ul class="stars">
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="item">
+                        <div class="thumb">
+                            <div class="hover-content">
+                                <ul>
+                                    <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+                                    <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
+                                    <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
+                        </div>
+                        <div class="down-content">
+                            <h4>New Green Jacket</h4>
+                            <span>$75.00</span>
+                            <ul class="stars">
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="item">
+                        <div class="thumb">
+                            <div class="hover-content">
+                                <ul>
+                                    <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+                                    <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
+                                    <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
+                        </div>
+                        <div class="down-content">
+                            <h4>Classic Dress</h4>
+                            <span>$45.00</span>
+                            <ul class="stars">
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading">
+                        <h2>Nos services 3</h2>
+                        <span>Check out all of our products.</span>
+                    </div>
+                </div>
+            
+                <div class="col-lg-4">
+                    <div class="item">
+                        <div class="thumb">
+                            <div class="hover-content">
+                                <ul>
+                                    <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+                                    <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
+                                    <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
+                        </div>
+                        <div class="down-content">
+                            <h4>Spring Collection</h4>
+                            <span>$130.00</span>
+                            <ul class="stars">
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="item">
+                        <div class="thumb">
+                            <div class="hover-content">
+                                <ul>
+                                    <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+                                    <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
+                                    <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
+                        </div>
+                        <div class="down-content">
+                            <h4>School Collection</h4>
+                            <span>$80.00</span>
+                            <ul class="stars">
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="item">
+                        <div class="thumb">
+                            <div class="hover-content">
+                                <ul>
+                                    <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+                                    <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
+                                    <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="down-content">
+                                            <h4>Summer Cap</h4>
+                                            <span>$12.00</span>
+                                            <ul class="stars">
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="item">
+                                        <div class="thumb">
+                                            <div class="hover-content">
+                                                <ul>
+                                                    <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+                                                    <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
+                                                    <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <img src="assets/images/kid-03.jpg" alt="">
+                                        </div>
+                                        <div class="down-content">
+                                            <h4>Classic Kid</h4>
+                                            <span>$30.00</span>
+                                            <ul class="stars">
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="pagination">
+                                        <ul>
+                                            <li>
+                                                <a href="#">1</a>
+                                            </li>
+                                            <li class="active">
+                                                <a href="#">2</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">3</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">4</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>#}
+      
+    </section>
+    <!-- ***** Products Area Ends ***** -->
+{#}   
+<div class="row">
+    <div class="col mt-5 p-5">
+    </div>
+</div>
+{#}
+
+    <!-- ***** Footer Start ***** -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="first-item">
+                        <div class="row logo justify-content-around">
+                            <img src="{{ asset('/assets/images/avatar/avatar2.png') }}" width="30px" height="30px" />
+                                <h3 class="text-success font-weight-bold">Zoo paradis</h3>
+                            </div>
+                        <ul>
+                            <li><a href="#">Forêt de Brocéliand</a></li>
+                            <li><a href="#">zoo-paradis@broceliand.com</a></li>
+                            <li><a href="#">05.24.77.43.11</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <h4>Shopping &amp; Categories</h4>
+                    <ul>
+                        <li><a href="#">Men’s Shopping</a></li>
+                        <li><a href="#">Women’s Shopping</a></li>
+                        <li><a href="#">Kid's Shopping</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h4>Liens éssentiels</h4>
+                    <ul>
+                        <li><a href="#">Homepage</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h4>Information</h4>
+                    <ul>
+                        <li><a href="#">Aide</a></li>
+                        <li><a href="#">FAQ's</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Tracking ID</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-12">
+                    <div class="under-footer">
+                        <p>Copyright © 2024 Zoo paradis., tout droit Réservés. 
+                        
+                        <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">Limay</a>
+
+                        <br>Distribué par: <a href="https://themewagon.com" target="_blank" title="free & premium responsive templates">ASSOFAC MONTREUIL</a></p>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </footer>
+{% endblock %}

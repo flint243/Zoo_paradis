@@ -2,51 +2,99 @@
 
 namespace App\Entity;
 
-use App\Repository\HabitatRepository;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\HabitatRepository;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\Validator\Constraints as Assert;
-
 
 #[ORM\Entity(repositoryClass: HabitatRepository::class)]
-#[ORM\EntityListeners(['App\EventListener\HabitatEntityListener'])]
-#[ORM\HasLifecycleCallbacks]
-#[Vich\Uploadable] // Indiquer que l'entité est uploadable via VichUploader
+#[Vich\Uploadable]
 class Habitat
 {
+    public function __toString(): string
+    {
+        return $this->id;
+    }
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    /**
+     * @var Collection<int, Animal>
+     */
+    #[ORM\OneToMany(targetEntity: Animal::class, mappedBy: 'habitat')]
+    private Collection $animals;
+
+    #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $description_habitat = null;
+    private ?string $description = null;
 
-    #[Vich\UploadableField(mapping: 'user_profile_image', fileNameProperty: 'imagesHabitat')]
-    #[Assert\File(
-        maxSize: '5M',
-        mimeTypes: ['image/jpeg', 'image/png', 'image/gif'],
-        mimeTypesMessage: 'Veuillez télécharger une image valide (jpeg, png, gif).'
-    )]
-    private ?File $imageFile = null;
+    #[ORM\Column(length: 255)]
+    private ?string $habitat_image = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $imagesHabitat = null;
+    #[Vich\UploadableField(mapping: 'habitat_uploads_images', fileNameProperty: 'habitat_image')]
+    private ?File $habitat_image_file = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTimeInterface $updatedAt = null;
+    private ?DateTimeInterface $updatedAt = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $liste_animaux = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $created_at = null;
+
+    public function __construct()
+    {
+        $this->animals = new ArrayCollection();
+        $this->liste_animaux = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return Collection<int, Animal>
+     */
+    public function getAnimals(): Collection
+    {
+        return $this->animals;
+    }
+
+    public function addAnimal(Animal $animal): static
+    {
+        if (!$this->animals->contains($animal)) {
+            $this->animals->add($animal);
+            $animal->setHabitat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimal(Animal $animal): static
+    {
+        if ($this->animals->removeElement($animal)) {
+            // set the owning side to null (unless already changed)
+            if ($animal->getHabitat() === $this) {
+                $animal->setHabitat(null);
+            }
+        }
+
+        return $this;
     }
 
     public function getNom(): ?string
@@ -61,79 +109,91 @@ class Habitat
         return $this;
     }
 
-    public function getDescriptionHabitat(): ?string
+    public function getDescription(): ?string
     {
-        return $this->description_habitat;
+        return $this->description;
     }
 
-    public function setDescriptionHabitat(string $description_habitat): static
+    public function setDescription(string $description): static
     {
-        $this->description_habitat = $description_habitat;
+        $this->description = $description;
 
         return $this;
     }
 
-    public function getImageFile(): ?File
+    public function getHabitatImage(): ?string
     {
-        return $this->imageFile;
+        return $this->habitat_image;
     }
 
-    public function setImageFile(?File $imageFile = null): void
+    public function setHabitatImage(string $habitat_image): static
     {
-        $this->imageFile = $imageFile;
+        $this->habitat_image = $habitat_image;
 
-        if ($imageFile) {
+        return $this;
+    }
+
+    public function getHabitatImageFile(): ?File
+    {
+        return $this->habitat_image_file;
+    }
+
+    public function setHabitatImageFile(?File $habitat_image_file = null): void
+    {
+        $this->habitat_image_file = $habitat_image_file;
+
+        if ($habitat_image_file) {
             // Si un fichier est téléchargé, on met à jour updatedAt
             $this->updatedAt = new \DateTime('now');
         }
     }
 
-    public function getImagesHabitat(): ?string
+    // Getters et setters
+    public function getType(): ?string
     {
-        return $this->imagesHabitat;
+        return $this->type;
     }
 
-    public function setImagesHabitat(?string $imagesHabitat): self
+    public function setType(string $type): self
     {
-        $this->imagesHabitat = $imagesHabitat;
+        $this->type = $type;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getListeAnimaux(): ?string
     {
-        return $this->createdAt;
+        return $this->liste_animaux;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setListeAnimaux(string $liste_animaux): static
     {
-        $this->createdAt = $createdAt;
+        $this->liste_animaux = $liste_animaux;
 
         return $this;
     }
 
-    #[ORM\PrePersist]
-    public function onPrePersist(): void
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        $this->createdAt = new \DateTimeImmutable();
-        $this->updatedAt = new \DateTime();  // Initialise également la date de mise à jour lors de la création
+        return $this->created_at;
     }
 
-    #[ORM\PreUpdate]
-    public function onPreUpdate(): void
+    public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
-        $this->updatedAt = new \DateTime();  // Met à jour uniquement updatedAt lors des modifications
+        $this->created_at = $created_at;
+
+        return $this;
     }
 }

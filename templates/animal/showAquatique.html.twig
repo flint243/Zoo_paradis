@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Habitat aquatique{% endblock %}
+
+{% block body %}
+
+
+<div class="container-fluid">
+    <div class="row bg-light justify-content-center py-4">
+        {% if aquatique %}
+                <img src="{{ asset('uploadsAnimals/imagesAnimals/' ~ aquatique.imagesAnimal) }}" height="500px" alt="Image de {{ aquatique.nom }}">
+                <div class="col-lg-12">
+                    <div class="down-content">
+                        <h4> {{ aquatique.nom }}</h4>
+                        <span>{{ aquatique.race }}</span>
+                    </div>
+                </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Habitat;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -24,14 +25,13 @@ class HabitatCrudController extends AbstractCrudController
     {
         return [
             TextField::new('nom'),
-            TextareaField::new('description_habitat'),
-            ImageField::new('images_habitat')
-                ->setBasePath('/uploads/images')
+            TextareaField::new('description'),
+            ImageField::new('habitat_image')
+                ->setBasePath('/uploadsHabitat/imagesHabitat')
                 ->onlyOnIndex(),
-            Field::new('imageFile', 'Image')
-                ->setFormType(FileType::class)
-                ->onlyOnForms(), // Formulaire pour upload d'image// Ajouter le champ de type DateTimeImmutable
-                
+            Field::new('habitat_image_file', 'Image')
+            ->setFormType(VichImageType::class) 
+            ->onlyOnForms(),
                 DateTimeField::new('createdAt')
                     ->setFormat('Y-MM-dd HH:mm:ss')  // Optionnel : format personnalisé
                     ->hideOnForm() // Si tu ne veux pas qu'il soit éditable dans le formulaire

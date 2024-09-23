@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\UserAuthenticator;
+use App\Service\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,15 @@ use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class RegistrationController extends AbstractController
 {
+    private $passwordHasher;
+    private $emailService;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher, EmailService $emailService)
+    {
+        $this->passwordHasher = $passwordHasher;
+        $this->emailService = $emailService;
+    }
+
     #[Route('/inscription', name: 'app_register')]
     public function register(
         Request $request,
@@ -41,15 +51,13 @@ class RegistrationController extends AbstractController
 
                 try {
                     $profileImage->move(
-                        $this->getParameter('kernel.project_dir').('/public/images/profile'), // Utiliser le paramètre configuré pour le chemin d'upload
+                        $this->getParameter('kernel.project_dir').('/public/images/profile'),
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // Gérer l'erreur si nécessaire
                     $this->addFlash('danger', 'Erreur lors du téléchargement de l\'image.');
                 }
 
-                // Ici, on passe simplement le nom de fichier à la propriété 'profileImage' qui stocke le nom du fichier
                 $user->setProfileImage($newFilename);
             }
 
@@ -65,20 +73,25 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            // Envoyer un email de bienvenue
+            $this->emailService->sendRegistrationEmail(
+                $user->getEmail(),
+                'Bienvenue sur notre site !',
+                '<p>Merci de vous être inscrit, '.$user->getNom().' !</p>'
+            );
+
             // Connexion automatique après inscription
             $response = $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,
                 $request
             );
-            // Si $response est null, on redirige vers une page par défaut
+
             return $response ?? $this->redirectToRoute('Accueil');
         }
-        
 
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(), 
-            // Assure-toi de créer la vue correctement
+            'registrationForm' => $form->createView(),
         ]);
     }
 }

@@ -20,16 +20,16 @@
                 <div class="connexion">
                     {% if app.user %}
                             <div class="mb-3 userConnect">
-                                Bonjour {{ app.user.pseudo }}
+                                Bonjour {{ app.user.nom }}
                                 {% if app.user.profileImage %}
-                                    <img src="/images/profile/{{ app.user.profileImage }}" width="40px" height="35px" />
+                                    <img src="/uploads/images/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px" />
                                 {% else %}
-                                <img src="{{ asset('/assets/images/avatar/avatar2.jpg') }}" width="20px" />
+                                <img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px" />
                                 {% endif %}
                             </div>
 
-                         <div class="deconnexionBtn">
-                            <a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a> 
+                         <div class="deconnexionBtn btn btn-danger">
+                            <a href="{{ path('app_logout') }}">Déconnexion</a> 
                          </div>
                         
                    {% else %}
@@ -46,8 +46,8 @@
                 
                         <!-- ***** Logo Start ***** -->
                         <a href="/" class="mt-2 logo">
-                            <div class="row p-2 border border-2 rounded">
-                            <img src="{{ asset('/assets/images/avatar/avatar2.jpg') }}" width="20px" />
+                            <div class="row p-2 bg-light rounded">
+                            <img src="{{ asset('/assets/images/avatar/avatar2.png') }}"class="rounded-circle" width="30px" height="30px" />
                                 <h4 class="text-success font-weight-bold">Zoo paradis</h4>
                             </div>
                         </a>
@@ -55,31 +55,12 @@
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
                         {% if is_granted('ROLE_ADMIN') %}
-                            <li class="btn btn-warning btn-small"><a href="/admin">Admin</a></li>
+                            <li class="adminBtn btn btn-warning btn-small"><a href="/admin">Admin</a></li>
                         {% endif %}
-                            <li class="scroll-to-section"><a href="/" class="active">Accueil</a></li>
-                            <li class="scroll-to-section"><a href="#men">Eau</a></li>
-                            <li class="scroll-to-section"><a href="#women">Terre</a></li>
-                            <li class="scroll-to-section"><a href="#kids">Ciel</a></li>
-                            <li class="submenu">
-                                <a href="javascript:;">Pages</a>
-                                <ul>
-                                    <li><a href="/about">A propos</a></li>
-                                    <li><a href="/products">Nos services</a></li>
-                                    <li><a href="/habitats">Les habitats</a></li>
-                                    <li><a href="/contact/us">Contact</a></li>
-                                </ul>
-                            </li>
-                            <li class="submenu">
-                                <a href="javascript:;">Features</a>
-                                <ul>
-                                    <li><a href="#">Features Page 1</a></li>
-                                    <li><a href="#">Features Page 2</a></li>
-                                    <li><a href="#">Features Page 3</a></li>
-                                    <li><a rel="nofollow" href="https://templatemo.com/page/4" target="_blank">Template Page 4</a></li>
-                                </ul>
-                            </li>
-                            <li class="scroll-to-section"><a href="#explore">Explore</a></li>
+                            <li class="scroll-to-section"><a href="/">Accueil</a></li>
+                            <li class="scroll-to-section"><a href="/about">A propos</a></li>
+                            <li class="scroll-to-section"><a href="/services">Nos services</a></li>
+                            <li class="scroll-to-section"><a href="#" class="active">Contact</a></li>
                         </ul>   
                         
                         <a class='menu-trigger'>
@@ -92,7 +73,7 @@
                    
         </div> 
     </header>
-    <!-- ***** Header Area End ***** -->
+    <!-- ***** Header End ***** -->
 
     <!-- ***** Main Banner Area Start ***** -->
     <div class="page-heading about-page-heading" id="top">
@@ -115,9 +96,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div id="map">
-                      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d90186.37207676383!2d-80.13495239500924!3d25.9317678710111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9ad1877e4a82d%3A0xa891714787d1fb5e!2sPier%20Park!5e1!3m2!1sen!2sth!4v1637512439384!5m2!1sen!2sth" width="100%" height="400px" frameborder="0" style="border:0" allowfullscreen></iframe>
-                      <!-- You can simply copy and paste "Embed a map" code from Google Maps for any location. -->
-                      
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2669.461277127928!2d-2.290752987609493!3d48.0047974711091!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480fb38fd5df5933%3A0x23f241c31b5da661!2sFor%C3%AAt%20de%20Broceliande%2C%20Val%20sans%20Retour!5e0!3m2!1sfr!2sfr!4v1726416390852!5m2!1sfr!2sfr" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                      <!-- You can simply copy and paste "Embed a map" code from Google Maps for any location. -->        
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -225,9 +204,10 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="first-item">
-                        <div class="logo">
-                            <img src="assets/images/white-logo.png" alt="Zoo paradis Brocéliand">
-                        </div>
+                        <div class="row logo justify-content-around">
+                            <img src="{{ asset('/assets/images/avatar/avatar2.png') }}" width="30px" height="30px" />
+                                <h3 class="text-success font-weight-bold">Zoo paradis</h3>
+                            </div>
                         <ul>
                             <li><a href="#">Forêt de Brocéliand</a></li>
                             <li><a href="#">zoo-paradis@broceliand.com</a></li>

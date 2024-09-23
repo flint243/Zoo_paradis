@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Habitat terretre{% endblock %}
+
+{% block body %}
+
+
+<div class="container-fluid">
+    <div class="row bg-light justify-content-center py-4">
+        {% if terrestre %}
+                <img src="{{ asset('uploadsAnimals/imagesAnimals/' ~ terrestre.imagesAnimal) }}" height="500px" alt="Image de {{ terrestre.nom }}">
+                <div class="col-lg-12">
+                    <div class="down-content">
+                        <h4> {{ terrestre.nom }}</h4>
+                        <span>{{ terrestre.race }}</span>
+                    </div>
+                </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

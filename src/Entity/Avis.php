@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AvisRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AvisRepository::class)]
 class Avis
@@ -14,36 +15,43 @@ class Avis
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $pseudo = null;
+    #[Assert\NotBlank]
+    private ?string $nom = null;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
     private ?string $commentaire = null;
 
     #[ORM\Column(type: 'boolean')]
     private bool $isValidated = false; // Indique si l'avis est validé
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'avis')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
-
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    // Getters and setters...
+    #[ORM\ManyToOne(inversedBy: 'avis')]
+    private ?Employe $employe = null;
+
+
+    
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->isValidated = false;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPseudo(): ?string
+    public function getNom(): ?string
     {
-        return $this->pseudo;
+        return $this->nom;
     }
 
-    public function setPseudo(string $pseudo): static
+    public function setNom(string $nom): static
     {
-        $this->pseudo = $pseudo;
+        $this->nom = $nom;
 
         return $this;
     }
@@ -71,18 +79,6 @@ class Avis
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -91,6 +87,18 @@ class Avis
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getEmploye(): ?Employe
+    {
+        return $this->employe;
+    }
+
+    public function setEmploye(?Employe $employe): static
+    {
+        $this->employe = $employe;
 
         return $this;
     }

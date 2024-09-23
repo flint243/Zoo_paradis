@@ -1,250 +1,312 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+	{% block title %}
+		Accueil
+	{% endblock %}
 
 
+	{% block body %}
 
-{% block body %}
+	<!-- ***** Preloader Start ***** -->
+	<div id="preloader">
+		<div class="jumper">
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+	</div>
+	<!-- ***** Preloader End ***** -->
 
 
+	<!-- ***** Header Area Start ***** -->
+	<header class="header-area header-sticky">
+		<div class="connexion">
+			{% if app.user %}
+				<div class="mb-3 userConnect">
+					Bonjour
+					{{ app.user.nom }}
+					{% if app.user.profileImage %}
+						<img src="/uploadsUsers/imagesUsers/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px"/>
+					{% else %}
+						<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px"/>
+					{% endif %}
+				</div>
 
- <!-- ***** Preloader Start ***** -->
-    <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>  
-    <!-- ***** Preloader End ***** -->
+				<div class="deconnexionBtn btn btn-danger">
+					<a href="{{ path('app_logout') }}">
+						Déconnexion
+					</a>
+				</div>
+
+			{% else %}
+				<a href="{{ path('app_login') }}" class="connexionBtn">
+					Connexion staff ici !
+				</a>
+			{% endif %}
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<nav class="main-nav">
+
+						<!-- ***** Logo Start ***** -->
+						<a href="/" class="mt-2 logo">
+							<div class="row p-2 bg-light rounded">
+								<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle" width="30px" height="30px"/>
+								<h4 class="text-success font-weight-bold">
+									Zoo paradis
+								</h4>
+							</div>
+						</a>
+						<!-- ***** Logo End ***** -->
+
+						<!-- ***** Menu Start ***** -->
+						<ul class="nav">
+							{% if is_granted('ROLE_SUPER_ADMIN') %}
+								<li>
+									<a href="/admin" class="adminBtn px-2 rounded bg-danger">
+										Super Admin
+									</a>
+								</li>
+							{% elseif is_granted('ROLE_ADMIN') %}
+								<li>
+									<a href="/admin" class="adminBtn px-2 rounded bg-warning">
+										Admin employé
+									</a>
+								</li>
+							{% elseif is_granted('ROLE_ADMIN') %}
+								<li>
+									<a href="/admin" class="adminBtn px-2 rounded bg-info">
+										Admin véto
+									</a>
+								</li>
+							{% endif %}
+							<li class="scroll-to-section">
+								<a href="/" class="active">
+									Accueil
+								</a>
+							</li>
+							<li>
+								<a href="/about">
+									A propos
+								</a>
+							</li>
+							<li>
+								<a href="/services">
+									Nos services
+								</a>
+							</li>
+							<li>
+								<a href="/habitats">
+									Les habitats
+								</a>
+							</li>
+							<li>
+								<a href="/contact/us">
+									Contact
+								</a>
+							</li>
+
+							{#<li class="scroll-to-section"><a href="#men">Eau</a></li></ul></li>#}
+						</ul>
+
+						<a class='menu-trigger'>
+							<span>Menu</span>
+						</a>
+						<!-- ***** Menu End ***** -->
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- ***** Header End ***** -->
+
+	<!-- *****  Banner Start ***** -->
+	<div class="main-banner accueil" id="top">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-6 leftSide">
+					<div class="left-content p-1">
+						<div class="thumb">
+							<div class="inner-content text-center">
+								<h4>
+									Bienvenus au Zoo paradis
+								</h4>
+								<span>
+									Un havre de paix pour nos les animaux
+								</span>
+							</div>
+							<img src="{{ asset('/assets/images/zoo/zoo2.webp') }}" height="500px" opacity="0.5" alt="">
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 rightSide">
+					<div class="right-content">
+						<div class="row troisCadres">
+							<div class="col-lg-5">
+								<div class="right-first-image">
+								{% for habitat3 in habitat3 %}
+									<div class="thumb">
+										<div class="inner-content">
+											<h4>
+												{{ habitat3.nom }}
+											</h4>
+											<span>
+												{{ habitat3.description }}
+											</span>
+										</div>
+										<div class="hover-content">
+											<div class="inner">
+												<h4>
+													{{ habitat3.description }}
+												</h4>
+												<p>
+													Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.
+												</p>
+												<div class="main-border-button">
+													<a href="/aquatique">
+														Explorer
+													</a>
+												</div>
+											</div>
+										</div>
+										
+											{# Ici, tu n'accèdes plus à .id car services est une chaîne #}
+										<div>
+											<img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ habitat3.habitatimage) }}"height="220px" alt="">
+										</div>
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-5">
+								<div class="right-first-image">
+									{% for habitat2 in habitat2 %}
+									<div class="thumb">
+										<div class="inner-content">
+											<h4>
+												{{ habitat2.nom }}
+											</h4>
+											<span>
+												{{ habitat2.description }}
+											</span>
+										</div>
+										<div class="hover-content">
+											<div class="inner">
+												<h4>
+													{{ habitat2.nom }}
+												</h4>
+												<p>
+													Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.
+												</p>
+												<div class="main-border-button">
+													<a href="/terrestre">
+														Explorer
+													</a>
+												</div>
+											</div>
+										</div>
+										
+											{# Ici, tu n'accèdes plus à .id car services est une chaîne #}
+										<div>
+											<img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ habitat2.habitatimage) }}" height="220px" alt="">
+										</div>
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+
+							<div class="col-lg-5">
+								<div class="right-first-image">
+										{% for habitat in habitat %}
+									<div class="thumb">
+										<div class="inner-content">
+											<h4>
+												{{ habitat.nom }}
+											</h4>
+											<span>
+												{{ habitat.description }}
+											</span>
+										</div>
+										<div class="hover-content">
+											<div class="inner">
+												<h4>
+													{{ habitat.nom }}
+												</h4>
+												<p>
+													Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.
+												</p>
+												<div class="main-border-button">
+													<a href="/celeste">
+														Explorer
+													</a>
+												</div>
+											</div>
+										</div>
+											{# Ici, tu n'accèdes plus à .id car services est une chaîne #}
+										<div>
+											<img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ habitat.habitatimage) }}" height="220px" alt="">
+										</div>
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- *****  Banner End ***** -->
+
+	{#}
+	<!-- ******** SECTION ANIMAUX ZOO ********* -->
     
-    
-    <!-- ***** Header Area Start ***** -->
-    <header class="header-area header-sticky">
-                <div class="connexion">
-                    {% if app.user %}
-                            <div class="mb-3 userConnect">
-                                Bonjour {{ app.user.pseudo }}
-                                {% if app.user.profileImage %}
-                                    <img src="/images/profile/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px" />
-                                {% else %}
-                                <img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px" />
-                                {% endif %}
-                            </div>
-
-                         <div class="deconnexionBtn">
-                            <a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a> 
-                         </div>
-                        
-                   {% else %}
-                        <a href="{{ path('app_register') }}" class="registerBtn">Pas encore inscrit c'est ici !</a>
-                        sinon
-                        <a href="{{ path('app_login') }}" class="connexionBtn">Connectez vous ici !</a>
-                    {% endif %}
-                </div> 
-                
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="main-nav">
-                
-                        <!-- ***** Logo Start ***** -->
-                        <a href="/" class="mt-2 logo">
-                            <div class="row p-2 bg-light rounded">
-                            <img src="{{ asset('/assets/images/avatar/avatar2.png') }}"class="rounded-circle" width="30px" height="30px" />
-                                <h4 class="text-success font-weight-bold">Zoo paradis</h4>
-                            </div>
-                        </a>
-                        <!-- ***** Logo End ***** -->
-                        <!-- ***** Menu Start ***** -->
-                        <ul class="nav">
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li class="btn btn-warning btn-small"><a href="/admin">Admin</a></li>
-                        {% endif %}
-                            <li class="scroll-to-section"><a href="/" class="active">Accueil</a></li>
-                            <li class="scroll-to-section"><a href="#men">Eau</a></li>
-                            <li class="scroll-to-section"><a href="#women">Terre</a></li>
-                            <li class="scroll-to-section"><a href="#kids">Ciel</a></li>
-                            <li class="submenu">
-                                <a href="javascript:;">Pages</a>
-                                <ul>
-                                    <li><a href="/about">A propos</a></li>
-                                    <li><a href="/products">Nos services</a></li>
-                                    <li><a href="/habitats">Les habitats</a></li>
-                                    <li><a href="/contact/us">Contact</a></li>
-                                </ul>
-                            </li>
-                            <li class="submenu">
-                                <a href="javascript:;">Features</a>
-                                <ul>
-                                    <li><a href="#">Features Page 1</a></li>
-                                    <li><a href="#">Features Page 2</a></li>
-                                    <li><a href="#">Features Page 3</a></li>
-                                    <li><a rel="nofollow" href="https://templatemo.com/page/4" target="_blank">Template Page 4</a></li>
-                                </ul>
-                            </li>
-                            <li class="scroll-to-section"><a href="#explore">Explore</a></li>
-                        </ul>   
-                        
-                        <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a>
-                        <!-- ***** Menu End ***** -->
-                    </nav>
-                </div>
-        </div>
-                   
-        </div> 
-    </header>
-    <!-- ***** Header Area End ***** -->
-
-    <!-- ***** Main Banner Area Start ***** -->
-    <div class="main-banner" id="top">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-6 leftSide">
-                    <div class="left-content p-1">
-                        <div class="thumb">
-                            <div class="inner-content text-center">
-                                <h4>Bienvenus au Zoo paradis</h4>
-                                <span>Un havre de paix pour nos les animaux</span>
-                            </div>
-                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" height="100%" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 rightSide">
-                    <div class="right-content">
-                        <div class="row troisCadres">
-                            <div class="col-lg-5">
-                                <div class="right-first-image">
-                                    <div class="thumb">
-                                        <div class="inner-content">
-                                            <h4>L'habitat marin</h4>
-                                            <span>le monde en bleu</span>
-                                        </div>
-                                        <div class="hover-content">
-                                            <div class="inner">
-                                                <h4>L'habitat marin</h4>
-                                                <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
-                                                <div class="main-border-button">
-                                                    <a href="habitats/aquatique">Explorer</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img src="{{ asset('/assets/images/aquatique/bb hypo.jpg') }}" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="right-first-image">
-                                    <div class="thumb">
-                                        <div class="inner-content">
-                                            <h4>L'habitat terrestre</h4>
-                                            <span>Bien ancré sur ses positions</span>
-                                        </div>
-                                        <div class="hover-content">
-                                            <div class="inner">
-                                                <h4>habitat terrestre</h4>
-                                                <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
-                                                <div class="main-border-button">
-                                                    <a href="habitats/terrestre">Explorer</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img src="{{ asset('/assets/images/terrestre/tigre.jpeg') }}" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="right-first-image">
-                                    <div class="thumb">
-                                        <div class="inner-content">
-                                            <h4>L'habitat celeste</h4>
-                                            <span>La tête dans les étoiles</span>
-                                        </div>
-                                        <div class="hover-content">
-                                            <div class="inner">
-                                                <h4>habitat celeste</h4>
-                                                <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
-                                                <div class="main-border-button">
-                                                    <a href="habitats/celeste">Explorer</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img src="{{ asset('/assets/images/ciel/vautour.jpg') }}" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ***** Main Banner Area End ***** -->
-
-    <!-- ***** Men Area Starts ***** -->
-    <section class="section" id="men">
+        <!-- ***** habitat celeste Starts ***** -->
+    <section class="section" id="kids">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
                     <div class="section-heading">
-                        <h2>L'habitat aquatique</h2>
-                        <span>Explorez les détails du monde aquatique.</span>
+                        <h2>L'habitat celeste</h2>
+                        <span>Venez découvrir la majestieuse vie des animaux des cieux.</span>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="men-item-carousel">
-                        <div class="owl-men-item owl-carousel">
+                    <div class="kid-item-carousel">
+                        <div class="owl-kid-item owl-carousel">
                             <div class="item">
                                 <div class="thumb">
                                     <div class="hover-content">
                                         <ul>
-                                            <li><a href="/aquatique"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="/aquatique"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="/aquatique"><i class="fa fa-shopping-cart"></i></a></li>
+                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
-                                    <img src="{{ asset('/assets/images/aquatique/manchot.jpeg') }}" alt="">
+                                    <img src="{{ asset('/assets/images/ciel/oiseauxVerts.jpg') }}" alt="">
                                 </div>
                                 <div class="down-content">
-                                    <h4>Aquatique 1</h4>
+                                    <h4>habitat celeste 1</h4>
                                     <span>1</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="thumb">
                                     <div class="hover-content">
                                         <ul>
-                                            <li><a href="/aquatique"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="/aquatique"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="/aquatique"><i class="fa fa-shopping-cart"></i></a></li>
+                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
-                                    <img src="{{ asset('/assets/images/aquatique/tortue.jpg') }}" alt="">
+                                    <img src="{{ asset('/assets/images/ciel/ibis_rouge.jpg') }}" alt="">
                                 </div>
                                 <div class="down-content">
-                                    <h4>Aquatique 2</h4>
+                                    <h4>habitat celeste 2</h4>
                                     <span>2</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
                                 </div>
                             </div>
                             <div class="item">
@@ -252,22 +314,13 @@
                                     <div class="hover-content">
                                         <ul>
                                             <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
-                                    <img src="{{ asset('/assets/images/aquatique/otarie.jpg') }}" alt="">
+                                    <img src="{{ asset('/assets/images/ciel/Perroquet_Ara.jpg') }}" alt="">
                                 </div>
                                 <div class="down-content">
-                                    <h4>Aquatique 3</h4>
+                                    <h4>habitat celeste 3</h4>
                                     <span>3</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
                                 </div>
                             </div>
                             <div class="item">
@@ -275,22 +328,13 @@
                                     <div class="hover-content">
                                         <ul>
                                             <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
-                                    <img src="{{ asset('/assets/images/aquatique/bb hypo.jpg') }}" alt="">
+                                    <img src="{{ asset('/assets/images/ciel/aigle.jpg') }}" alt="">
                                 </div>
                                 <div class="down-content">
-                                    <h4>Aquatique 4</h4>
+                                    <h4>habitat celeste 4</h4>
                                     <span>4</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -299,9 +343,9 @@
             </div>
         </div>
     </section>
-    <!-- ***** Men Area Ends ***** -->
-
-    <!-- ***** Women Area Starts ***** -->
+        <!-- ***** habitat celeste Ends ***** -->
+    
+        <!-- ***** Habitat terrestre Starts ***** -->
     <section class="section" id="women">
         <div class="container">
             <div class="row">
@@ -323,8 +367,6 @@
                                     <div class="hover-content">
                                         <ul>
                                             <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
                                     <img src="{{ asset('/assets/images/terrestre/bb girafe2.jpeg') }}" alt="">
@@ -332,13 +374,6 @@
                                 <div class="down-content">
                                     <h4>habitat terrestre 1</h4>
                                     <span>1</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
                                 </div>
                             </div>
                             <div class="item">
@@ -346,8 +381,6 @@
                                     <div class="hover-content">
                                         <ul>
                                             <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
                                     <img src="{{ asset('/assets/images/terrestre/elephant.jpg') }}" alt="">
@@ -355,13 +388,6 @@
                                 <div class="down-content">
                                     <h4>habitat terrestre 2</h4>
                                     <span>2</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
                                 </div>
                             </div>
                             <div class="item">
@@ -369,8 +395,6 @@
                                     <div class="hover-content">
                                         <ul>
                                             <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
                                     <img src="{{ asset('/assets/images/terrestre/koala.png') }}" alt="">
@@ -378,13 +402,6 @@
                                 <div class="down-content">
                                     <h4>habitat terrestre 3</h4>
                                     <span>3</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
                                 </div>
                             </div>
                             <div class="item">
@@ -392,8 +409,6 @@
                                     <div class="hover-content">
                                         <ul>
                                             <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
                                     <img src="{{ asset('/assets/images/terrestre/chacal.jpg') }}" alt="">
@@ -401,13 +416,6 @@
                                 <div class="down-content">
                                     <h4>habitat terrestre 4</h4>
                                     <span>4</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -416,16 +424,16 @@
             </div>
         </div>
     </section>
-    <!-- ***** Women Area Ends ***** -->
-
-    <!-- ***** Kids Area Starts ***** -->
-    <section class="section" id="kids">
+        <!-- ***** Habitat terrestre Ends ***** -->
+    
+        <!-- ***** Habitat aquatique Starts ***** -->
+    <section class="section" id="men">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
                     <div class="section-heading">
-                        <h2>L'habitat celeste</h2>
-                        <span>Venez découvrir la majestieuse vie des animaux des cieux.</span>
+                        <h2>L'habitat aquatique</h2>
+                        <span>Explorez les détails du monde aquatique.</span>
                     </div>
                 </div>
             </div>
@@ -433,52 +441,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="kid-item-carousel">
-                        <div class="owl-kid-item owl-carousel">
+                    <div class="men-item-carousel">
+                        <div class="owl-men-item owl-carousel">
                             <div class="item">
                                 <div class="thumb">
                                     <div class="hover-content">
                                         <ul>
-                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
+                                            <li><a href="/aquatique"><i class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
-                                    <img src="{{ asset('/assets/images/ciel/oiseauxVerts.jpg') }}" alt="">
+                                    <img src="{{ asset('/assets/images/aquatique/manchot.jpeg') }}" alt="">
                                 </div>
                                 <div class="down-content">
-                                    <h4>habitat celeste 1</h4>
+                                    <h4>Aquatique 1</h4>
                                     <span>1</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="thumb">
                                     <div class="hover-content">
                                         <ul>
-                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
+                                            <li><a href="/aquatique"><i class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
-                                    <img src="{{ asset('/assets/images/ciel/ibis_rouge.jpg') }}" alt="">
+                                    <img src="{{ asset('/assets/images/aquatique/tortue.jpg') }}" alt="">
                                 </div>
                                 <div class="down-content">
-                                    <h4>habitat celeste 2</h4>
+                                    <h4>Aquatique 2</h4>
                                     <span>2</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
                                 </div>
                             </div>
                             <div class="item">
@@ -486,22 +476,13 @@
                                     <div class="hover-content">
                                         <ul>
                                             <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
-                                    <img src="{{ asset('/assets/images/ciel/Perroquet_Ara.jpg') }}" alt="">
+                                    <img src="{{ asset('/assets/images/aquatique/otarie.jpg') }}" alt="">
                                 </div>
                                 <div class="down-content">
-                                    <h4>habitat celeste 3</h4>
+                                    <h4>Aquatique 3</h4>
                                     <span>3</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
                                 </div>
                             </div>
                             <div class="item">
@@ -509,22 +490,13 @@
                                     <div class="hover-content">
                                         <ul>
                                             <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
-                                    <img src="{{ asset('/assets/images/ciel/aigle.jpg') }}" alt="">
+                                    <img src="{{ asset('/assets/images/aquatique/bb hypo.jpg') }}" alt="">
                                 </div>
                                 <div class="down-content">
-                                    <h4>habitat celeste 4</h4>
+                                    <h4>Aquatique 4</h4>
                                     <span>4</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -533,251 +505,460 @@
             </div>
         </div>
     </section>
-    <!-- ***** Kids Area Ends ***** -->
+        <!-- ***** Habitat aquatique Ends ***** -->
+    {#}
 
-    <!-- ***** Explore Area Starts ***** -->
-    <section class="section" id="explore">
-        <div class="container">
-            <div class="row">
+		<!-- ***** Services Area Starts ***** -->
+	<section class="section" id="products"> 
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="section-heading">
+						<h2>
+							Nos services
+						</h2>
+						<span>
+							Check out all of our products.
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
 
-                <!--*****  SECTION   AVIS *****-->
-                <div class="col-lg-4">
-                    <h3>Témoignages</h3>
-                    <p>Nos invités sont ravis</p>
-                </div>
+		<div class="container">
+			<div class="row servicesGap">
+				<div class="col-lg-4">
+					<div class="item">
+						<div class="thumb">
+							<div class="hover-content">
+								<ul>
+									<li><a href="/restauration"><i class="fa fa-eye"></i></a></li>
+								</ul>
+							</div>
+								{% for services in services %}
+									{# Ici, tu n'accèdes plus à .id car services est une chaîne #}
+										<div>
+											<img src="{{ asset('uploads/services/' ~ services.servicesImages) }}" alt="">
+										</div>
+										<div class="down-content">
+											<h4>
+												{{ services.nom }}
+											</h4>
+											<span>
+												{{ services.description }}
+											</span>
+										</div>
+								{% endfor %}
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="item">
+						<div class="thumb">
+							<div class="hover-content">
+								<ul>
+									<li><a href="/restauration"><i class="fa fa-eye"></i></a></li>
+								</ul>
+							</div>
+								{% for services2 in services2 %}
+									{# Ici, tu n'accèdes plus à .id car services est une chaîne #}
+										<div>
+											<img src="{{ asset('uploads/services/' ~ services2.servicesImages) }}" alt="">
+										</div>
+										<div class="down-content">
+											<h4>
+												{{ services2.nom }}
+											</h4>
+											<span>
+												{{ services2.description }}
+											</span>
+										</div>
+								{% endfor %}
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="item">
+						<div class="thumb">
+							<div class="hover-content">
+								<ul>
+									<li><a href="/restauration"><i class="fa fa-eye"></i></a></li>
+								</ul>
+							</div>
+								{% for services3 in services3 %}
+									{# Ici, tu n'accèdes plus à .id car services3 est une chaîne #}
+										<div>
+											<img src="{{ asset('uploads/services/' ~ services3.servicesImages) }}" alt="">
+										</div>
+										<div class="down-content">
+											<h4>
+												{{ services3.nom }}
+											</h4>
+											<span>
+												{{ services3.description }}
+											</span>
+										</div>
+								{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-                <!--***** slider *****-->
-                <section id="slideShowAvis">
-                    <div id="slider" class="slidere">
-                        {% for avis in avisList %}
-                        {% if avis.id == 1 or avis.id == 2 or avis.id == 3  %}
-                            <div class="slide">
-                                <img src="{{ asset('/images/profile/' ~ avis.user.profileImage) }}" name="slideImg" class="slideImg" alt="Image du Client" width="40px" height="35px">
-                                <i class="fa-solid fa-quote-left"></i>
-                                <p>
-                                    "{{ avis.commentaire }}"
-                                    <br>
-                                    <strong>{{ avis.user.pseudo }}</strong>
-                                    <p>Date : {{ avis.createdAt|date('d-m-Y') }}</p>
-                                    </p>
-                            </div>
-                            {% else %}
-                              <img src="{{ asset('/assets/images/avatar/avatar2.png') }}" width="30px" height="25px" />
-                             {% endif %}
-                        {% endfor %}
-                        <div id="bandeauColor">
-                            <div id="InfoSlider"></div>
-                        </div>
-                    </div>
-                </section>
-            <!-- FIN slider -->
+		<!-- FIN DE CONTAINER -->
+	
+	</section>
+		<!-- ***** Services Area Ends ***** -->
 
-        <!--  FIN ----- SECTION AVIS ----- -->
-            </div>
-        </div>
-    </section>
-    <!-- ***** Explore Area Ends ***** -->
+		<!-- ***** Explore Start ***** -->
+	<section class="section" id="explore">
+			<div class="container">
+				<div
+					class="row">
 
-    <!-- ***** Social Area Starts ***** -->
-    <section class="section" id="social">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-heading">
-                        <h2>Réseaux sociaux</h2>
-                        <span>Suivez les aventures au quotidien de vos animaux préférés.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row images">
-                <div class="col-2">
-                    <div class="thumb">
-                        <div class="icon">
-                            <a href="http://instagram.com">
-                                <h6>Fashion</h6>
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                        </div>
-                        <img src="{{ asset('/assets/images/ciel/oiseauxVerts.jpg') }}" alt="">
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="thumb">
-                        <div class="icon">
-                            <a href="http://instagram.com">
-                                <h6>New</h6>
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                        </div>
-                        <img src="{{ asset('/assets/images/ciel/oiseauxVerts.jpg') }}" alt="">
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="thumb">
-                        <div class="icon">
-                            <a href="http://instagram.com">
-                                <h6>Brand</h6>
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                        </div>
-                        <img src="{{ asset('/assets/images/ciel/oiseauxVerts.jpg') }}" alt="">
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="thumb">
-                        <div class="icon">
-                            <a href="http://instagram.com">
-                                <h6>Makeup</h6>
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                        </div>
-                        <img src="{{ asset('/assets/images/ciel/oiseauxVerts.jpg') }}" alt="">
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="thumb">
-                        <div class="icon">
-                            <a href="http://instagram.com">
-                                <h6>Leather</h6>
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                        </div>
-                        <img src="{{ asset('/assets/images/ciel/oiseauxVerts.jpg') }}" alt="">
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="thumb">
-                        <div class="icon">
-                            <a href="http://instagram.com">
-                                <h6>Bag</h6>
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                        </div>
-                        <img src="{{ asset('/assets/images/ciel/oiseauxVerts.jpg') }}" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ***** Social Area Ends ***** -->
+					<!--*****  SECTION   AVIS *****-->
+					<div class="col-lg-4">
+						<h3>
+							Témoignages
+						</h3>
+						<p>
+							Nos invités sont ravis
+						</p>
+					</div>
 
-    <!-- ***** Subscribe Area Starts ***** -->
-    <div class="subscribe">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="section-heading"><h2>Donnez votre avis</h2>
-                        <span>Votre avis compte.</span>
-                    </div>
-                    <div class="col-lg-6">
-                   <form action="{{ path('Accueil') }}" method="post">
-                        {{ form_start(form, {'attr': {'class': 'form'}}) }}
-                        
-                        {# Afficher dynamiquement le pseudo de l'utilisateur connecté #}
-                        {% if app.user %}
-                            <p class="p-1 border border-1-solid">Nom : {{app.user.pseudo }}</p>
-                        {% endif %}
+					<!--***** slider *****-->
+					<section id="slideShowAvis">
+						<div id="slider" class="slidere">
+							{% for avis in avisList %}
+								{% if avis.isValidated and (avis.id == 1 or avis.id == 2 or avis.id == 3) %}
+									<div
+										class="slide">
+										{#<img src="{{ asset('/images/profile/' ~ avis.user.profileImage) }}" name="slideImg" class="slideImg" alt="Image du Client" width="40px" height="35px">
+																																																		                                #}
+										<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="bg-light border border-2 rounded-circle" width="35px" height="100px"/>
+										<i class="fa-solid fa-quote-left"></i>
+										<p>
+											"
+											{{ avis.commentaire }}
+											"
+											<br>
+											<strong>
+												{{ avis.nom }}
+											</strong>
+										</p>
+										<p>
+											Date :
+											{{ avis.createdAt|date('d-m-Y') }}
+										</p>
+									</p>
+								</div>
+							{% endif %}
+						{% endfor %}
+						<div id="bandeauColor">
+							<div id="InfoSlider"></div>
+						</div>
+					</div>
+				</section>
+				<!-- FIN slider -->
 
-                        <div class="mb-3">
-                            {# Le reste du formulaire d'avis #}
-                            {{ form_row(form.commentaire, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                        {% if app.user %}
-                            <button class="btn btn-success mb-3" type="submit">Envoyer</button>
-                        {% else %}
-                        <h6 class="text-warning">Veuillez vous connecter pour poster !</h6>
-                         {% endif %}
-                        {{ form_end(form) }}
-                    </form>
-                </div>
-            </div>
-                <div class="col-lg-4">
-                    <div class="row">
-                        <div class="col-6">
-                            <ul>
-                                <li>Notre boutique souvenir:<br><span>Forêt de Brosseliand</span></li>
-                                <li>Téléphone:<br><span>010-020-0340</span></li>
-                                <li>Nos bureaux:<br><span>Forêt de Brosseliand</span></li>
-                            </ul>
-                        </div>
-                        <div class="col-6">
-                            <ul>
-                                <li>Horaires:<br><span>07:30 AM - 9:30 PM Daily</span></li>
-                                <li>Email:<br><span>info@company.com</span></li>
-                                <li>Réseaux sociaux:<br><span><a href="#">Facebook</a>, <a href="#">Instagram</a>, <a href="#">Behance</a>, <a href="#">Linkedin</a></span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ***** Subscribe Area Ends ***** -->
-    
-    <!-- ***** Footer Start ***** -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="first-item">
-                        <div class="logo">
-                            <img src="assets/images/white-logo.png" alt="Zoo paradis Brocéliand">
-                        </div>
-                        <ul>
-                            <li><a href="#">Forêt de Brocéliand</a></li>
-                            <li><a href="#">zoo-paradis@broceliand.com</a></li>
-                            <li><a href="#">05.24.77.43.11</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <h4>Shopping &amp; Categories</h4>
-                    <ul>
-                        <li><a href="#">Men’s Shopping</a></li>
-                        <li><a href="#">Women’s Shopping</a></li>
-                        <li><a href="#">Kid's Shopping</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3">
-                    <h4>Liens éssentiels</h4>
-                    <ul>
-                        <li><a href="#">Homepage</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Help</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3">
-                    <h4>Information</h4>
-                    <ul>
-                        <li><a href="#">Aide</a></li>
-                        <li><a href="#">FAQ's</a></li>
-                        <li><a href="#">Shipping</a></li>
-                        <li><a href="#">Tracking ID</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-12">
-                    <div class="under-footer">
-                        <p>Copyright © 2024 Zoo paradis., tout droit Réservés. 
-                        
-                        <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">Limay</a>
+				<!--  FIN - SECTION AVIS - -->
+			</div>
+		</div>
+	</section>
+	<!-- ***** Explore Ends ***** -->
 
-                        <br>Distribué par: <a href="https://themewagon.com" target="_blank" title="free & premium responsive templates">ASSOFAC MONTREUIL</a></p>
-                        <ul>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                            <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-    </footer>
-    
-    
-</div>
+	<!-- ***** Réseuax sociaux Start ***** -->
+	<section class="section" id="social">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="section-heading mt-5">
+						<h2>
+							Réseaux sociaux
+						</h2>
+						<span>
+							Suivez les aventures au quotidien de vos animaux préférés.
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row images">
+				<div class="col-2">
+					<div class="thumb">
+						<div class="icon">
+							<a href="http://instagram.com">
+								<h6>
+									Découvertes
+								</h6>
+								<i class="fa fa-instagram"></i>
+							</a>
+						</div>
+						<img src="{{ asset('/assets/images/visite/visite1.jpg') }}" alt="">
+					</div>
+				</div>
+				<div class="col-2">
+					<div class="thumb">
+						<div class="icon">
+							<a href="http://instagram.com">
+								<h6>
+									Actualités
+								</h6>
+								<i class="fa fa-instagram"></i>
+							</a>
+						</div>
+						<img src="{{ asset('/assets/images/visite/visite2.jpeg') }}" alt="">
+					</div>
+				</div>
+				<div class="col-2">
+					<div class="thumb">
+						<div class="icon">
+							<a href="http://instagram.com">
+								<h6>
+									Evènements du zoo
+								</h6>
+								<i class="fa fa-instagram"></i>
+							</a>
+						</div>
+						<img src="{{ asset('/assets/images/visite/visite3.jpg') }}" alt="">
+					</div>
+				</div>
+				<div class="col-2">
+					<div class="thumb">
+						<div class="icon">
+							<a href="http://instagram.com">
+								<h6>
+									Shoppings du zoo
+								</h6>
+								<i class="fa fa-instagram"></i>
+							</a>
+						</div>
+						<img src="{{ asset('/assets/images/visite/visite4.jpg') }}" alt="">
+					</div>
+				</div>
+				<div class="col-2">
+					<div class="thumb">
+						<div class="icon">
+							<a href="http://instagram.com">
+								<h6>
+									Animaux stars
+								</h6>
+								<i class="fa fa-instagram"></i>
+							</a>
+						</div>
+						<img src="{{ asset('/assets/images/visite/visite5.avif') }}" alt="">
+					</div>
+				</div>
+				<div class="col-2">
+					<div class="thumb">
+						<div class="icon">
+							<a href="http://instagram.com">
+								<h6>
+									Cadeaux
+								</h6>
+								<i class="fa fa-instagram"></i>
+							</a>
+						</div>
+						<img src="{{ asset('/assets/images/visite/visite6.jpg') }}" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- ***** Réseuax sociaux Ends ***** -->
 
-{% block javascripts %}{% endblock %}
+	<!-- ***** Vos avis Start ***** -->
+	<div class="subscribe">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="section-heading">
+						<h2>
+							Donnez votre avis
+						</h2>
+						<span>
+							Votre avis compte.
+						</span>
+					</div>
+					<div class="col-lg-6">
+						<form action="{{ path('Accueil') }}" method="post">
+							{{ form_start(form, {'attr': {'class': 'form'}}
+							) }}
+
+							{# Afficher dynamiquement le pseudo de l'utilisateur connecté #}
+							<div class="mb-3">
+								{# Le reste du formulaire d'avis #}
+								{{ form_row(form.nom, {'attr': {'class': 'form-control'}}
+								) }}
+							</div>
+
+							<div
+								class="mb-3">
+								{# Le reste du formulaire d'avis #}
+								{{ form_row(form.commentaire, {'attr': {'class': 'form-control'}}
+								) }}
+							</div>
+
+							<button class="btn btn-success mb-3" type="submit">
+								Envoyer
+							</button>
+
+							{{ form_end(form) }}
+						</form>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="row">
+						<div class="col-6">
+							<ul>
+								<li>
+									Notre boutique souvenir:
+									<br>
+									<span>
+										Forêt de Brosseliand
+									</span>
+								</li>
+								<li>
+									Téléphone:
+									<br>
+									<span>
+										010-020-0340
+									</span>
+								</li>
+								<li>
+									Nos bureaux:
+									<br>
+									<span>
+										Forêt de Brosseliand
+									</span>
+								</li>
+							</ul>
+						</div>
+						<div class="col-6">
+							<ul>
+								<li>
+									Horaires:
+									<br>
+									<span>
+										07:30 AM - 9:30 PM Daily
+									</span>
+								</li>
+								<li>
+									Email:
+									<br>
+									<span>
+										info@company.com
+									</span>
+								</li>
+								<li>
+									Réseaux sociaux:
+									<br>
+									<span>
+										<a href="#">
+											Facebook
+										</a>
+										,
+										<a href="#">
+											Instagram
+										</a>
+										,
+										<a href="#">
+											Behance
+										</a>
+										,
+										<a href="#">
+											Linkedin
+										</a>
+									</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- ***** Vos avis Ends ***** -->
+
+	<!-- ***** Footer Start ***** -->
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="first-item">
+						<div class="row logo justify-content-around">
+							<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" width="30px" height="30px"/>
+							<h3 class="text-success font-weight-bold">
+								Zoo paradis
+							</h3>
+						</div>
+						<ul>
+							<li><a href="#">Forêt de Brocéliand</a></li>
+							<li><a href="#">zoo-paradis@broceliand.com</a></li>
+							<li><a href="#">05.24.77.43.11</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<h4>
+						Shopping &amp; Categories
+					</h4>
+					<ul>
+						<li><a href="#">Men’s Shopping</a></li>
+						<li><a href="#">Women’s Shopping</a></li>
+						<li><a href="#">Kid's Shopping</a></li>
+					</ul>
+				</div>
+				<div class="col-lg-3">
+					<h4>
+						Liens éssentiels
+					</h4>
+					<ul>
+						<li><a href="#">Homepage</a></li>
+						<li><a href="#">About Us</a></li>
+						<li><a href="#">Help</a></li>
+						<li><a href="#">Contact Us</a></li>
+					</ul>
+				</div>
+				<div class="col-lg-3">
+					<h4>
+						Information
+					</h4>
+					<ul>
+						<li><a href="#">Aide</a></li>
+						<li><a href="#">FAQ's</a></li>
+						<li><a href="#">Shipping</a></li>
+						<li><a href="#">Tracking ID</a></li>
+					</ul>
+				</div>
+				<div class="col-lg-12">
+					<div class="under-footer">
+						<p>
+							Copyright © 2024 Zoo paradis., tout droit Réservés.
+
+							<br>
+							Design:
+							<a href="https://templatemo.com" target="_parent" title="free css templates">
+								Limay
+							</a>
+
+							<br>
+							Distribué par:
+							<a href="https://themewagon.com" target="_blank" title="free & premium responsive templates">
+								ASSOFAC MONTREUIL
+							</a>
+						</p>
+						<ul>
+							<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+							<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+							<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+							<li><a href="#"><i class="fa fa-behance"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	
 {% endblock %}
