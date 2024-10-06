@@ -30,7 +30,7 @@ phpunit.xml
 
 ##
 firebase/serviceAccount.json
-config/firebase_credentials.json
+config/firebase/firebase_credentials.json
 ##
 
 ##

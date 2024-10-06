@@ -9,7 +9,7 @@ use App\Entity\Habitat;
 use App\Entity\ServicesZoo;
 use App\Entity\Veterinaire;
 use App\Entity\Aquatique;
-use App\Entity\Celeste;
+use App\Entity\Aerien;
 use App\Entity\Employe;
 use App\Entity\Terrestre;
 use Symfony\Component\HttpFoundation\Response;
@@ -66,38 +66,38 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Nos services', 'fas fa-users', ServicesZoo::class);
 
          // Section "Gestion des employé"
-         yield MenuItem::section('Gestion des employé');
-         yield MenuItem::linkToCrud('Nos employé', 'fas fa-users', Employe::class);
+         yield MenuItem::section('Gestion des employés');
+         yield MenuItem::linkToCrud('Nos employés', 'fas fa-users', Employe::class);
 
         // Section "Gestion des vétérinaires"
         yield MenuItem::section('Gestion du des vétérinaires');
-        yield MenuItem::linkToCrud('Nos Vétérinaires', 'fas fa-users', Veterinaire::class);
+        yield MenuItem::linkToCrud('Nos Vétérinaires', 'fas fa-user-doctor', Veterinaire::class);
 
         // Section "Gestion des habitats"
         yield MenuItem::section('Gestion des habitats');
-        yield MenuItem::linkToCrud('Nos habitats', 'fas fa-users', Habitat::class);
+        yield MenuItem::linkToCrud('Nos habitats', 'fas fa-paw', Habitat::class);
 
         // Section "Gestion des animaux"
         yield MenuItem::section('Gestion des animaux');
-        yield MenuItem::linkToCrud('Nos animaux', 'fas fa-users', Animal::class);
+        yield MenuItem::linkToCrud('Nos animaux', 'fas fa-paw', Animal::class);
 
-        // Section "Gestion des habitats celestes"
-        yield MenuItem::section('Gestion des habitats celestes');
-        yield MenuItem::linkToCrud('Habitats célestes', 'fas fa-users', Celeste::class);
+        // Section "Gestion des habitats aériens"
+        yield MenuItem::section('Gestion des habitats aériens');
+        yield MenuItem::linkToCrud('Habitats aériens', 'fas fa-crow', Aerien::class);
 
         
         // Section "Gestion des animaux"
         yield MenuItem::section('Gestion des animaux terrestres');
-        yield MenuItem::linkToCrud('Habitats terretres', 'fas fa-users', Terrestre::class);
+        yield MenuItem::linkToCrud('Habitats terretres', 'fas fa-cow', Terrestre::class);
 
         // Section "Gestion des animaux"
         yield MenuItem::section('Gestion des animaux aquatiques');
-        yield MenuItem::linkToCrud('Habitats aquatiques', 'fas fa-users', Aquatique::class);
+        yield MenuItem::linkToCrud('Habitats aquatiques', 'fas fa-fish', Aquatique::class);
         
         
         // Section "Gestion des avis"
         yield MenuItem::section('Gestion des avis');
-        yield MenuItem::linkToCrud('Les avis', 'fas fa-users', Avis::class);
+        yield MenuItem::linkToCrud('Les avis', 'fas fa-comment', Avis::class);
 
 
 
