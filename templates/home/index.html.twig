@@ -40,7 +40,7 @@
 
 			{% else %}
 				<a href="{{ path('app_login') }}" class="connexionBtn">
-					Connexion staff ici !
+					Connexion staff
 				</a>
 			{% endif %}
 		</div>
@@ -75,7 +75,7 @@
 										Admin employé
 									</a>
 								</li>
-							{% elseif is_granted('ROLE_ADMIN') %}
+							{% elseif is_granted('ROLE_VETERINAIRE') %}
 								<li>
 									<a href="/admin" class="adminBtn px-2 rounded bg-info">
 										Admin véto
@@ -238,7 +238,7 @@
 													Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.
 												</p>
 												<div class="main-border-button">
-													<a href="/celeste">
+													<a href="/aerien">
 														Explorer
 													</a>
 												</div>

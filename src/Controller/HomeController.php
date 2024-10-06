@@ -50,7 +50,7 @@ public function index(
     $avisList = $avisRepository->findAll();
 
     // Récupérer tous les services existants
-    $habitat = $habitatRepository->findBy(['nom'=> 'celeste']);
+    $habitat = $habitatRepository->findBy(['nom'=> 'aerien']);
     $habitat2 = $habitatRepository->findBy(['nom'=> 'terrestre']);
     $habitat3 = $habitatRepository->findBy(['nom'=> 'aquatique']);
 

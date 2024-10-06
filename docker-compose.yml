@@ -1,56 +1,33 @@
 services:
-  # Service pour Symfony
-  app:
-    image: php:8.3-apache
+  symfony_zoo_app:
+    image: symfony_zoo_image
     build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: zooparadis
-    volumes:
-      - .:/var/www/html
+     context: .
+     dockerfile: Dockerfile
     ports:
-      - "8000:80"
-    networks:
-      - symfony-network
-    environment:
-      - DATABASE_URL="mysql://root:limaykongo@localhost:3306/zoo_db"
+      - "8081:80"
+    volumes:
+      - .:/var/www/        
 
-
-
-  # Service pour la base de données MySQL
-  db:
+  mysql:
     image: mysql:8.4
-    container_name: symfony_db
-    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root 
-      MYSQL_DATABASE: zoo_db
-      MYSQL_USER: root
-      MYSQL_PASSWORD: limaykongo
+       MYSQL_ROOT_PASSWORD: root_password
+       MYSQL_DATABASE: symfony_zoo_db
+       MYSQL_USER: symfo
+       MYSQL_PASSWORD: nbvcxw
     ports:
-      - "3307:3306" 
+      - "3307:3306"
     volumes:
-      - db-data:/var/lib/mysql
-    networks:
-      - symfony-network
+      - data:/var/lib/mysql
 
-    # Service pour PhpMyAdmin
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: symfony_phpmyadmin
     environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
-      PMA_USER: 
-      PMA_PASSWORD: 
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: user_password
     ports:
-      - "8080:80"
-    networks:
-      - symfony-network
-
-networks:
-  symfony-network:
-    driver: bridge
+      - "8082:80"  
 
 volumes:
-  db-data:
+  data:

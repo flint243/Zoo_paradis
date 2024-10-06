@@ -24,8 +24,8 @@ phpunit.xml
 #
 
 # Ignore Symfony asset generated files
-public/assets/
-assets/vendor/
+#public/assets/
+#assets/vendor/
 #
 
 ##

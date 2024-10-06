@@ -75,7 +75,7 @@ class HabitatsController extends AbstractController
     }
 
 /*
-    #[Route('/habitats/celeste/', name: 'habitat_celeste')]
+    #[Route('/habitats/aerien/', name: 'habitat_aerien')]
     public function habitatCelest($id, EntityManagerInterface $entityManager): Response
     {
         // Récupérer les détails de l'habitat par son ID
@@ -84,7 +84,7 @@ class HabitatsController extends AbstractController
         if (!$animaux) {
             throw $this->createNotFoundException('animaul non trouvé');
         }
-        return $this->render('habitats/celeste.html.twig', [
+        return $this->render('habitats/aerien.html.twig', [
             'animaux' => $animaux,
         ]);
     }
@@ -151,14 +151,10 @@ class HabitatsController extends AbstractController
     }
 
 
-
-
-
-
-    #[Route('/habitat/celeste', name: 'celeste')]
+    #[Route('/habitat/aerien', name: 'aerien')]
     public function ciel(): Response
     {
-        return $this->render('habitats/celeste.html.twig', [
+        return $this->render('habitats/aerien.html.twig', [
             'controller_name' => 'HabitatsController',
         ]);
     }

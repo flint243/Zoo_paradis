@@ -22,6 +22,13 @@ security:
             logout:
                 path: app_logout
 
+    role_hierarchy:
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_EMPLOYE, ROLE_VETERINAIRE]
+        ROLE_ADMIN: [ROLE_EMPLOYE]
+
     access_control:
-         - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/profile, roles: ROLE_USER }
+    - { path: ^/admin/super, roles: ROLE_SUPER_ADMIN }
+    - { path: ^/admin/veterinaire, roles: ROLE_VETERINAIRE }
+    - { path: ^/admin, roles: ROLE_ADMIN }
+    - { path: ^/profile, roles: ROLE_USER }
+

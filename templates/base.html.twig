@@ -10,42 +10,42 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
 
         <!-- Stylesheets -->
-        <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/fontawesome.css') }}">
-        <link rel="preload" href="{{ asset('/assets/css/templatemo-hexashop.css') }}" as="style" onload="this.rel='stylesheet'">
-        <link rel="stylesheet" href="{{ asset('/assets/css/owl-carousel.css') }}">
-        <link rel="stylesheet" href="{{ asset('/assets/css/lightbox.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
+        <link rel="preload" href="{{ asset('assets/css/templatemo-hexashop.css') }}" as="style" onload="this.rel='stylesheet'">
+        <link rel="stylesheet" href="{{ asset('assets/css/owl-carousel.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/lightbox.css') }}">
 
         {% block stylesheets %}{% endblock %}
         
         <!-- Scripts in head if necessary -->
-        <!-- <script src="{{ asset('/assets/js/jquery-2.1.0.min.js') }}"></script> -->
+         <script src="{{ asset('assets/js/jquery-2.1.0.min.js') }}"></script> 
     </head>
     <body>
         {% block body %}{% endblock %}
 
         <!-- jQuery -->
-        <script src="{{ asset('/assets/js/jquery-2.1.0.min.js') }}"></script>
+        <script src="{{ asset('assets/js/jquery-2.1.0.min.js') }}"></script>
 
         <!-- Bootstrap -->
-        <script src="{{ asset('/assets/js/popper.js') }}"></script>
+        <script src="{{ asset('assets/js/popper.js') }}"></script>
 
         <!-- Plugins -->
-        <script src="{{ asset('/assets/js/owl-carousel.js') }}"></script>
-        <script src="{{ asset('/assets/js/accordions.js') }}"></script>
-        <script src="{{ asset('/assets/js/datepicker.js') }}"></script>
-        <script src="{{ asset('/assets/js/scrollreveal.min.js') }}"></script>
-        <script src="{{ asset('/assets/js/waypoints.min.js') }}"></script>
-        <script src="{{ asset('/assets/js/jquery.counterup.min.js') }}"></script>
-        <script src="{{ asset('/assets/js/imgfix.min.js') }}"></script> 
-        <script src="{{ asset('/assets/js/slick.js') }}"></script> 
-        <script src="{{ asset('/assets/js/lightbox.js') }}"></script> 
-        <script src="{{ asset('/assets/js/isotope.js') }}"></script> 
-        {#<script src="{{ asset('/assets/js/slideClassAvis.js') }}"></script> #}
-        {#<script src="{{ asset('/assets/js/slideClassHabitats.js') }}"></script>#} 
+        <script src="{{ asset('assets/js/owl-carousel.js') }}"></script>
+        <script src="{{ asset('assets/js/accordions.js') }}"></script>
+        <script src="{{ asset('assets/js/datepicker.js') }}"></script>
+        <script src="{{ asset('assets/js/scrollreveal.min.js') }}"></script>
+        <script src="{{ asset('assets/js/waypoints.min.js') }}"></script>
+        <script src="{{ asset('assets/js/jquery.counterup.min.js') }}"></script>
+        <script src="{{ asset('assets/js/imgfix.min.js') }}"></script> 
+        <script src="{{ asset('assets/js/slick.js') }}"></script> 
+        <script src="{{ asset('assets/js/lightbox.js') }}"></script> 
+        <script src="{{ asset('assets/js/isotope.js') }}"></script> 
+        {#<script src="{{ asset('assets/js/slideClassAvis.js') }}"></script>#}
+        {#<script src="{{ asset('assets/js/slideClassHabitats.js') }}"></script>#} 
         
         <!-- Global Init -->
-        <script src="{{ asset('/assets/js/custom.js') }}"></script>
+        <script src="{{ asset('assets/js/custom.js') }}"></script>
 
         {#<script>
             $(function() {

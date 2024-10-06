@@ -7,3 +7,31 @@ vich_uploader:
             delete_on_update: true
             delete_on_remove: true
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        user_uploads_images:
+            uri_prefix: /uploadsUsers/imagesUsers
+            upload_destination: '%kernel.project_dir%/public/uploadsUsers/imagesUsers'
+            delete_on_update: true
+            delete_on_remove: true
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        animal_uploads_images:
+            uri_prefix: /uploadsAnimals/imagesAnimals
+            upload_destination: '%kernel.project_dir%/public/uploadsAnimals/imagesAnimals'
+            delete_on_update: true
+            delete_on_remove: true
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        habitat_uploads_images:
+            uri_prefix: /uploadsHabitats/imagesHabitats
+            upload_destination: '%kernel.project_dir%/public/uploadsHabitats/imagesHabitats'
+            delete_on_update: true
+            delete_on_remove: true
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        services_uploads_images:
+            uri_prefix: /uploads/services
+            upload_destination: '%kernel.project_dir%/public/uploads/services'
+            delete_on_update: true
+            delete_on_remove: true
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

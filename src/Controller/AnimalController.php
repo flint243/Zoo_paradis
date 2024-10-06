@@ -6,7 +6,7 @@ use App\Entity\Animal;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Database;
 use App\Repository\AnimalRepository;
-use App\Repository\CelesteRepository;
+use App\Repository\AerienRepository;
 use App\Repository\AquatiqueRepository;
 use App\Repository\TerrestreRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,19 +17,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AnimalController extends AbstractController
 {
 
-    #[Route('/celeste/{id}', name: 'animal_show_celeste')]
-    public function showCeleste(CelesteRepository $celesteRepository, $id): Response
+    #[Route('/aerien/{id}', name: 'animal_show_aerien')]
+    public function showaerien(AerienRepository $aerienRepository, $id): Response
     {
-        $celeste = $celesteRepository->find($id);
+        $aerien = $aerienRepository->find($id);
 
         // Vérifiez si l'animal existe
-        if (!$celeste) {
+        if (!$aerien) {
             throw $this->createNotFoundException('Cet animal n\'existe pas');
         }
 
 
-        return $this->render('animal/showCeleste.html.twig', [
-            'celeste' => $celeste,
+        return $this->render('animal/showaerien.html.twig', [
+            'aerien' => $aerien,
         ]);
     }
 
@@ -79,14 +79,14 @@ class AnimalController extends AbstractController
         ]);
     }
 
-    #[Route('/celeste', name: 'animal_celeste')]
-    public function celeste(CelesteRepository $celesteRepository): Response
+    #[Route('/aerien', name: 'animal_aerien')]
+    public function aerien(AerienRepository $aerienRepository): Response
     {
-        $celeste = $celesteRepository->findAll();
+        $aerien = $aerienRepository->findAll();
 
 
-        return $this->render('habitats/celeste.html.twig', [
-            'celeste' => $celeste,
+        return $this->render('habitats/aerien.html.twig', [
+            'aerien' => $aerien,
         ]);
     }
 

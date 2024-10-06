@@ -1,30 +1,35 @@
-# Utiliser l'image officielle PHP avec Apache
-FROM php:8.3-apache
+# Étape 1 : Utiliser une image de base PHP avec Apache
+FROM php:8.2-apache
 
-# Installer les extensions PHP nécessaires
-RUN apt-get update && apt-get install -y \
+# Étape 2 : Installer les dépendances système nécessaires
+RUN apt-get update && apt-get install -y default-mysql-client \
     git \
     unzip \
     libicu-dev \
-    libpq-dev \
-    libzip-dev \
-    libonig-dev \
-    && docker-php-ext-install intl pdo pdo_mysql pdo_pgsql opcache zip
+    && docker-php-ext-install pdo pdo_mysql intl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Installer Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Étape 3 : Installer Composer
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-# Copier les fichiers de l'application Symfony
-COPY . /var/www/html
+# Étape 4 : Configurer le répertoire de travail
+WORKDIR /var/www/
 
-# Configurer le répertoire de travail
-WORKDIR /var/www/html
+# Étape 5 : Copier les fichiers de l'application dans le conteneur
+COPY . .
 
-# Configurer les permissions
-RUN chown -R www-data:www-data /var/www/html/var /var/www/html/public
+# Étape 6 : Installer les dépendances du projet avec Composer
+#RUN composer install --optimize-autoloader
 
-# Activer le module Apache mod_rewrite
-RUN a2enmod rewrite
+# Étape 7 : Modifier les permissions si nécessaire
+RUN chown -R www-data:www-data /var/www/
 
-# Exposer le port 80 pour le service web
+# Étape 5 : Copier les fichiers de configuration Apache (si nécessaire)
+COPY apache.conf /etc/apache2/sites-available/000-default.conf
+
+# Étape 8 : Exposer le port 80
 EXPOSE 80
+
+# Étape 9 : Démarrer Apache
+CMD ["apache2-foreground"]

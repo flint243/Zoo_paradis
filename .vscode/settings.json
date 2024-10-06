@@ -1,4 +1,8 @@
 {
     "intelephense.completion.fullyQualifyGlobalConstantsAndFunctions": true,
-    "intelephense.completion.triggerParameterHints": true
+    "intelephense.completion.triggerParameterHints": true,
+    "files.exclude": {
+        "public/assets": false
+    }
 }
+

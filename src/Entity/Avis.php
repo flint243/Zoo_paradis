@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AvisRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -99,6 +100,18 @@ class Avis
     public function setEmploye(?Employe $employe): static
     {
         $this->employe = $employe;
+
+        return $this;
+    }
+
+    public function isValidated(): ?bool
+    {
+        return $this->isValidated;
+    }
+
+    public function setValidated(bool $isValidated): static
+    {
+        $this->isValidated = $isValidated;
 
         return $this;
     }

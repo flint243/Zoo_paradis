@@ -38,13 +38,10 @@ class Habitat
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $habitat_image = null;
+    private ?string $habitats_image = null;
 
-    #[Vich\UploadableField(mapping: 'habitat_uploads_images', fileNameProperty: 'habitat_image')]
-    private ?File $habitat_image_file = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
+    #[Vich\UploadableField(mapping: 'habitat_uploads_images', fileNameProperty: 'habitats_image')]
+    private ?File $habitats_image_file = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTimeInterface $updatedAt = null;
@@ -121,45 +118,33 @@ class Habitat
         return $this;
     }
 
-    public function getHabitatImage(): ?string
+    public function getHabitatsImage(): ?string
     {
-        return $this->habitat_image;
+        return $this->habitats_image;
     }
 
-    public function setHabitatImage(string $habitat_image): static
+    public function setHabitatsImage(string $habitats_image): ?string
     {
-        $this->habitat_image = $habitat_image;
+        $this->habitats_image = $habitats_image;
 
         return $this;
     }
 
-    public function getHabitatImageFile(): ?File
+    public function getHabitatsImageFile(): ?File
     {
-        return $this->habitat_image_file;
+        return $this->habitats_image_file;
     }
 
-    public function setHabitatImageFile(?File $habitat_image_file = null): void
+    public function setHabitatsImageFile(?File $habitats_image_file = null): void
     {
-        $this->habitat_image_file = $habitat_image_file;
+        $this->habitats_image_file = $habitats_image_file;
 
-        if ($habitat_image_file) {
+        if ($habitats_image_file) {
             // Si un fichier est téléchargé, on met à jour updatedAt
             $this->updatedAt = new \DateTime('now');
         }
     }
 
-    // Getters et setters
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {

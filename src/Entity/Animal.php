@@ -5,6 +5,7 @@ namespace App\Entity;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AnimalRepository;
 use Symfony\Component\HttpFoundation\File\File;
@@ -93,7 +94,7 @@ class Animal
         return $this->images_animal;
     }
 
-    public function setImagesAnimal(string $images_animal): self
+    public function setImagesAnimal(string $images_animal): ?string
     {
         $this->images_animal = $images_animal;
 

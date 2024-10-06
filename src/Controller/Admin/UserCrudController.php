@@ -101,10 +101,10 @@ class UserCrudController extends AbstractCrudController
             ];
     }
 
-    public function configureActions(Actions $actions): Actions
+    /*public function configureActions(Actions $actions): Actions
     {
         return $actions
             ->disable(Action::DELETE, Action::NEW) // Désactiver par défaut
             ->disable(Action::EDIT, 'ROLE_ADMIN'); // Désactiver par défaut
-    }
+    }*/
 }
