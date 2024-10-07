@@ -7,7 +7,25 @@ services:
     ports:
       - "8081:80"
     volumes:
-      - .:/var/www/        
+      - .:/var/www/
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www/
+    depends_on:
+      - mysql
+
+  apache:
+    image: 'webdevops/apache:latest'
+    ports:
+      - '83:80'
+    volumes:
+      - .:/var/www/
+    depends_on:
+      - php-fpm        
 
   mysql:
     image: mysql:8.4

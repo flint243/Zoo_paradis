@@ -2,6 +2,10 @@
 pgadmin
 #
 
+#
+.DS_store
+#
+
 # Ignore environment files
 .env
 .env.test
@@ -24,8 +28,8 @@ phpunit.xml
 #
 
 # Ignore Symfony asset generated files
-#public/assets/
-#assets/vendor/
+public/assets/
+assets/vendor/
 #
 
 ##
