@@ -7,12 +7,12 @@
 
 <div class="container-fluid">
     <div class="row bg-light justify-content-center py-4">
-        {% if terrestre %}
-                <img src="{{ asset('uploadsAnimals/imagesAnimals/' ~ terrestre.imagesAnimal) }}" height="500px" alt="Image de {{ terrestre.nom }}">
+        {% if aerien %}
+                <img src="{{ asset('uploadsAnimals/imagesAnimals/' ~ aerien.imagesanimal) }}" height="500px" alt="Image de {{ aerien.prenom }}">
                 <div class="col-lg-12">
                     <div class="down-content">
-                        <h4> {{ terrestre.nom }}</h4>
-                        <span>{{ terrestre.race }}</span>
+                        <h4> {{ aerien.prenom }}</h4>
+                        <span>{{ aerien.race }}</span>
                     </div>
                 </div>
         {% endif %}

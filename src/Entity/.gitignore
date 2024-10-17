@@ -1,0 +1,55 @@
+#
+pgadmin
+#
+
+#
+.DS_Store
+#
+
+# Ignore environment files
+.env
+.env.test
+.env.local
+.env.local.php
+.env.*.local
+node_modules
+#
+
+# Ignore Symfony secrets and cache
+config/secrets/prod/prod.decrypt.private.php
+public/bundles/
+var/
+vendor/
+#
+
+# Ignore PHPUnit configuration and cache
+phpunit.xml
+.phpunit.result.cache
+#
+
+# Ignore Symfony asset generated files
+public/assets/
+assets/vendor/
+#
+
+##
+#config/firebase/firebase_credentials.json
+##
+
+##
+app-deployment.yaml
+app-service.yaml
+db-deployment.yaml
+db-service.yaml
+phpmyadmin-deployment.yaml
+phpmyadmin-service.yaml
+pvc.yaml
+##
+
+##
+docker-compose.yml
+##
+
+##
+phpunit.xml.dist
+##

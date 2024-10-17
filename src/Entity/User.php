@@ -20,6 +20,24 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[UniqueEntity(fields: ['email'], message: 'Il y a déjà un compte avec cet email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
+    private $plainPassword;
+
+    /**
+     * @Assert\Length(min=6, max=4096)
+     */
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -52,14 +70,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\OneToMany(targetEntity: Avis::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private Collection $avis;
-
 
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
-        $this->avis = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -198,46 +212,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->avis;
     }
 
-    public function addAvis(Avis $avis): static
-    {
-        if (!$this->avis->contains($avis)) {
-            $this->avis->add($avis);
-            $avis->setUser($this);
-        }
 
-        return $this;
-    }
-
-    public function removeAvis(Avis $avis): static
-    {
-        if ($this->avis->removeElement($avis)) {
-            if ($avis->getUser() === $this) {
-                $avis->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function addAvi(Avis $avi): static
-    {
-        if (!$this->avis->contains($avi)) {
-            $this->avis->add($avi);
-            $avi->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAvi(Avis $avi): static
-    {
-        if ($this->avis->removeElement($avi)) {
-            // set the owning side to null (unless already changed)
-            if ($avi->getUser() === $this) {
-                $avi->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 }

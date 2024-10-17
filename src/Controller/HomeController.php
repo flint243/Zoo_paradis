@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Avis;
-use App\Entity\User;
 use App\Form\AvisType;
-use App\Service\FirebaseService;
+use App\Entity\Contact;
+use App\Form\ContactType;
 use App\Repository\AvisRepository;
+use App\Repository\AnimalRepository;
 use App\Repository\HabitatRepository;
-use App\Repository\ServicesZooRepository;
+use App\Repository\ServicesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +25,7 @@ class HomeController extends AbstractController
 public function index(
     AuthenticationUtils $authenticationUtils, 
     AvisRepository $avisRepository,
-    ServicesZooRepository $serviceszooRepository,
+    ServicesRepository $servicesRepository,
     HabitatRepository $habitatRepository, 
     Request $request, 
     EntityManagerInterface $entityManager, 
@@ -36,46 +37,32 @@ public function index(
     // Dernier nom d'utilisateur saisi
     $lastUsername = $authenticationUtils->getLastUsername();
     
-    // Utilisateur connecté
-    //$user = $security->getUser();
-    
     // Création du formulaire d'avis
     $avis = new Avis();
-    $form = $this->createForm(AvisType::class, $avis);
+    $form = $this->createForm(AvisType::class, $avis);    
 
     // Gestion du formulaire
     $form->handleRequest($request);
-
+   
     // Récupérer tous les avis existants
     $avisList = $avisRepository->findAll();
 
     // Récupérer tous les services existants
-    $habitat = $habitatRepository->findBy(['nom'=> 'aerien']);
+    $habitat1 = $habitatRepository->findBy(['nom'=> 'aerien']);
     $habitat2 = $habitatRepository->findBy(['nom'=> 'terrestre']);
     $habitat3 = $habitatRepository->findBy(['nom'=> 'aquatique']);
 
     //Récupérer tous les services existants
-    $services = $serviceszooRepository->findBy(['nom'=> 'Restauration']);
-    $services2 = $serviceszooRepository->findBy(['nom'=> 'Habitats']);
-    $services3 = $serviceszooRepository->findBy(['nom'=> 'Visites']);
+    $services = $servicesRepository->findBy(['nom'=> 'Restauration']);
+    $services2 = $servicesRepository->findBy(['nom'=> 'Habitats']);
+    $services3 = $servicesRepository->findBy(['nom'=> 'Visites']);
 
-   
-       
-        
     // Vérifier si le formulaire a été soumis et est valide
     if ($form->isSubmitted() && $form->isValid()) {
         
-        // Associer l'utilisateur connecté à l'avis
-       /* if ($user) {
-            $avis->setUser($user); // Associe l'utilisateur connecté
-            $avis->setPseudo($user->getPseudo()); // Associe le pseudo de l'utilisateur
-        } else {
-            throw new \Exception('Aucun utilisateur connecté. Impossible de soumettre un avis.');
-        }*/
-
         // Définir la date de création et marquer l'avis comme validé
         $avis->setCreatedAt(new \DateTimeImmutable());
-        $avis->setIsValidated(true);
+        $avis->setIsValidated(false);
 
         // Persister l'avis
         $entityManager->persist($avis);
@@ -89,17 +76,46 @@ public function index(
     return $this->render('home/index.html.twig', [
         'last_username'   => $lastUsername,
         'error'           => $error,
-        //'user'            => $user,
         'form'            => $form->createView(),
         'avisList'        => $avisList,
-        /*'avisProfileImages' => $avisProfileImages, // Passer les images de profil à la vue*/
         'services'    => $services,
         'services2'    => $services2,
         'services3'    => $services3,
 
-        'habitat'    => $habitat,
+        'habitat1'    => $habitat1,
         'habitat2'    => $habitat2,
         'habitat3'    => $habitat3,
+    ]);
+}
+
+
+
+#[Route('/about', name: 'about')]
+public function about(): Response
+{
+    return $this->render('home/about.html.twig', [
+        'controller_name' => 'AboutController',
+    ]);
+}
+
+
+
+#[Route('/contact', name: 'contact')]
+public function contact(EntityManagerInterface $entityManager, Request $request,): Response
+{
+    $contact = new Contact();
+    $form = $this->createForm(ContactType::class, $contact);
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $contact->setCreatedAt(new \DateTimeImmutable());
+        $entityManager->persist($contact);
+        $entityManager->flush();
+    }
+
+    return $this->render('home/contact.html.twig', [
+        'ContactForm' => $form->createView(),
     ]);
 }
 
@@ -136,7 +152,19 @@ public function index(
         ]);
     }
 
+    #[Route('/habitats/aerien/{id}', name: 'animal_aerien_show')]
+    public function showaerien(AnimalRepository $aerienRepository, $id): Response
+    {
+        $aerien = $aerienRepository->find($id);
 
+        // Vérifiez si l'animal existe
+        if (!$aerien) {
+            throw $this->createNotFoundException('Cet animal n\'existe pas');
+        }
+        return $this->render('animal/show.html.twig', [
+            'aerien' => $aerien,
+        ]);
+    }
 
 
 

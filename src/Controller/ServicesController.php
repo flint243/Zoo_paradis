@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\ServicesZoo;
+use App\Entity\Services;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\ServicesZooRepository;
+use App\Repository\ServicesRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,12 +12,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ServicesController extends AbstractController
 {
     #[Route('/services', name: 'services')]
-    public function index(ServicesZooRepository $serviceszooRepository, ): Response
+    public function index(ServicesRepository $servicesRepository, ): Response
     {
        // Récupérer tous les services existants
-        $services = $serviceszooRepository->findBy(['nom'=> 'Restauration']);
-        $services2 = $serviceszooRepository->findBy(['nom'=> 'Habitats']);
-        $services3 = $serviceszooRepository->findBy(['nom'=> 'Visites']);
+        $services = $servicesRepository->findBy(['nom'=> 'Restauration']);
+        $services2 = $servicesRepository->findBy(['nom'=> 'Habitats']);
+        $services3 = $servicesRepository->findBy(['nom'=> 'Visites']);
 
         return $this->render('services/services.html.twig', [
             'services' => $services,

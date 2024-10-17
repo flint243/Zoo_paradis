@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Animal;
 use App\Entity\Habitat;
+use App\Repository\AnimalRepository;
 use App\Repository\HabitatRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,101 +17,73 @@ class HabitatsController extends AbstractController
     #[Route('/habitats', name: 'habitats')]
     public function habitats(HabitatRepository $habitatRepository): Response
     {
-        
         // Récupère uniquement les habitat validés
-        $habitats = $habitatRepository->findAll(); // Modifier selon tes besoins pour ne récupérer que les habitats validés
+        // Récupérer tous les services existants
+    $habitatAerien = $habitatRepository->findBy(['nom'=> 'aerien']);
+    $habitatTerrestre = $habitatRepository->findBy(['nom'=> 'terrestre']);
+    $habitatAquatique = $habitatRepository->findBy(['nom'=> 'aquatique']);
 
         return $this->render('habitats/habitats.html.twig', [
-            'habitats' => $habitats,
+            'habitatAerien' => $habitatAerien,
+            'habitatTerrestre' => $habitatTerrestre,
+            'habitatAquatique' => $habitatAquatique,
         ]);
     }
 
 
 
-
-    #[Route('/api/habitat', name: 'api_habitat_list')]
-    public function list(HabitatRepository $habitatRepository): JsonResponse
+    #[Route('/habitats/aerien', name: 'aerien')]
+    public function aerien(AnimalRepository $animalRepository): Response
     {
-        // Récupère uniquement les habitat validés
-        $habitats = $habitatRepository->findAll(); // Modifier selon tes besoins pour ne récupérer que les habitats validés
-    
-        // Transforme les données en JSON
-        $habitatData = [];
-        foreach ($habitats as $habitat) {
-            $imagePath = $potentialPath = '/' . $habitat->getNom();
-    
-            // Ensuite on vérifie si une image spécifique existe
-            foreach (['.jpg', '.png', '.jpeg'] as $extension) {
-                
-                if (file_exists($potentialPath)) {
-                    $imagePath = $potentialPath;
-                    break;
-                }
-            }
-            $habitatData[] = [
-                'nom' => $habitat->getNom(),
-                'description_habitat' => $habitat->getDescription(),
-                'image_habitat' => $imagePath,
-            ];
-        }
-    
-        return new JsonResponse($habitatData);
-    }
 
-    #[Route('/habitat/{id}', name: 'habitat_detail')]
-    public function habitatDetail(int $id, EntityManagerInterface $entityManager): Response
-    {
-        // Récupérer les détails de l'habitat par son ID
-        $habitat = $entityManager->getRepository(Habitat::class)->find($id);
+        $aerien = $animalRepository->findBy(["habitat" => "1"]);
 
-        if (!$habitat) {
-            throw $this->createNotFoundException('Habitat non trouvé');
-        }
-            $entityManager->persist($habitat);
-            $entityManager->flush();
-    
-        return $this->render('habitats/details.html.twig', [
-            'habitat' => $habitat,
+        return $this->render('habitats/aerien.html.twig', [
+            'controller_name' => 'HabitatsController',
+            'aerien' => $aerien,
         ]);
     }
+
 
 /*
-    #[Route('/habitats/aerien/', name: 'habitat_aerien')]
-    public function habitatCelest($id, EntityManagerInterface $entityManager): Response
+    #[Route('/habitats/aerien/{id}', name: 'habitat_aerien')]
+    public function aerienId(int $id, EntityManagerInterface $entityManager): Response
     {
         // Récupérer les détails de l'habitat par son ID
-        $animaux = $entityManager->getRepository(Animal::class)->find($id);
+        $habitatAerien = $entityManager->getRepository(Habitat::class)->find($id);
+        //$aerien = $entityManager->getRepository(Animal::class)->findAll();
 
-        if (!$animaux) {
-            throw $this->createNotFoundException('animaul non trouvé');
-        }
+            $entityManager->persist($habitatAerien);
+            $entityManager->flush();
+
+       
         return $this->render('habitats/aerien.html.twig', [
-            'animaux' => $animaux,
+            'habitatAerien' => $habitatAerien,
+            //'aerien' => $aerien,
         ]);
     }
 */
 
-    #[Route('habitats/terrestre', name: 'habitat_terrestre')]
-    public function habitatTerrestre(EntityManagerInterface $entityManager): Response
+/******************** FIN AERIENS **********************/
+
+    #[Route('/habitats/terrestre', name: 'terrestre')]
+    public function habitatTerrestre(AnimalRepository $animalRepository): Response
     {
-
-       $animals = $entityManager->getRepository(Animal::class)->findAll();
-
+       $terrestre = $animalRepository->findBy(["habitat" => "2"]);
 
         return $this->render('habitats/terrestre.html.twig', [
-           'animals' => $animals,
+           'terrestre' => $terrestre,
         ]);
     }
-
-
-
-    #[Route('/habitats/terrestre/{id}', name: 'terrestre_by_habitat')]
-    public function terre(int $id, int $habitat, EntityManagerInterface $entityManager): Response
+/*
+    #[Route('/habitats/terrestre/{id}', name: 'habitat_terrestre')]
+    public function terre(int $id, EntityManagerInterface $entityManager): Response
     {
         // Récupérer l'objet Habitat par son ID
         //$animaux = $entityManager->getRepository(Animal::class)->findBy(['habitat' => $habitat]);
 
         $habitat = $entityManager->getRepository(Habitat::class)->find($id);
+        $terrestre = $entityManager->getRepository(Animal::class)->findAll();
         
             $entityManager->persist($habitat);
             $entityManager->flush();
@@ -120,54 +93,85 @@ class HabitatsController extends AbstractController
             throw $this->createNotFoundException('habitat non trouvé');
         }
         // Récupérer tous les animaux liés à cet habitat
-        $animals = $habitat->getAnimals();
+        $terrestre = $habitat->getAnimals();
 
         // Récupérer les animaux en fonction de l'objet Habitat
         //$animaux = $entityManager->getRepository(Animal::class)->findBy(['habitat' => $habitatEntity]);
 
-        return $this->render('habitats/details.html.twig', [
+        return $this->render('habitats/terrestre.html.twig', [
             'habitat' => $habitat,
-            'animals' => $animals,
+            'terrestre' => $terrestre,
         ]);
     }
 
 /******************** FIN TERRESTRE **********************/
+    
+    #[Route('/habitats/aquatique', name: 'aquatique')]
+    public function aquatique(EntityManagerInterface $entityManager): Response
+    {
+        $aquatique = $entityManager->getRepository(Animal::class)->findBy(["habitat" => "3"]);
 
+        return $this->render('habitats/aquatique.html.twig', [
+            'controller_name' => 'HabitatsController',
+            "aquatique" => $aquatique,
+        ]);
+    }
 
     
-    #[Route('/habitats/aquatique', name: 'habitat_aquatique')]
-    public function habitatAquatique(/*int $id, */EntityManagerInterface $entityManager): Response
+    #[Route('/habitats/aquatique/{id}', name: 'habitat_aquatique')]
+    public function habitatAquatique(int $id, AnimalRepository $animalRepository, EntityManagerInterface $entityManager): Response
     {
 
          // Récupérer les détails de l'habitat par son ID
-         $animaux = $entityManager->getRepository(Animal::class)->findAll();
+         $habitat = $entityManager->getRepository(Habitat::class)->find($id);
 
-        if (!$animaux) {
-            throw $this->createNotFoundException('animaul non trouvé');
+         $animal = $animalRepository->findAll();
+
+        if (!$habitat) {
+            throw $this->createNotFoundException('animal non trouvé');
         }
         return $this->render('habitats/aquatique.html.twig', [
-            //'animaux' => $animaux,
+            'habitat' => $habitat,
+            'animal' => $animal,
         ]);
     }
 
 
-    #[Route('/habitat/aerien', name: 'aerien')]
-    public function ciel(): Response
-    {
-        return $this->render('habitats/aerien.html.twig', [
-            'controller_name' => 'HabitatsController',
-        ]);
+
+
+
+
+
+
+/*
+#[Route('/api/habitat', name: 'api_habitat_list')]
+public function list(HabitatRepository $habitatRepository): JsonResponse
+{
+    // Récupère uniquement les habitat validés
+    $habitats = $habitatRepository->findAll(); // Modifier selon tes besoins pour ne récupérer que les habitats validés
+
+    // Transforme les données en JSON
+    $habitatData = [];
+    foreach ($habitats as $habitat) {
+        $imagePath = $potentialPath = '/' . $habitat->getNom();
+
+        // Ensuite on vérifie si une image spécifique existe
+        foreach (['.jpg', '.png', '.jpeg'] as $extension) {
+            
+            if (file_exists($potentialPath)) {
+                $imagePath = $potentialPath;
+                break;
+            }
+        }
+        $habitatData[] = [
+            'nom' => $habitat->getNom(),
+            'description_habitat' => $habitat->getDescription(),
+            'image_habitat' => $imagePath,
+        ];
     }
 
-
-    
-    #[Route('/habitat/aquatique', name: 'aquatique')]
-    public function aquatique(): Response
-    {
-        return $this->render('habitats/aquatique.html.twig', [
-            'controller_name' => 'HabitatsController',
-        ]);
-    }
-
+    return new JsonResponse($habitatData);
+}
+    */
 
 }

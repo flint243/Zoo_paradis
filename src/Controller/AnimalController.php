@@ -14,93 +14,57 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
+
 class AnimalController extends AbstractController
 {
 
-    #[Route('/aerien/{id}', name: 'animal_show_aerien')]
-    public function showaerien(AerienRepository $aerienRepository, $id): Response
+
+    #[Route('/aerien/{id}', name: 'animal_aerien_show')]
+    public function showaerien(AnimalRepository $animalRepository, $id): Response
     {
-        $aerien = $aerienRepository->find($id);
+        $aerien = $animalRepository->find($id);
 
         // Vérifiez si l'animal existe
         if (!$aerien) {
             throw $this->createNotFoundException('Cet animal n\'existe pas');
         }
-
-
-        return $this->render('animal/showaerien.html.twig', [
+        return $this->render('animal/show.html.twig', [
             'aerien' => $aerien,
         ]);
     }
 
-    #[Route('/terrestre/{id}', name: 'animal_show')]
-    public function show(TerrestreRepository $terrestreRepository, $id): Response
+
+    #[Route('habitats/terrestre/{id}', name: 'terrestre_show')]
+    public function showTerrestre(AnimalRepository $animalRepository, $id): Response
     {
-        $terrestre = $terrestreRepository->find($id);
+        $terrestre = $animalRepository->find($id);
 
         // Vérifiez si l'animal existe
         if (!$terrestre) {
             throw $this->createNotFoundException('Cet animal n\'existe pas');
         }
-
-
-        return $this->render('animal/show.html.twig', [
+        return $this->render('animal/show_terrestre.html.twig', [
             'terrestre' => $terrestre,
         ]);
     }
 
-    #[Route('/aquatique/{id}', name: 'animal_show_aquatique')]
-    public function showAquatique(AquatiqueRepository $aquatiqueRepository, $id): Response
+    /******************* AQUATIQUE *****************/
+
+
+    #[Route('/aquatique/{id}', name: 'animal_aquatique_show')]
+    public function showAquatique(AnimalRepository $animalRepository, $id): Response
     {
-        $aquatique = $aquatiqueRepository->find($id);
+        $aquatique = $animalRepository->find($id);
 
         // Vérifiez si l'animal existe
         if (!$aquatique) {
             throw $this->createNotFoundException('Cet animal n\'existe pas');
         }
 
-
-        return $this->render('animal/showAquatique.html.twig', [
+        return $this->render('animal/show_aquatique.html.twig', [
             'aquatique' => $aquatique,
         ]);
+        
     }
-
-
-
-
-    #[Route('/terrestre', name: 'animal_terrestre')]
-    public function terretsre(TerrestreRepository $terrestreRepository): Response
-    {
-        $terrestre = $terrestreRepository->findAll();
-
-       
-        return $this->render('habitats/terrestre.html.twig', [
-            'terrestre' => $terrestre,
-        ]);
-    }
-
-    #[Route('/aerien', name: 'animal_aerien')]
-    public function aerien(AerienRepository $aerienRepository): Response
-    {
-        $aerien = $aerienRepository->findAll();
-
-
-        return $this->render('habitats/aerien.html.twig', [
-            'aerien' => $aerien,
-        ]);
-    }
-
-
-    #[Route('/aquatique', name: 'animal_aquatique')]
-    public function aquatique(AquatiqueRepository $aquatiqueRepository): Response
-    {
-        $aquatique = $aquatiqueRepository->findAll();
-
-       
-        return $this->render('habitats/aquatique.html.twig', [
-            'aquatique' => $aquatique,
-        ]);
-    }
-
 
 }

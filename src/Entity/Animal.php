@@ -5,7 +5,6 @@ namespace App\Entity;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AnimalRepository;
 use Symfony\Component\HttpFoundation\File\File;
@@ -53,11 +52,18 @@ class Animal
     #[ORM\ManyToOne(inversedBy: 'animals')]
     private ?Employe $employe = null;
 
+    /**
+     * @var Collection<int, LogerAnimal>
+     */
+    #[ORM\OneToMany(targetEntity: LogerAnimal::class, mappedBy: 'animal_id')]
+    private Collection $logerAnimals;
+
 
 
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
+        $this->logerAnimals = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,7 +100,7 @@ class Animal
         return $this->images_animal;
     }
 
-    public function setImagesAnimal(string $images_animal): ?string
+    public function setImagesAnimal(string $images_animal): self
     {
         $this->images_animal = $images_animal;
 
@@ -172,6 +178,36 @@ class Animal
     public function setEmploye(?Employe $employe): static
     {
         $this->employe = $employe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LogerAnimal>
+     */
+    public function getLogerAnimals(): Collection
+    {
+        return $this->logerAnimals;
+    }
+
+    public function addLogerAnimal(LogerAnimal $logerAnimal): static
+    {
+        if (!$this->logerAnimals->contains($logerAnimal)) {
+            $this->logerAnimals->add($logerAnimal);
+            $logerAnimal->setAnimalId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLogerAnimal(LogerAnimal $logerAnimal): static
+    {
+        if ($this->logerAnimals->removeElement($logerAnimal)) {
+            // set the owning side to null (unless already changed)
+            if ($logerAnimal->getAnimalId() === $this) {
+                $logerAnimal->setAnimalId(null);
+            }
+        }
 
         return $this;
     }

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Habitat ciel{% endblock %}
+{% block title %}Habitat aérien{% endblock %}
 
 {% block body %}
 <!-- ***** Preloader Start ***** -->
@@ -145,27 +145,27 @@
                 <div class="col-lg-12">
                     <div class="men-item-carousel">
                         <div class="owl-men-item owl-carousel">
-                            {% if aerien %}
+                            {% for aerien in aerien %}
                                 <div class="item">
                                     <div class="thumb">
                                         <div class="hover-content">
                                             <ul>
                                                 <li>
-                                                    <a href="{{ path('animal_show_aerien', {id: aerien.id}) }}">
+                                                    <a href="{{ path('animal_aerien_show', {id: aerien.id}) }}">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
                                                 </li>
                                             </ul>
                                         </div>
-                                        <img src="{{ asset('uploadsAnimals/imagesAnimals/' ~ aerien.imagesAnimal) }}" alt="Image de {{ aerien.nom }}">
-                                        {{ aerien.nom }}
+                                        <img src="{{ asset('uploadsAnimals/imagesAnimals/' ~ aerien.imagesanimal) }}" alt="Image de {{ aerien.prenom }}">
+                                        {{ aerien.prenom }}
                                     </div>
                                     <div class="down-content">
                                         <h4>{{ aerien.race }}</h4>
                                         <span>{{ loop.index }}</span>
                                     </div>
                                 </div>
-                            {% endif %} </div>
+                            {% endfor %} </div>
                         </div>
                     </div>
                 </div>

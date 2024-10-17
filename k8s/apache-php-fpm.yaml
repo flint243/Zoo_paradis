@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache-php-fpm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apache-php-fpm
+  template:
+    metadata:
+      labels:
+        app: apache-php-fpm
+    spec:
+      containers:
+      - name: php-fpm
+        image: symfony_zoo-image-php-fpm
+        volumeMounts:
+        - name: app-code
+          mountPath: /var/www/
+      - name: apache
+        image: webdevops/apache:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: app-code
+          mountPath: /var/www/
+      volumes:
+      - name: app-code
+        hostPath:
+          path: /chemin/vers/ton/projet

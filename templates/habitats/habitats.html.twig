@@ -3,40 +3,40 @@
 {% block title %}Nos habitats{% endblock %}
 
 {% block body %}
-<!-- ***** Preloader Start ***** -->
-    <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>  
+    <!-- ***** Preloader Start ***** -->
+        <div id="preloader">
+            <div class="jumper">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>  
     <!-- ***** Preloader End ***** -->
     
     
     <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky">
-                <div class="connexion">
-                    {% if app.user %}
-                            <div class="mb-3 userConnect">
-                                Bonjour {{ app.user.nom }}
-                                {% if app.user.profileImage %}
-                                    <img src="/uploads/images/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px" />
-                                {% else %}
-                                <img src="{{ asset('/assets/images/avatar/avatar2.jpg') }}" width="20px" />
-                                {% endif %}
-                            </div>
+        <div class="connexion">
+            {% if app.user %}
+                    <div class="mb-3 userConnect">
+                        Bonjour {{ app.user.nom }}
+                        {% if app.user.profileImage %}
+                            <img src="/uploads/images/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px" />
+                        {% else %}
+                        <img src="{{ asset('/assets/images/avatar/avatar2.jpg') }}" width="20px" />
+                        {% endif %}
+                    </div>
 
-                         <div class="deconnexionBtn">
-                            <a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a> 
-                         </div>
-                        
-                   {% else %}
-                        <a href="{{ path('app_register') }}" class="registerBtn">Pas encore inscrit c'est <span class="text-danger">ici</span> !</a>
-                        sinon
-                        <a href="{{ path('app_login') }}" class="connexionBtn">Connectez vous ici !</a>
-                    {% endif %}
-                </div> 
+                    <div class="deconnexionBtn">
+                    <a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a> 
+                    </div>
+                
+            {% else %}
+                <a href="{{ path('app_register') }}" class="registerBtn">Pas encore inscrit c'est <span class="text-danger">ici</span> !</a>
+                sinon
+                <a href="{{ path('app_login') }}" class="connexionBtn">Connectez vous ici !</a>
+            {% endif %}
+        </div> 
                 
         <div class="container">
             <div class="row">
@@ -123,40 +123,63 @@
             </div>
         </div>
 
-        <div class="container">
+        <div class="container mesHabitats">
             <div class="row">
-                <!-- slider -->
-        <div id="slideShowHabitat">
-        {% for image in habitats %}
-            {% if image.id in [1, 2, 3, 4] %}
-                <div id="sliderHabitat" class="slidereHabitat">
-                    <h2 class="mb-3 ">{{ image.nom }}</h2>
-
-                    {# Définition de la route spécifique en fonction de l'ID #}
-                    {% set detailPath = '' %}
-                    {% if image.id == 1 %}
-                        {% set detailPath = path('animal_show_celeste', {id: image.id}) %}
-                    {% elseif image.id == 2 %}
-                        {% set detailPath = path('animal_show', {id: image.id}) %}
-                    {% elseif image.id == 3 %}
-                        {% set detailPath = path('animal_show_aquatique', {id: image.id}) %}
-                    {% elseif image.id == 4 %}
-                        {% set detailPath = path('detail_page4', {id: image.id}) %}
-                    {% endif %}
-
-                    <a href="{{ detailPath }}">
-                        <img src="{{ asset('uploadHabitats/imagesHabitats/' ~ image.habitatimage) }}" name="slideImgHabitat" class="slideImgHabitat" alt="Image du slider">
-                    </a>        
-                    <div id="bandeauColorHabitat">
-                        <div id="InfoSliderHabitat">
-                            <h5 class="">{{ image.description }}</h5>
+                <div class="col-sm-4">
+                    <div class="habitatCol">
+                        {% for imageAerien in habitatAerien %}
+                        <div class="">
+                            <h2 class="mb-3 ">Habitat {{ imageAerien.nom }}</h2>
+                            <a href="/habitats/aerien">
+                                <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageAerien.habitatimage) }}" alt="Image du">
+                            </a>        
+                                <div id="bandeauHabitatHabitatAerien">
+                                    <div id="InfoHabitatAerien">
+                                        <h5 class="">{{ imageAerien.description }}</h5>
+                                    </div>
+                                </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
-            {% endif %}
-        {% endfor %}
-        </div>
-        </div>
+
+                <div class="col-sm-4">
+                    <div class="habitatCol">
+                        {% for imageTerre in habitatTerrestre %}
+                            <div class="HabitatTerresrtre">
+                                <h2 class="mb-3 ">Habitat {{ imageTerre.nom }}</h2>
+                                <a href="/habitats/terrestre">
+                                    <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageTerre.habitatimage) }}" alt="Image du slider">
+                                </a>        
+                                <div id="bandeauHabitatTerrestre">
+                                    <div id="InfoHabitatTerrestre">
+                                        <h5 class="">{{ imageTerre.description }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="habitatCol">
+                        {% for imageAquatique in habitatAquatique %}
+                                <div class="HabitatAquatique">
+                                    <h2 class="mb-3 ">Habitat {{ imageAquatique.nom }}</h2>
+                                    <a href="/habitats/aquatique">
+                                        <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageAquatique.habitatimage) }}" alt="Image du slider">
+                                    </a>        
+                                    <div id="bandeauHabitatAquatique">
+                                        <div id="InfoHabitatAquatique">
+                                            <h5 class="">{{ imageAquatique.description }}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+         </div>
     </section>
 
      <!-- ***** Footer Start ***** -->

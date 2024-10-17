@@ -17,11 +17,11 @@ class AvisType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('nom', TextType::class, [
-            'label' => 'Votre nom',
+        ->add('pseudo', TextType::class, [
+            'label' => 'Votre pseudo',
             'required' => true,
             'attr' => [
-                'placeholder' => 'Saisissez votre nom ici'
+                'placeholder' => 'Saisissez votre pseudo ici'
             ]
         ])
         ->add('commentaire', TextareaType::class, [

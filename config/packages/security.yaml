@@ -25,10 +25,11 @@ security:
     role_hierarchy:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_EMPLOYE, ROLE_VETERINAIRE]
         ROLE_ADMIN: [ROLE_EMPLOYE]
+        ROLE_VETERINAIRE: [ROLE_VETERINAIRE]
 
     access_control:
-    - { path: ^/admin/super, roles: ROLE_SUPER_ADMIN }
-    - { path: ^/admin/veterinaire, roles: ROLE_VETERINAIRE }
+    - { path: ^/admin/veterinaire/super, roles: ROLE_SUPER_ADMIN }
+    - { path: ^/veterinaire, roles: ROLE_VETERINAIRE }
     - { path: ^/admin, roles: ROLE_ADMIN }
     - { path: ^/profile, roles: ROLE_USER }
 

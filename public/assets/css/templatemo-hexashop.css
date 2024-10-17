@@ -414,7 +414,7 @@ header
   cursor: pointer;
   display: block;
   position: absolute;
-  top: 33px;
+  top: 0px;
   width: 32px;
   height: 40px;
   text-indent: -9999em;
@@ -1613,8 +1613,8 @@ Products Page
 
 #products .section-heading {
   text-align: center;
-  margin-bottom: 60px;
-  margin-top: 80px;
+  margin-bottom: 40px;
+  margin-top: 40px;
 }
 
 #products .item {
@@ -2516,64 +2516,19 @@ img.slideImg{
     margin-bottom: 0;
     color: #000000;
 }
-
-
-/*.......................  SLIDER  AQATIQUE ..................*/
-#slideShowHabitat{
+/*.......................  SLIDER  AQUATIQUE ..................*/
+.habitatCol IMG{
   width: 100%;
-  height: 600px;
-  position: relative;
-  overflow: hidden;
-  background-color: rgb(88 239 6 / 12%);
-  margin-bottom: 50px;
-}
-#sliderHabitat{
-  width: auto;
-  height: 100%;
-  position: relative;
-  top: 20%;
-  text-align: center;
-  transition: all 1s;
-}
-.slideImgHabitat{
-  width: 400px;
   height: 300px;
   position: relative;
-  top: 0%;
-}
-
-#bandeauColorHabitat{
-  width: 100%;
-  height: auto;
-  position: relative;
-  top: 5%;
-  margin-left: 0px;
-  text-align: center;
-  padding: 10px;
-  z-index: 1;
-}
-#InfoSliderHabitat{
-  width: auto;
-  height: 100%;
-  position: relative;
-  top: 0px;
-  margin-left: 0%;
-  font-weight: bold;
-  padding:5px;
-  -webkit-text-stroke: 2px rgba(45, 44, 44, 0.182);
-  color:white;
-  transition:all 2s;
-}
-.nomSlideHabitat{
-  font-weight: 400;
-    font-size: 18px;
-    margin-bottom: 0;
-    color: #000000;
 }
 
 /************ SECTIONS ****************/
 .section{
   background-color: rgba(0, 128, 0, 0.722);
+}
+.mesHabitats{
+  padding-bottom: 100px;
 }
 
 
@@ -2599,3 +2554,4 @@ img.slideImg{
   display : flex;
   flex-wrap: nowrap;
 }
+

@@ -38,10 +38,10 @@ class Habitat
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $habitats_image = null;
+    private ?string $habitat_image = null;
 
-    #[Vich\UploadableField(mapping: 'habitat_uploads_images', fileNameProperty: 'habitats_image')]
-    private ?File $habitats_image_file = null;
+    #[Vich\UploadableField(mapping: 'habitat_uploads_images', fileNameProperty: 'habitat_image')]
+    private ?File $habitat_image_file = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTimeInterface $updatedAt = null;
@@ -51,6 +51,8 @@ class Habitat
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
+
+    
 
     public function __construct()
     {
@@ -118,33 +120,32 @@ class Habitat
         return $this;
     }
 
-    public function getHabitatsImage(): ?string
+    public function getHabitatImage(): ?string
     {
-        return $this->habitats_image;
+        return $this->habitat_image;
     }
 
-    public function setHabitatsImage(string $habitats_image): ?string
+    public function setHabitatImage(string $habitat_image): static
     {
-        $this->habitats_image = $habitats_image;
+        $this->habitat_image = $habitat_image;
 
         return $this;
     }
 
-    public function getHabitatsImageFile(): ?File
+    public function getHabitatImageFile(): ?File
     {
-        return $this->habitats_image_file;
+        return $this->habitat_image_file;
     }
 
-    public function setHabitatsImageFile(?File $habitats_image_file = null): void
+    public function setHabitatImageFile(?File $habitat_image_file = null): void
     {
-        $this->habitats_image_file = $habitats_image_file;
+        $this->habitat_image_file = $habitat_image_file;
 
-        if ($habitats_image_file) {
+        if ($habitat_image_file) {
             // Si un fichier est téléchargé, on met à jour updatedAt
             $this->updatedAt = new \DateTime('now');
         }
     }
-
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
@@ -181,4 +182,5 @@ class Habitat
 
         return $this;
     }
+
 }

@@ -16,14 +16,6 @@ class AvisRepository extends ServiceEntityRepository
         parent::__construct($registry, Avis::class);
     }
 
-    public function findNonValidatedAvis(): array
-    {
-        return $this->createQueryBuilder('a')
-            ->where('a.isValidated = false')
-            ->getQuery()
-            ->getResult();
-    }
-
     //    /**
     //     * @return Avis[] Returns an array of Avis objects
     //     */

@@ -50,17 +50,17 @@ class Employe
     private Collection $contacts;
 
     /**
-     * @var Collection<int, ServicesZoo>
+     * @var Collection<int, Services>
      */
-    #[ORM\OneToMany(targetEntity: ServicesZoo::class, mappedBy: 'employe')]
-    private Collection $servicesZoos;
+    #[ORM\OneToMany(targetEntity: Services::class, mappedBy: 'employe')]
+    private Collection $services;
 
     public function __construct()
     {
         $this->avis = new ArrayCollection();
         $this->animals = new ArrayCollection();
         $this->contacts = new ArrayCollection();
-        $this->servicesZoos = new ArrayCollection();
+        $this->services = new ArrayCollection();
         $this->created_at = new \DateTimeImmutable();
     }
 
@@ -220,29 +220,29 @@ class Employe
     }
 
     /**
-     * @return Collection<int, ServicesZoo>
+     * @return Collection<int, Services>
      */
-    public function getServicesZoos(): Collection
+    public function getServicess(): Collection
     {
-        return $this->servicesZoos;
+        return $this->servicess;
     }
 
-    public function addServicesZoo(ServicesZoo $servicesZoo): static
+    public function addServices(Services $services): static
     {
-        if (!$this->servicesZoos->contains($servicesZoo)) {
-            $this->servicesZoos->add($servicesZoo);
-            $servicesZoo->setEmploye($this);
+        if (!$this->servicess->contains($services)) {
+            $this->servicess->add($services);
+            $services->setEmploye($this);
         }
 
         return $this;
     }
 
-    public function removeServicesZoo(ServicesZoo $servicesZoo): static
+    public function removeServices(Services $services): static
     {
-        if ($this->servicesZoos->removeElement($servicesZoo)) {
+        if ($this->servicess->removeElement($services)) {
             // set the owning side to null (unless already changed)
-            if ($servicesZoo->getEmploye() === $this) {
-                $servicesZoo->setEmploye(null);
+            if ($services->getEmploye() === $this) {
+                $services->setEmploye(null);
             }
         }
 

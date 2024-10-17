@@ -7,611 +7,617 @@
 
 	{% block body %}
 
-	<!-- ***** Preloader Start ***** -->
-	<div id="preloader">
-		<div class="jumper">
-			<div></div>
-			<div></div>
-			<div></div>
+		<!-- ***** Preloader Start ***** -->
+		<div id="preloader">
+			<div class="jumper">
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
 		</div>
-	</div>
-	<!-- ***** Preloader End ***** -->
+		<!-- ***** Preloader End ***** -->
 
 
-	<!-- ***** Header Area Start ***** -->
-	<header class="header-area header-sticky">
-		<div class="connexion">
-			{% if app.user %}
-				<div class="mb-3 userConnect">
-					Bonjour
-					{{ app.user.nom }}
-					{% if app.user.profileImage %}
-						<img src="/uploadsUsers/imagesUsers/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px"/>
-					{% else %}
-						<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px"/>
-					{% endif %}
-				</div>
+		<!-- ***** Header Area Start ***** -->
+		<header class="header-area header-sticky">
+			<div class="connexion">
+				{% if app.user %}
+					<div class="mb-3 userConnect">
+						Bonjour
+						{{ app.user.nom }}
+						{% if app.user.profileImage %}
+							<img src="/uploadsUsers/imagesUsers/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px"/>
+						{% else %}
+							<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px"/>
+						{% endif %}
+					</div>
 
-				<div class="deconnexionBtn btn btn-danger">
-					<a href="{{ path('app_logout') }}">
-						Déconnexion
+					<div class="deconnexionBtn btn btn-danger">
+						<a href="{{ path('app_logout') }}">
+							Déconnexion
+						</a>
+					</div>
+
+				{% else %}
+					<a href="{{ path('app_login') }}" class="connexionBtn">
+						Connexion staff
 					</a>
-				</div>
-
-			{% else %}
-				<a href="{{ path('app_login') }}" class="connexionBtn">
-					Connexion staff
-				</a>
-			{% endif %}
-		</div>
-
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<nav class="main-nav">
-
-						<!-- ***** Logo Start ***** -->
-						<a href="/" class="mt-2 logo">
-							<div class="row p-2 bg-light rounded">
-								<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle" width="30px" height="30px"/>
-								<h4 class="text-success font-weight-bold">
-									Zoo paradis
-								</h4>
-							</div>
-						</a>
-						<!-- ***** Logo End ***** -->
-
-						<!-- ***** Menu Start ***** -->
-						<ul class="nav">
-							{% if is_granted('ROLE_SUPER_ADMIN') %}
-								<li>
-									<a href="/admin" class="adminBtn px-2 rounded bg-danger">
-										Super Admin
-									</a>
-								</li>
-							{% elseif is_granted('ROLE_ADMIN') %}
-								<li>
-									<a href="/admin" class="adminBtn px-2 rounded bg-warning">
-										Admin employé
-									</a>
-								</li>
-							{% elseif is_granted('ROLE_VETERINAIRE') %}
-								<li>
-									<a href="/admin" class="adminBtn px-2 rounded bg-info">
-										Admin véto
-									</a>
-								</li>
-							{% endif %}
-							<li class="scroll-to-section">
-								<a href="/" class="active">
-									Accueil
-								</a>
-							</li>
-							<li>
-								<a href="/about">
-									A propos
-								</a>
-							</li>
-							<li>
-								<a href="/services">
-									Nos services
-								</a>
-							</li>
-							<li>
-								<a href="/habitats">
-									Les habitats
-								</a>
-							</li>
-							<li>
-								<a href="/contact/us">
-									Contact
-								</a>
-							</li>
-
-							{#<li class="scroll-to-section"><a href="#men">Eau</a></li></ul></li>#}
-						</ul>
-
-						<a class='menu-trigger'>
-							<span>Menu</span>
-						</a>
-						<!-- ***** Menu End ***** -->
-					</nav>
-				</div>
+				{% endif %}
 			</div>
-		</div>
-	</header>
-	<!-- ***** Header End ***** -->
 
-	<!-- *****  Banner Start ***** -->
-	<div class="main-banner accueil" id="top">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-6 leftSide">
-					<div class="left-content p-1">
-						<div class="thumb">
-							<div class="inner-content text-center">
-								<h4>
-									Bienvenus au Zoo paradis
-								</h4>
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<nav
+							class="main-nav">
+
+							<!-- ***** Logo Start ***** -->
+							<a href="/" class="mt-2 logo">
+								<div class="row p-2 bg-light rounded">
+									<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle" width="30px" height="30px"/>
+									<h4 class="text-success font-weight-bold">
+										Zoo paradis
+									</h4>
+								</div>
+							</a>
+							<!-- ***** Logo End ***** -->
+
+							<!-- ***** Menu Start ***** -->
+							<ul class="nav">
+								{% if is_granted('ROLE_SUPER_ADMIN') %}
+									<li>
+										<a href="/admin" class="adminBtn px-2 rounded bg-danger">
+											Super Admin
+										</a>
+									</li>
+								{% elseif is_granted('ROLE_ADMIN') %}
+									<li>
+										<a href="/admin" class="adminBtn px-2 rounded bg-warning">
+											Admin employé
+										</a>
+									</li>
+								{% elseif is_granted('ROLE_VETERINAIRE') %}
+									<li>
+										<a href="/admin" class="adminBtn px-2 rounded bg-info">
+											Admin véto
+										</a>
+									</li>
+								{% endif %}
+								<li class="scroll-to-section">
+									<a href="/" class="active">
+										Accueil
+									</a>
+								</li>
+								<li>
+									<a href="/about">
+										A propos
+									</a>
+								</li>
+								<li>
+									<a href="/services">
+										Nos services
+									</a>
+								</li>
+								<li>
+									<a href="/habitats">
+										Les habitats
+									</a>
+								</li>
+								<li>
+									<a href="/contact">
+										Contact
+									</a>
+								</li>
+
+								{#<li class="scroll-to-section"><a href="#men">Eau</a></li></ul></li>#}
+							</ul>
+
+							<a class='menu-trigger'>
 								<span>
-									Un havre de paix pour nos les animaux
+									Menu
 								</span>
-							</div>
-							<img src="{{ asset('/assets/images/zoo/zoo2.webp') }}" height="500px" opacity="0.5" alt="">
-						</div>
+							</a>
+							<!-- ***** Menu End ***** -->
+						</nav>
 					</div>
 				</div>
-				<div class="col-lg-6 rightSide">
-					<div class="right-content">
-						<div class="row troisCadres">
-							<div class="col-lg-5">
-								<div class="right-first-image">
-								{% for habitat3 in habitat3 %}
-									<div class="thumb">
-										<div class="inner-content">
-											<h4>
-												{{ habitat3.nom }}
-											</h4>
-											<span>
-												{{ habitat3.description }}
-											</span>
-										</div>
-										<div class="hover-content">
-											<div class="inner">
-												<h4>
-													{{ habitat3.description }}
-												</h4>
-												<p>
-													Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.
-												</p>
-												<div class="main-border-button">
-													<a href="/aquatique">
-														Explorer
-													</a>
-												</div>
-											</div>
-										</div>
-										
-											{# Ici, tu n'accèdes plus à .id car services est une chaîne #}
-										<div>
-											<img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ habitat3.habitatimage) }}"height="220px" alt="">
-										</div>
-										{% endfor %}
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-5">
-								<div class="right-first-image">
-									{% for habitat2 in habitat2 %}
-									<div class="thumb">
-										<div class="inner-content">
-											<h4>
-												{{ habitat2.nom }}
-											</h4>
-											<span>
-												{{ habitat2.description }}
-											</span>
-										</div>
-										<div class="hover-content">
-											<div class="inner">
-												<h4>
-													{{ habitat2.nom }}
-												</h4>
-												<p>
-													Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.
-												</p>
-												<div class="main-border-button">
-													<a href="/terrestre">
-														Explorer
-													</a>
-												</div>
-											</div>
-										</div>
-										
-											{# Ici, tu n'accèdes plus à .id car services est une chaîne #}
-										<div>
-											<img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ habitat2.habitatimage) }}" height="220px" alt="">
-										</div>
-										{% endfor %}
-									</div>
-								</div>
-							</div>
+			</div>
+		</header>
+		<!-- ***** Header End ***** -->
 
-							<div class="col-lg-5">
-								<div class="right-first-image">
-										{% for habitat in habitat %}
-									<div class="thumb">
-										<div class="inner-content">
-											<h4>
-												{{ habitat.nom }}
-											</h4>
-											<span>
-												{{ habitat.description }}
-											</span>
-										</div>
-										<div class="hover-content">
-											<div class="inner">
-												<h4>
-													{{ habitat.nom }}
-												</h4>
-												<p>
-													Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.
-												</p>
-												<div class="main-border-button">
-													<a href="/aerien">
-														Explorer
-													</a>
+		<!-- *****  Banner Start ***** -->
+		<div class="main-banner accueil" id="top">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-6 leftSide">
+						<div class="left-content p-1">
+							<div class="thumb">
+								<div class="inner-content text-center">
+									<h4>
+										Bienvenus au Zoo paradis
+									</h4>
+									<span>
+										Un havre de paix pour nos les animaux
+									</span>
+								</div>
+								<img src="{{ asset('/assets/images/zoo/zoo2.webp') }}" height="500px" opacity="0.5" alt="">
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-6 rightSide">
+						<div class="right-content">
+							<div class="row troisCadres">
+
+								<div class="col-lg-5">
+									<div class="right-first-image">
+										{% for habitat1 in habitat1 %}
+											<div class="thumb">
+												<div class="inner-content">
+													<h4>
+														{{ habitat1.nom }}
+													</h4>
+													<span>
+														{{ habitat1.description }}
+													</span>
 												</div>
-											</div>
+												<div class="hover-content">
+													<div class="inner">
+														<h4>
+															{{ habitat1.nom }}
+														</h4>
+														<p>
+															Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.
+														</p>
+														<div class="main-border-button">
+															<a href="/habitats/aerien">
+																Explorer
+															</a>
+														</div>
+													</div>
+												</div>
+												{# Ici, tu n'accèdes plus à .id car services est une chaîne #}
+												<div>
+													<img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ habitat1.habitatImage) }}" height="220px" alt="">
+												</div>
+											{% endfor %}
 										</div>
-											{# Ici, tu n'accèdes plus à .id car services est une chaîne #}
-										<div>
-											<img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ habitat.habitatimage) }}" height="220px" alt="">
-										</div>
-										{% endfor %}
 									</div>
 								</div>
+
+								<div class="col-lg-5">
+									<div class="right-first-image">
+										{% for habitat2 in habitat2 %}
+											<div class="thumb">
+												<div class="inner-content">
+													<h4>
+														{{ habitat2.nom }}
+													</h4>
+													<span>
+														{{ habitat2.description }}
+													</span>
+												</div>
+												<div class="hover-content">
+													<div class="inner">
+														<h4>
+															{{ habitat2.nom }}
+														</h4>
+														<p>
+															Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.
+														</p>
+														<div class="main-border-button">
+															<a href="/habitats/terrestre">
+																Explorer
+															</a>
+														</div>
+													</div>
+												</div>
+
+												{# Ici, tu n'accèdes plus à .id car services est une chaîne #}
+												<div>
+													<img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ habitat2.habitatimage) }}" height="220px" alt="">
+												</div>
+											{% endfor %}
+										</div>
+									</div>
+								</div>
+
+								<div class="col-lg-5">
+									<div class="right-first-image">
+										{% for habitat3 in habitat3 %}
+											<div class="thumb">
+												<div class="inner-content">
+													<h4>
+														{{ habitat3.nom }}
+													</h4>
+													<span>
+														{{ habitat3.description }}
+													</span>
+												</div>
+												<div class="hover-content">
+													<div class="inner">
+														<h4>
+															{{ habitat3.description }}
+														</h4>
+														<p>
+															Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.
+														</p>
+														<div class="main-border-button">
+															<a href="/habitats/aquatique">
+																Explorer
+															</a>
+														</div>
+													</div>
+												</div>
+
+												{# Ici, tu n'accèdes plus à .id car services est une chaîne #}
+												<div>
+													<img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ habitat3.habitatimage) }}" height="220px" alt="">
+												</div>
+											{% endfor %}
+										</div>
+									</div>
+								</div>
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- *****  Banner End ***** -->
+		<!-- *****  Banner End ***** -->
 
-	{#}
-	<!-- ******** SECTION ANIMAUX ZOO ********* -->
-    
-        <!-- ***** habitat celeste Starts ***** -->
-    <section class="section" id="kids">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="section-heading">
-                        <h2>L'habitat celeste</h2>
-                        <span>Venez découvrir la majestieuse vie des animaux des cieux.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="kid-item-carousel">
-                        <div class="owl-kid-item owl-carousel">
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="{{ asset('/assets/images/ciel/oiseauxVerts.jpg') }}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>habitat celeste 1</h4>
-                                    <span>1</span>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="{{ asset('/assets/images/ciel/ibis_rouge.jpg') }}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>habitat celeste 2</h4>
-                                    <span>2</span>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="{{ asset('/assets/images/ciel/Perroquet_Ara.jpg') }}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>habitat celeste 3</h4>
-                                    <span>3</span>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="{{ asset('/assets/images/ciel/aigle.jpg') }}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>habitat celeste 4</h4>
-                                    <span>4</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-        <!-- ***** habitat celeste Ends ***** -->
-    
-        <!-- ***** Habitat terrestre Starts ***** -->
-    <section class="section" id="women">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="section-heading">
-                        <h2>L'habitat terrestre</h2>
-                        <span>Venez explorer le monde des animaux terrestre.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="women-item-carousel">
-                        <div class="owl-women-item owl-carousel">
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="{{ asset('/assets/images/terrestre/bb girafe2.jpeg') }}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>habitat terrestre 1</h4>
-                                    <span>1</span>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="{{ asset('/assets/images/terrestre/elephant.jpg') }}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>habitat terrestre 2</h4>
-                                    <span>2</span>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="{{ asset('/assets/images/terrestre/koala.png') }}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>habitat terrestre 3</h4>
-                                    <span>3</span>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="{{ asset('/assets/images/terrestre/chacal.jpg') }}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>habitat terrestre 4</h4>
-                                    <span>4</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-        <!-- ***** Habitat terrestre Ends ***** -->
-    
-        <!-- ***** Habitat aquatique Starts ***** -->
-    <section class="section" id="men">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="section-heading">
-                        <h2>L'habitat aquatique</h2>
-                        <span>Explorez les détails du monde aquatique.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="men-item-carousel">
-                        <div class="owl-men-item owl-carousel">
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="/aquatique"><i class="fa fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="{{ asset('/assets/images/aquatique/manchot.jpeg') }}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Aquatique 1</h4>
-                                    <span>1</span>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="/aquatique"><i class="fa fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="{{ asset('/assets/images/aquatique/tortue.jpg') }}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Aquatique 2</h4>
-                                    <span>2</span>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="{{ asset('/assets/images/aquatique/otarie.jpg') }}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Aquatique 3</h4>
-                                    <span>3</span>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="{{ asset('/assets/images/aquatique/bb hypo.jpg') }}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Aquatique 4</h4>
-                                    <span>4</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-        <!-- ***** Habitat aquatique Ends ***** -->
-    {#}
+		{#}
+			<!-- ******** SECTION ANIMAUX ZOO ********* -->
+		    
+		        <!-- ***** habitat celeste Starts ***** -->
+		    <section class="section" id="kids">
+		        <div class="container">
+		            <div class="row">
+		                <div class="col-lg-6">
+		                    <div class="section-heading">
+		                        <h2>L'habitat celeste</h2>
+		                        <span>Venez découvrir la majestieuse vie des animaux des cieux.</span>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		
+		        <div class="container">
+		            <div class="row">
+		                <div class="col-lg-12">
+		                    <div class="kid-item-carousel">
+		                        <div class="owl-kid-item owl-carousel">
+		                            <div class="item">
+		                                <div class="thumb">
+		                                    <div class="hover-content">
+		                                        <ul>
+		                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+		                                        </ul>
+		                                    </div>
+		                                    <img src="{{ asset('/assets/images/ciel/oiseauxVerts.jpg') }}" alt="">
+		                                </div>
+		                                <div class="down-content">
+		                                    <h4>habitat celeste 1</h4>
+		                                    <span>1</span>
+		                                </div>
+		                            </div>
+		                            <div class="item">
+		                                <div class="thumb">
+		                                    <div class="hover-content">
+		                                        <ul>
+		                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+		                                        </ul>
+		                                    </div>
+		                                    <img src="{{ asset('/assets/images/ciel/ibis_rouge.jpg') }}" alt="">
+		                                </div>
+		                                <div class="down-content">
+		                                    <h4>habitat celeste 2</h4>
+		                                    <span>2</span>
+		                                </div>
+		                            </div>
+		                            <div class="item">
+		                                <div class="thumb">
+		                                    <div class="hover-content">
+		                                        <ul>
+		                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+		                                        </ul>
+		                                    </div>
+		                                    <img src="{{ asset('/assets/images/ciel/Perroquet_Ara.jpg') }}" alt="">
+		                                </div>
+		                                <div class="down-content">
+		                                    <h4>habitat celeste 3</h4>
+		                                    <span>3</span>
+		                                </div>
+		                            </div>
+		                            <div class="item">
+		                                <div class="thumb">
+		                                    <div class="hover-content">
+		                                        <ul>
+		                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+		                                        </ul>
+		                                    </div>
+		                                    <img src="{{ asset('/assets/images/ciel/aigle.jpg') }}" alt="">
+		                                </div>
+		                                <div class="down-content">
+		                                    <h4>habitat celeste 4</h4>
+		                                    <span>4</span>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </section>
+		        <!-- ***** habitat celeste Ends ***** -->
+		    
+		        <!-- ***** Habitat terrestre Starts ***** -->
+		    <section class="section" id="women">
+		        <div class="container">
+		            <div class="row">
+		                <div class="col-lg-6">
+		                    <div class="section-heading">
+		                        <h2>L'habitat terrestre</h2>
+		                        <span>Venez explorer le monde des animaux terrestre.</span>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="container">
+		            <div class="row">
+		                <div class="col-lg-12">
+		                    <div class="women-item-carousel">
+		                        <div class="owl-women-item owl-carousel">
+		                            <div class="item">
+		                                <div class="thumb">
+		                                    <div class="hover-content">
+		                                        <ul>
+		                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+		                                        </ul>
+		                                    </div>
+		                                    <img src="{{ asset('/assets/images/terrestre/bb girafe2.jpeg') }}" alt="">
+		                                </div>
+		                                <div class="down-content">
+		                                    <h4>habitat terrestre 1</h4>
+		                                    <span>1</span>
+		                                </div>
+		                            </div>
+		                            <div class="item">
+		                                <div class="thumb">
+		                                    <div class="hover-content">
+		                                        <ul>
+		                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+		                                        </ul>
+		                                    </div>
+		                                    <img src="{{ asset('/assets/images/terrestre/elephant.jpg') }}" alt="">
+		                                </div>
+		                                <div class="down-content">
+		                                    <h4>habitat terrestre 2</h4>
+		                                    <span>2</span>
+		                                </div>
+		                            </div>
+		                            <div class="item">
+		                                <div class="thumb">
+		                                    <div class="hover-content">
+		                                        <ul>
+		                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+		                                        </ul>
+		                                    </div>
+		                                    <img src="{{ asset('/assets/images/terrestre/koala.png') }}" alt="">
+		                                </div>
+		                                <div class="down-content">
+		                                    <h4>habitat terrestre 3</h4>
+		                                    <span>3</span>
+		                                </div>
+		                            </div>
+		                            <div class="item">
+		                                <div class="thumb">
+		                                    <div class="hover-content">
+		                                        <ul>
+		                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+		                                        </ul>
+		                                    </div>
+		                                    <img src="{{ asset('/assets/images/terrestre/chacal.jpg') }}" alt="">
+		                                </div>
+		                                <div class="down-content">
+		                                    <h4>habitat terrestre 4</h4>
+		                                    <span>4</span>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </section>
+		        <!-- ***** Habitat terrestre Ends ***** -->
+		    
+		        <!-- ***** Habitat aquatique Starts ***** -->
+		    <section class="section" id="men">
+		        <div class="container">
+		            <div class="row">
+		                <div class="col-lg-6">
+		                    <div class="section-heading">
+		                        <h2>L'habitat aquatique</h2>
+		                        <span>Explorez les détails du monde aquatique.</span>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="container">
+		            <div class="row">
+		                <div class="col-lg-12">
+		                    <div class="men-item-carousel">
+		                        <div class="owl-men-item owl-carousel">
+		                            <div class="item">
+		                                <div class="thumb">
+		                                    <div class="hover-content">
+		                                        <ul>
+		                                            <li><a href="/aquatique"><i class="fa fa-eye"></i></a></li>
+		                                        </ul>
+		                                    </div>
+		                                    <img src="{{ asset('/assets/images/aquatique/manchot.jpeg') }}" alt="">
+		                                </div>
+		                                <div class="down-content">
+		                                    <h4>Aquatique 1</h4>
+		                                    <span>1</span>
+		                                </div>
+		                            </div>
+		                            <div class="item">
+		                                <div class="thumb">
+		                                    <div class="hover-content">
+		                                        <ul>
+		                                            <li><a href="/aquatique"><i class="fa fa-eye"></i></a></li>
+		                                        </ul>
+		                                    </div>
+		                                    <img src="{{ asset('/assets/images/aquatique/tortue.jpg') }}" alt="">
+		                                </div>
+		                                <div class="down-content">
+		                                    <h4>Aquatique 2</h4>
+		                                    <span>2</span>
+		                                </div>
+		                            </div>
+		                            <div class="item">
+		                                <div class="thumb">
+		                                    <div class="hover-content">
+		                                        <ul>
+		                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+		                                        </ul>
+		                                    </div>
+		                                    <img src="{{ asset('/assets/images/aquatique/otarie.jpg') }}" alt="">
+		                                </div>
+		                                <div class="down-content">
+		                                    <h4>Aquatique 3</h4>
+		                                    <span>3</span>
+		                                </div>
+		                            </div>
+		                            <div class="item">
+		                                <div class="thumb">
+		                                    <div class="hover-content">
+		                                        <ul>
+		                                            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+		                                        </ul>
+		                                    </div>
+		                                    <img src="{{ asset('/assets/images/aquatique/bb hypo.jpg') }}" alt="">
+		                                </div>
+		                                <div class="down-content">
+		                                    <h4>Aquatique 4</h4>
+		                                    <span>4</span>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </section>
+		        <!-- ***** Habitat aquatique Ends ***** -->
+		    {#}
 
 		<!-- ***** Services Area Starts ***** -->
-	<section class="section" id="products"> 
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="section-heading">
-						<h2>
-							Nos services
-						</h2>
-						<span>
-							Check out all of our products.
-						</span>
+			<section class="section" id="products"> <div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="section-heading">
+							<h2>
+								Nos services
+							</h2>
+							<span>
+								Check out all of our products.
+							</span>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="container">
-			<div class="row servicesGap">
-				<div class="col-lg-4">
-					<div class="item">
-						<div class="thumb">
-							<div class="hover-content">
-								<ul>
-									<li><a href="/restauration"><i class="fa fa-eye"></i></a></li>
-								</ul>
-							</div>
+			<div class="container">
+				<div class="row servicesGap">
+					<div class="col-lg-4 imgServices">
+						<div class="item">
+							<div class="thumb">
+								<div class="hover-content">
+									<ul>
+										<li><a href="/restauration"><i class="fa fa-eye"></i></a></li>
+									</ul>
+								</div>
 								{% for services in services %}
 									{# Ici, tu n'accèdes plus à .id car services est une chaîne #}
-										<div>
-											<img src="{{ asset('uploads/services/' ~ services.servicesImages) }}" alt="">
-										</div>
-										<div class="down-content">
-											<h4>
-												{{ services.nom }}
-											</h4>
-											<span>
-												{{ services.description }}
-											</span>
-										</div>
+									<div>
+										<img src="{{ asset('uploads/services/' ~ services.servicesImages) }}" alt="">
+									</div>
+									<div class="down-content">
+										<h4>
+											{{ services.nom }}
+										</h4>
+										<span>
+											{{ services.description }}
+										</span>
+									</div>
 								{% endfor %}
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="item">
-						<div class="thumb">
-							<div class="hover-content">
-								<ul>
-									<li><a href="/restauration"><i class="fa fa-eye"></i></a></li>
-								</ul>
-							</div>
+					<div class="col-lg-4 imgServices">
+						<div class="item">
+							<div class="thumb">
+								<div class="hover-content">
+									<ul>
+										<li><a href="/restauration"><i class="fa fa-eye"></i></a></li>
+									</ul>
+								</div>
 								{% for services2 in services2 %}
 									{# Ici, tu n'accèdes plus à .id car services est une chaîne #}
-										<div>
-											<img src="{{ asset('uploads/services/' ~ services2.servicesImages) }}" alt="">
-										</div>
-										<div class="down-content">
-											<h4>
-												{{ services2.nom }}
-											</h4>
-											<span>
-												{{ services2.description }}
-											</span>
-										</div>
+									<div>
+										<img src="{{ asset('uploads/services/' ~ services2.servicesImages) }}" alt="">
+									</div>
+									<div class="down-content">
+										<h4>
+											{{ services2.nom }}
+										</h4>
+										<span>
+											{{ services2.description }}
+										</span>
+									</div>
 								{% endfor %}
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="item">
-						<div class="thumb">
-							<div class="hover-content">
-								<ul>
-									<li><a href="/restauration"><i class="fa fa-eye"></i></a></li>
-								</ul>
-							</div>
+					<div class="col-lg-4 imgServices">
+						<div class="item">
+							<div class="thumb">
+								<div class="hover-content">
+									<ul>
+										<li><a href="/restauration"><i class="fa fa-eye"></i></a></li>
+									</ul>
+								</div>
 								{% for services3 in services3 %}
 									{# Ici, tu n'accèdes plus à .id car services3 est une chaîne #}
-										<div>
-											<img src="{{ asset('uploads/services/' ~ services3.servicesImages) }}" alt="">
-										</div>
-										<div class="down-content">
-											<h4>
-												{{ services3.nom }}
-											</h4>
-											<span>
-												{{ services3.description }}
-											</span>
-										</div>
+									<div>
+										<img src="{{ asset('uploads/services/' ~ services3.servicesImages) }}" alt="">
+									</div>
+									<div class="down-content">
+										<h4>
+											{{ services3.nom }}
+										</h4>
+										<span>
+											{{ services3.description }}
+										</span>
+									</div>
 								{% endfor %}
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<!-- FIN DE CONTAINER -->
-	
-	</section>
+			<!-- FIN DE CONTAINER -->
+
+		</section>
 		<!-- ***** Services Area Ends ***** -->
 
 		<!-- ***** Explore Start ***** -->
-	<section class="section" id="explore">
+		<section class="section" id="explore">
 			<div class="container">
 				<div
 					class="row">
@@ -633,17 +639,16 @@
 								{% if avis.isValidated and (avis.id == 1 or avis.id == 2 or avis.id == 3) %}
 									<div
 										class="slide">
-										{#<img src="{{ asset('/images/profile/' ~ avis.user.profileImage) }}" name="slideImg" class="slideImg" alt="Image du Client" width="40px" height="35px">
-																																																		                                #}
+										{#<img src="{{ asset('/images/profile/' ~ avis.user.profileImage) }}" name="slideImg" class="slideImg" alt="Image du Client" width="40px" height="35px">#}
 										<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="bg-light border border-2 rounded-circle" width="35px" height="100px"/>
 										<i class="fa-solid fa-quote-left"></i>
 										<p>
-											"
+											
 											{{ avis.commentaire }}
-											"
+											
 											<br>
 											<strong>
-												{{ avis.nom }}
+												{{ avis.pseudo }}
 											</strong>
 										</p>
 										<p>
@@ -786,10 +791,10 @@
 							{{ form_start(form, {'attr': {'class': 'form'}}
 							) }}
 
-							{# Afficher dynamiquement le pseudo de l'utilisateur connecté #}
-							<div class="mb-3">
+							<div
+								class="mb-3">
 								{# Le reste du formulaire d'avis #}
-								{{ form_row(form.nom, {'attr': {'class': 'form-control'}}
+								{{ form_row(form.pseudo, {'attr': {'class': 'form-control'}}
 								) }}
 							</div>
 
@@ -960,5 +965,5 @@
 			</div>
 		</div>
 	</footer>
-	
+
 {% endblock %}

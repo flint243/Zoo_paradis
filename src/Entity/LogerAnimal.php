@@ -13,14 +13,16 @@ class LogerAnimal
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $habitat_id = null;
-
-    #[ORM\Column]
-    private ?int $animal_id = null;
-
+    
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
+
+
+    #[ORM\ManyToOne(inversedBy: 'logerAnimals')]
+    private ?Animal $animal_id = null;
+
+    #[ORM\ManyToOne(inversedBy: 'logerAnimals')]
+    private ?Habitat $habitat_id = null;
 
 
     public function __construct()
@@ -33,30 +35,6 @@ class LogerAnimal
         return $this->id;
     }
 
-    public function getHabitatId(): ?int
-    {
-        return $this->habitat_id;
-    }
-
-    public function setHabitatId(int $habitat_id): static
-    {
-        $this->habitat_id = $habitat_id;
-
-        return $this;
-    }
-
-    public function getAnimalId(): ?int
-    {
-        return $this->animal_id;
-    }
-
-    public function setAnimalId(int $animal_id): static
-    {
-        $this->animal_id = $animal_id;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
@@ -65,6 +43,30 @@ class LogerAnimal
     public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getAnimalId(): ?Animal
+    {
+        return $this->animal_id;
+    }
+
+    public function setAnimalId(?Animal $animal_id): static
+    {
+        $this->animal_id = $animal_id;
+
+        return $this;
+    }
+
+    public function getHabitatId(): ?Habitat
+    {
+        return $this->habitat_id;
+    }
+
+    public function setHabitatId(?Habitat $habitat_id): static
+    {
+        $this->habitat_id = $habitat_id;
 
         return $this;
     }

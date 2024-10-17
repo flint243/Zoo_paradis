@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpmyadmin
+  labels:
+    app: phpmyadmin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpmyadmin
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin
+    spec:
+      containers:
+      - name: phpmyadmin
+        image: phpmyadmin/phpmyadmin  # Le champ image doit être ici
+        env:
+        - name: PMA_HOST
+          value: mysql-service
+        - name: MYSQL_ROOT_PASSWORD
+          value: root_password
+        ports:
+        - containerPort: 80  # Port sur lequel PhpMyAdmin écoute

@@ -26,10 +26,10 @@ class HabitatCrudController extends AbstractCrudController
         return [
             TextField::new('nom'),
             TextareaField::new('description'),
-            ImageField::new('habitats_image')
+            ImageField::new('habitat_image')
                 ->setBasePath('/uploadsHabitat/imagesHabitat')
                 ->onlyOnIndex(),
-            Field::new('habitats_image_file', 'Image')
+            Field::new('habitat_image_file', 'Image')
             ->setFormType(VichImageType::class) 
             ->onlyOnForms(),
                 DateTimeField::new('createdAt')
