@@ -52,6 +52,9 @@ class Animal
     #[ORM\ManyToOne(inversedBy: 'animals')]
     private ?Employe $employe = null;
 
+    #[ORM\OneToMany(targetEntity: AnimalImage::class, mappedBy: 'animal', cascade: ['persist', 'remove'])]
+    private Collection $images;
+
     /**
      * @var Collection<int, LogerAnimal>
      */
@@ -64,6 +67,7 @@ class Animal
     {
         $this->created_at = new \DateTimeImmutable();
         $this->logerAnimals = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -211,4 +215,37 @@ class Animal
 
         return $this;
     }
+
+
+    /**
+     * @return Collection<int, AnimalImage>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(AnimalImage $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->setAnimal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(AnimalImage $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getAnimal() === $this) {
+                $image->setAnimal(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

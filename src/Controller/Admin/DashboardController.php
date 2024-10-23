@@ -7,10 +7,8 @@ use App\Entity\User;
 use App\Entity\Animal;
 use App\Entity\Habitat;
 use App\Entity\Services;
-use App\Entity\Veterinaire;
 use App\Entity\Aquatique;
 use App\Entity\Aerien;
-use App\Entity\Employe;
 use App\Entity\Terrestre;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,7 +17,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 
 class DashboardController extends AbstractDashboardController
@@ -64,14 +61,6 @@ class DashboardController extends AbstractDashboardController
         // Section "Gestion des services"
         yield MenuItem::section('Gestion des services');
         yield MenuItem::linkToCrud('Nos services', 'fas fa-users', Services::class);
-
-         // Section "Gestion des employé"
-         yield MenuItem::section('Gestion des employé');
-         yield MenuItem::linkToCrud('Nos employé', 'fas fa-users', Employe::class);
-
-        // Section "Gestion des vétérinaires"
-        yield MenuItem::section('Gestion du des vétérinaires');
-        yield MenuItem::linkToCrud('Nos Vétérinaires', 'fas fa-users', Veterinaire::class);
 
         // Section "Gestion des habitats"
         yield MenuItem::section('Gestion des habitats');

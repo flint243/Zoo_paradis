@@ -70,16 +70,16 @@
 											Super Admin
 										</a>
 									</li>
-								{% elseif is_granted('ROLE_ADMIN') %}
+								{% elseif is_granted('ROLE_EMPLOYE') %}
 									<li>
-										<a href="/admin" class="adminBtn px-2 rounded bg-warning">
-											Admin employé
+										<a href="/employee-admin" class="adminBtn px-2 rounded bg-warning">
+											Employé
 										</a>
 									</li>
 								{% elseif is_granted('ROLE_VETERINAIRE') %}
 									<li>
-										<a href="/admin" class="adminBtn px-2 rounded bg-info">
-											Admin véto
+										<a href="/veterinaire-admin" class="adminBtn px-2 rounded bg-info">
+											Vétérinaire
 										</a>
 									</li>
 								{% endif %}
@@ -128,28 +128,26 @@
 		<!-- *****  Banner Start ***** -->
 		<div class="main-banner accueil" id="top">
 			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-6 leftSide">
-						<div class="left-content p-1">
+				<div class="row justify-content-around troisCadres">
+					<div class="row m-0 leftSide">
+						<div class="left-content">
 							<div class="thumb">
-								<div class="inner-content text-center">
+								<div class="row inner-content p-2 titre_baniere">
 									<h4>
-										Bienvenus au Zoo paradis
+										Bienvenus à Zoo paradis
 									</h4>
 									<span>
 										Un havre de paix pour nos les animaux
 									</span>
 								</div>
-								<img src="{{ asset('/assets/images/zoo/zoo2.webp') }}" height="500px" opacity="0.5" alt="">
+									<img src="{{ asset('/assets/images/banieres/animal-group.jpg') }}" class="presentImg" opacity="0.5" alt="">
 							</div>
 						</div>
 					</div>
 
-					<div class="col-lg-6 rightSide">
 						<div class="right-content">
-							<div class="row troisCadres">
-
-								<div class="col-lg-5">
+							<div class="row">
+								<div class="col-lg-4">
 									<div class="right-first-image">
 										{% for habitat1 in habitat1 %}
 											<div class="thumb">
@@ -185,7 +183,7 @@
 									</div>
 								</div>
 
-								<div class="col-lg-5">
+								<div class="col-lg-4">
 									<div class="right-first-image">
 										{% for habitat2 in habitat2 %}
 											<div class="thumb">
@@ -222,7 +220,7 @@
 									</div>
 								</div>
 
-								<div class="col-lg-5">
+								<div class="col-lg-4">
 									<div class="right-first-image">
 										{% for habitat3 in habitat3 %}
 											<div class="thumb">
@@ -237,7 +235,7 @@
 												<div class="hover-content">
 													<div class="inner">
 														<h4>
-															{{ habitat3.description }}
+															{{ habitat3.nom }}
 														</h4>
 														<p>
 															Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.
@@ -258,10 +256,8 @@
 										</div>
 									</div>
 								</div>
-
 							</div>
 						</div>
-					</div>
 				</div>
 			</div>
 		</div>

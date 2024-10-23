@@ -141,7 +141,6 @@ public function contact(EntityManagerInterface $entityManager, Request $request,
                  }
              }
              $avisData[] = [
-                 //'pseudo' => $avis->getPseudo(),
                  'comnnetaire' => $avis->getCommentaire(),
                  'image_habitat' => $imagePath,
              ];
@@ -165,50 +164,5 @@ public function contact(EntityManagerInterface $entityManager, Request $request,
             'aerien' => $aerien,
         ]);
     }
-
-
-
-
-/*private $firebaseService;
-
-public function __construct(FirebaseService $firebaseService)
-{
-    $this->firebaseService = $firebaseService;
-}
-
-
-  #[Route('/', name:'add_review', methods:'{"POST"}')]
-public function addReview(Request $request): Response
-{
-    $pseudo = $request->request->get('pseudo');
-    $commentaire = $request->request->get('commentaire');
-    $userId = $request->request->get('user_id');
-    $createdAt = new \DateTime();
-    $isValidated = false;
-
-    $reviewData = [
-        'pseudo' => $pseudo,
-        'commentaire' => $commentaire,
-        'user_id' => $userId,
-        'createdAt' => $createdAt->format(\DateTime::ISO8601),
-        'isvalidated' => $isValidated,
-    ];
-
-    $this->firebaseService->addReview($reviewData);
-
-    return new Response('Review added successfully.');
-}
-
-
- #[Route('/reviews', name:'get_reviews', methods:'{"GET"}')]
- 
-public function getReviews(): Response
-{
-    $reviews = $this->firebaseService->getReviews();
-
-    // Optionnel : formater les données pour les afficher dans une vue ou une réponse JSON
-    return $this->json($reviews);
-}
-    */
 
 }

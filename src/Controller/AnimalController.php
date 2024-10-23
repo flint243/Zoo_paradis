@@ -6,19 +6,12 @@ use App\Entity\Animal;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Database;
 use App\Repository\AnimalRepository;
-use App\Repository\AerienRepository;
-use App\Repository\AquatiqueRepository;
-use App\Repository\TerrestreRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
-
 class AnimalController extends AbstractController
 {
-
-
     #[Route('/aerien/{id}', name: 'animal_aerien_show')]
     public function showaerien(AnimalRepository $animalRepository, $id): Response
     {
@@ -64,7 +57,5 @@ class AnimalController extends AbstractController
         return $this->render('animal/show_aquatique.html.twig', [
             'aquatique' => $aquatique,
         ]);
-        
     }
-
 }

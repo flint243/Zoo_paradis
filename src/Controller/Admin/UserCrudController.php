@@ -6,20 +6,15 @@ use App\Entity\User;
 use App\Service\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 
 
 class UserCrudController extends AbstractCrudController
@@ -70,7 +65,8 @@ class UserCrudController extends AbstractCrudController
                 ->setChoices([
                     'Admin' => 'ROLE_ADMIN',
                     'User' => 'ROLE_USER',
-                    'Manager' => 'ROLE_MANAGER',
+                    'Employe' => 'ROLE_EMPLOYE',
+                    'Veterinaire' => 'ROLE_VETERINAIRE',
                 ])
                 ->allowMultipleChoices(),
             

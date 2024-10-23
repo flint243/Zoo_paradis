@@ -9,6 +9,17 @@ security:
                 property: email
 
     firewalls:
+
+        # Firewall pour les employés
+        employee_admin:
+            pattern: ^/employe_admin
+            provider: app_user_provider
+            form_login:
+                login_path: employe_login
+                check_path: employe_login
+            logout:
+                path: employe_logout
+                target: employe_login
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -24,11 +35,12 @@ security:
 
     role_hierarchy:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_EMPLOYE, ROLE_VETERINAIRE]
-        ROLE_ADMIN: [ROLE_EMPLOYE]
+        ROLE_EMPLOYE: [ROLE_EMPLOYE]
         ROLE_VETERINAIRE: [ROLE_VETERINAIRE]
 
     access_control:
     - { path: ^/admin/veterinaire/super, roles: ROLE_SUPER_ADMIN }
+    - { path: ^/employe-admin, roles: ROLE_EMPLOYE }
     - { path: ^/veterinaire, roles: ROLE_VETERINAIRE }
     - { path: ^/admin, roles: ROLE_ADMIN }
     - { path: ^/profile, roles: ROLE_USER }

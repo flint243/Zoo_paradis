@@ -35,3 +35,10 @@ vich_uploader:
             delete_on_update: true
             delete_on_remove: true
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        animal_images:
+            uri_prefix: /uploads/animal_images
+            upload_destination: '%kernel.project_dir%/public/uploads/animal_images'
+            delete_on_update: true
+            delete_on_remove: true
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

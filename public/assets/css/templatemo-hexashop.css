@@ -661,8 +661,8 @@ banner
 
 .main-banner {
   border-bottom: 3px solid #eee;
-  padding-top: 160px;
-  padding-bottom: 30px;
+  padding-top: 110px;
+  padding-bottom: 0px;
 }
 
 .main-banner .left-content .thumb img {
@@ -2532,14 +2532,13 @@ img.slideImg{
 }
 
 
-.troisCadres {
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
-  padding-top: 5px;
-  justify-content: space-evenly;
+.leftSide {
+  position: relative;
+  margin-bottom: 50px;
+}
+.right-content{
+  position: relative;
+  margin-top: 20px;
 }
 
 .owl-item img{
@@ -2555,3 +2554,11 @@ img.slideImg{
   flex-wrap: nowrap;
 }
 
+.titre_baniere{
+  width:100%;
+  text-align: center;
+}
+.titre_baniere h4, span{
+  width: 100%;
+  position: relative;
+}

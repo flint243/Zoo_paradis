@@ -7,9 +7,10 @@ namespace App\Form;
 use App\Entity\Habitat;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class HabitatType extends AbstractType
 {
@@ -33,7 +34,13 @@ class HabitatType extends AbstractType
                     ])
                 ],
             ])
-            // Autres champs...
+            ->add('images', CollectionType::class, [
+                'entry_type' => FileType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'required' => false,
+            ]);
         ;
     }
 

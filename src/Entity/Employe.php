@@ -7,10 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 #[ORM\Entity(repositoryClass: EmployeRepository::class)]
-class Employe
+class Employe 
 {
+    private array $roles = ["ROLE_EMPLOYE"];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -62,6 +66,14 @@ class Employe
         $this->contacts = new ArrayCollection();
         $this->services = new ArrayCollection();
         $this->created_at = new \DateTimeImmutable();
+    }
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // S'assurer que tous les employés ont au moins le rôle ROLE_EMPLOYEE
+        $roles[] = 'ROLE_EMPLOYEE';
+        return array_unique($roles);
     }
 
     public function getId(): ?int

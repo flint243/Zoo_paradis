@@ -1,8 +1,4 @@
 #
-pgadmin
-#
-
-#
 .DS_Store
 #
 
@@ -33,7 +29,7 @@ assets/vendor/
 #
 
 ##
-#config/firebase/firebase_credentials.json
+config/firebase/firebase_credentials.json
 ##
 
 ##
