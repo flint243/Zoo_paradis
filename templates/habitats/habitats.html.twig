@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nos habitats{% endblock %}
+{% block title %}Zoo paradis | Nos habitats{% endblock %}
 
 {% block body %}
     <!-- ***** Preloader Start ***** -->
@@ -15,8 +15,8 @@
     
     
     <!-- ***** Header Area Start ***** -->
-    <header class="header-area header-sticky">
-			<div class="connexion">
+        <header class="header-area header-sticky">
+			<div class="connexion bg-light">
 				{% if app.user %}
 					<div class="mb-3 userConnect">
 						Bonjour
@@ -36,7 +36,7 @@
 
 				{% else %}
 					<a href="{{ path('app_login') }}" class="connexionBtn">
-						Connexion staff
+						Connexion ici
 					</a>
 				{% endif %}
 			</div>
@@ -66,21 +66,21 @@
 											Super Admin
 										</a>
 									</li>
-								{% elseif is_granted('ROLE_ADMIN') %}
+								{% elseif is_granted('ROLE_EMPLOYE') %}
 									<li>
-										<a href="/admin" class="adminBtn px-2 rounded bg-warning">
-											Admin employé
+										<a href="/employee-admin" class="adminBtn px-2 rounded bg-warning">
+											Employé
 										</a>
 									</li>
 								{% elseif is_granted('ROLE_VETERINAIRE') %}
 									<li>
-										<a href="/admin" class="adminBtn px-2 rounded bg-info">
-											Admin véto
+										<a href="/veterinaire-admin" class="adminBtn px-2 rounded bg-info">
+											Vétérinaire
 										</a>
 									</li>
 								{% endif %}
 								<li class="scroll-to-section">
-									<a href="/" class="active">
+									<a href="/">
 										Accueil
 									</a>
 								</li>
@@ -92,6 +92,11 @@
 								<li>
 									<a href="/services">
 										Nos services
+									</a>
+								</li>
+                                <li>
+									<a href="/" class="active">
+										Nos habitats
 									</a>
 								</li>
 								<li>
@@ -117,13 +122,13 @@
     <!-- ***** Header Area End ***** -->
 
     <!-- ***** Main Banner Area Start ***** -->
-    <div class="page-heading" id="top">
+    <div class="page-heading habitats" id="top">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="inner-content">
-                        <h2>Nos habitats</h2>
-                        <span>Awesome &amp; Creative HTML CSS layout by TemplateMo</span>
+                        <h2 class="text-light">Nos habitats</h2>
+                        <span class="text-light">Un havre de paix pour nos animaux</span>
                     </div>
                 </div>
             </div>
@@ -146,7 +151,7 @@
         </div>
 
         <div class="container mesHabitats">
-            <div class="row">
+            <div class="row habitats">
                 <div class="col-sm-4">
                     <div class="habitatCol">
                         {% for imageAerien in habitatAerien %}

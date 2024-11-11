@@ -1,0 +1,268 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Zooparadis | Nos visites guidées{% endblock %}
+
+{% block body %}
+    <!-- ***** Preloader Start ***** -->
+        <div id="preloader">
+            <div class="jumper">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>  
+    <!-- ***** Preloader End ***** -->
+    
+    
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+			<div class="connexion">
+				{% if app.user %}
+					<div class="mb-3 userConnect">
+						Bonjour
+						{{ app.user.nom }}
+						{% if app.user.profileImage %}
+							<img src="/uploadsUsers/imagesUsers/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px"/>
+						{% else %}
+							<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px"/>
+						{% endif %}
+					</div>
+
+					<div class="deconnexionBtn btn btn-danger">
+						<a href="{{ path('app_logout') }}">
+							Déconnexion
+						</a>
+					</div>
+
+				{% else %}
+					<a href="{{ path('app_login') }}" class="connexionBtn">
+						Connexion staff
+					</a>
+				{% endif %}
+			</div>
+
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<nav
+							class="main-nav">
+
+							<!-- ***** Logo Start ***** -->
+							<a href="/" class="mt-2 logo">
+								<div class="row p-2 bg-light rounded">
+									<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle" width="30px" height="30px"/>
+									<h4 class="text-success font-weight-bold">
+										Zoo paradis
+									</h4>
+								</div>
+							</a>
+							<!-- ***** Logo End ***** -->
+
+							<!-- ***** Menu Start ***** -->
+							<ul class="nav">
+								{% if is_granted('ROLE_SUPER_ADMIN') %}
+									<li>
+										<a href="/admin" class="adminBtn px-2 rounded bg-danger">
+											Super Admin
+										</a>
+									</li>
+								{% elseif is_granted('ROLE_ADMIN') %}
+									<li>
+										<a href="/admin" class="adminBtn px-2 rounded bg-warning">
+											Admin employé
+										</a>
+									</li>
+								{% elseif is_granted('ROLE_VETERINAIRE') %}
+									<li>
+										<a href="/admin" class="adminBtn px-2 rounded bg-info">
+											Admin véto
+										</a>
+									</li>
+								{% endif %}
+								<li class="scroll-to-section">
+									<a href="/" class="active">
+										Accueil
+									</a>
+								</li>
+								<li>
+									<a href="/about">
+										A propos
+									</a>
+								</li>
+								<li>
+									<a href="/services">
+										Nos services
+									</a>
+								</li>
+								<li>
+									<a href="/contact">
+										Contact
+									</a>
+								</li>
+
+								{#<li class="scroll-to-section"><a href="#men">Eau</a></li></ul></li>#}
+							</ul>
+
+							<a class='menu-trigger'>
+								<span>
+									Menu
+								</span>
+							</a>
+							<!-- ***** Menu End ***** -->
+						</nav>
+					</div>
+				</div>
+			</div>
+		</header>
+    <!-- ***** Header Area End ***** -->
+
+    <!-- ***** Main Banner Area Start ***** -->
+    <div class="page-heading" id="top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="inner-content">
+                        <h2>Visites guidées de nos habitats</h2>
+                        <span>Awesome &amp; Creative HTML CSS layout by TemplateMo</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <!-- ***** Main Banner Area End ***** -->
+
+    <!-- ***** Products Area Starts ***** -->
+    <section class="section" id="products">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading">
+                        <h2>Visites guidées de nos habitats</h2>
+                        <span>Ici nous vous présentons les differents habitats de nos animaux. Cliquez sur une image pour voir les detailles</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-3 mb-3 mx-3 p-3 bg-secondary">
+                    <div class="habitatCol">
+                        {% for imageAerien in habitatAerien %}
+                        <div class="">
+                            <h4 class="mb-3 text-center">Habitat {{ imageAerien.nom }}</h4>
+                            <a href="/habitats/aerien">
+                                <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageAerien.habitatimage) }}" alt="Image du">
+                            </a>        
+                                <div id="bandeauHabitatHabitatAerien">
+                                    <div id="InfoHabitatAerien">
+                                        <h5 class="">{{ imageAerien.description }}</h5>
+                                    </div>
+                                </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3 mx-3 p-3 bg-secondary">
+                    <div class="habitatCol">
+                        {% for imageTerre in habitatTerrestre %}
+                            <div class="HabitatTerresrtre">
+                                <h4 class="mb-3 text-center">Habitat {{ imageTerre.nom }}</h4>
+                                <a href="/habitats/terrestre">
+                                    <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageTerre.habitatimage) }}" alt="Image du slider">
+                                </a>        
+                                <div id="bandeauHabitatTerrestre">
+                                    <div id="InfoHabitatTerrestre">
+                                        <h5 class="">{{ imageTerre.description }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3 mx-3 p-3 bg-secondary">
+                    <div class="habitatCol">
+                        {% for imageAquatique in habitatAquatique %}
+                                <div class="HabitatAquatique">
+                                    <h4 class="mb-3 text-center">Habitat {{ imageAquatique.nom }}</h4>
+                                    <a href="/habitats/aquatique">
+                                        <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageAquatique.habitatimage) }}" alt="Image du slider">
+                                    </a>        
+                                    <div id="bandeauHabitatAquatique">
+                                        <div id="InfoHabitatAquatique">
+                                            <h5 class="">{{ imageAquatique.description }}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+         </div>
+    </section>
+
+     <!-- ***** Footer Start ***** -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="first-item">
+                            <div class="row logo justify-content-around">
+                            <img src="{{ asset('/assets/images/avatar/avatar2.png') }}" width="30px" height="30px" />
+                                <h3 class="text-success font-weight-bold">Zoo paradis</h3>
+                            </div>
+                        <ul>
+                            <li><a href="#">Forêt de Brocéliand</a></li>
+                            <li><a href="#">zoo-paradis@broceliand.com</a></li>
+                            <li><a href="#">05.24.77.43.11</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <h4>Shopping &amp; Categories</h4>
+                    <ul>
+                        <li><a href="#">Men’s Shopping</a></li>
+                        <li><a href="#">Women’s Shopping</a></li>
+                        <li><a href="#">Kid's Shopping</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h4>Liens éssentiels</h4>
+                    <ul>
+                        <li><a href="#">Homepage</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h4>Information</h4>
+                    <ul>
+                        <li><a href="#">Aide</a></li>
+                        <li><a href="#">FAQ's</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Tracking ID</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-12">
+                    <div class="under-footer">
+                        <p>Copyright © 2024 Zoo paradis., tout droit Réservés. 
+                        
+                        <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">Limay</a>
+
+                        <br>Distribué par: <a href="https://themewagon.com" target="_blank" title="free & premium responsive templates">ASSOFAC MONTREUIL</a></p>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </footer>
+
+    {% endblock %}

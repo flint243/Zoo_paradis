@@ -1,39 +1,47 @@
 <?php
+
 namespace App\Service;
 
 use Kreait\Firebase\Factory;
-
-
+use Kreait\Firebase\Database;
+use Psr\Log\LoggerInterface;
 class FirebaseService
 {
-    private $HttpClient;
+    private Database $database;
+    private $firestore;
+    private LoggerInterface $logger;
 
-    public function __construct()
+    public function __construct(Factory $factory, LoggerInterface $logger)
     {
+        $factory = (new Factory)
+            ->withServiceAccount('../config/firebase/firebase_credentials.json')
+            ->withDatabaseUri('https://zooparadis-d65fe-default-rtdb.europe-west1.firebasedatabase.app/');
 
-
-
-
-       /* try {
-            // Chemin vers le fichier des identifiants Firebase
-            $serviceAccountPath = __DIR__ . '/../../config/firebase/firebase_credentials.json';
-
-            // Initialisation de la Factory Firebase
-            $factory = (new Factory)->withServiceAccount($serviceAccountPath);
-
-            // Initialisation du service Firebase Messaging
-            $this->messaging = $factory->createMessaging();
-        } catch (\Exception $e) {
-            // Gestion de l'erreur en cas de problème avec le fichier ou la configuration Firebase
-            throw new \RuntimeException('Erreur lors de l\'initialisation de Firebase : ' . $e->getMessage());
-        }*/
+        $this->database = $factory->createDatabase();
+        $this->firestore = $factory->createFirestore();
+        $this->logger = $logger;
     }
 
+    public function getDatabase(): Database
+    {
+        return $this->database;
+    }
+
+
+    public function sendMessage($contact): bool
+    {
+        try {
+            $contactRef = $this->firestore->database()->collection('contacts')->newDocument();
+            $contactRef->set([
+                'titre' => $contact->getTitre(),
+                'email' => $contact->getEmail(),
+                'message' => $contact->getDescription(),
+                'createdAt' => (new \DateTimeImmutable())->format('Y-m-d H:i:s'),
+            ]);
+            return true;
+        } catch (\Exception $e) {
+            $this->logger->error('Erreur d\'envoi Firebase : ' . $e->getMessage());
+            return false;
+        }
+    }
 }
-
-
-
-
-
-  /*  https://zooparadis-d65fe-default-rtdb.europe-west1.firebasedatabase.app/. */
-

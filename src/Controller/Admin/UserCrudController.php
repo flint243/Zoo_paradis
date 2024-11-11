@@ -16,17 +16,22 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+
 
 class UserCrudController extends AbstractCrudController
 {
-    private $passwordHasher;
+    private UserPasswordHasherInterface $passwordHasher;
     private $emailService;
+    private $mailer;
 
-    public function __construct(UserPasswordHasherInterface $passwordHasher, EmailService $emailService)
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher, EmailService $emailService, MailerInterface $mailer)
     {
         $this->passwordHasher = $passwordHasher;
         $this->emailService = $emailService;
-        
+        $this->mailer = $mailer;
     }
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
@@ -42,12 +47,25 @@ class UserCrudController extends AbstractCrudController
         parent::persistEntity($entityManager, $entityInstance);
 
         // Envoyer un email à l'utilisateur après l'ajout depuis l'admin
-        $this->emailService->sendRegistrationEmail(
+        $this->emailService->sendEmail(
             $entityInstance->getEmail(),
             'Votre compte a été créé par un administrateur',
-            '<p>Un administrateur a créé un compte pour vous. Votre nom d\'utilisateur est '.$entityInstance->getNom().'.</p>'
+            'emails/registration.html.twig',
+    ['name' => $entityInstance->getNom()]
         );
     }
+
+    private function sendNotificationEmail(string $userEmail): void
+    {
+        $email = (new Email())
+            ->from('noreply@yourdomain.com')
+            ->to($userEmail)
+            ->subject('Account Created Successfully')
+            ->text('Your account has been created successfully. You can now log in.');
+
+        $this->mailer->send($email);
+    }
+
     public static function getEntityFqcn(): string
     {
         return User::class;
@@ -55,7 +73,6 @@ class UserCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        
             return [
                 TextField::new('nom'),
                 EmailField::new('email'),
@@ -96,5 +113,7 @@ class UserCrudController extends AbstractCrudController
                     ->hideOnForm(),
             ];
     }
+
+    
 
 }

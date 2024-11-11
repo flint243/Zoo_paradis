@@ -4,8 +4,24 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-# config/routes.yaml
+
 app_login:
     path: /connexion
     controller: App\Controller\SecurityController::login
+
+image_click:
+    path: /increment-click
+    controller: App\Controller\AnimalController::incrementClickAerien
+    methods: POST
+
+
+test_firebase:
+    path: /test-firebase
+    controller: App\Controller\AnimalController::testFirebaseConnection
+    methods: GET
+
+contact_firebase:
+    path: /contact
+    controller: App\Controller\ContactController::contact
+    methods: POST
 

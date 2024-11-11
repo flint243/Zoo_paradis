@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Visites guidées{% endblock %}
+{% block title %}Zoo paradis | Nos restaurants{% endblock %}
 
 {% block body %}
 <!-- ***** Preloader Start ***** -->
@@ -16,50 +16,109 @@
     
     <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="main-nav">
-                        <!-- ***** Logo Start ***** -->
-                        <a href="/" class="logo">
-                            <img src="assets/images/logo.png">
-                        </a>
-                        <!-- ***** Logo End ***** -->
-                        <!-- ***** Menu Start ***** -->
-                        <ul class="nav">
-                            <li class="scroll-to-section"><a href="/" class="active">Accueil</a></li>
-                            <li class="scroll-to-section"><a href="index.html">Men's</a></li>
-                            <li class="scroll-to-section"><a href="index.html">Women's</a></li>
-                            <li class="scroll-to-section"><a href="index.html">Kid's</a></li>
-                            <li class="submenu">
-                                <a href="javascript:;">Pages</a>
-                                <ul>
-                                    <li><a href="/about">A propos</a></li>
-                                    <li><a href="/services">Produits</a></li>
-                                    <li><a href="/single/product">Produit</a></li>
-                                    <li><a href="/contact/us">Contact</a></li>
-                                </ul>
-                            </li>
-                            <li class="submenu">
-                                <a href="javascript:;">Features</a>
-                                <ul>
-                                    <li><a href="#">Features Page 1</a></li>
-                                    <li><a href="#">Features Page 2</a></li>
-                                    <li><a href="#">Features Page 3</a></li>
-                                    <li><a rel="nofollow" href="https://templatemo.com/page/4" target="_blank">Template Page 4</a></li>
-                                </ul>
-                            </li>
-                            <li class="scroll-to-section"><a href="index.html">Explore</a></li>
-                        </ul>        
-                        <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a>
-                        <!-- ***** Menu End ***** -->
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </header>
+		<div class="connexion bg-light">
+			{% if app.user %}
+				<div class="mb-3 userConnect">
+					Bonjour
+					{{ app.user.nom }}
+					{% if app.user.profileImage %}
+						<img src="/uploadsUsers/imagesUsers/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px"/>
+					{% else %}
+						<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px"/>
+					{% endif %}
+				</div>
+
+				<div class="deconnexionBtn btn btn-danger">
+					<a href="{{ path('app_logout') }}">
+						Déconnexion
+					</a>
+				</div>
+
+			{% else %}
+				<a href="{{ path('app_login') }}" class="connexionBtn">
+					Connexion ici
+				</a>
+			{% endif %}
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<nav
+						class="main-nav">
+
+						<!-- ***** Logo Start ***** -->
+						<a href="/" class="mt-2 logo">
+							<div class="row p-2 bg-light rounded">
+								<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle" width="30px" height="30px"/>
+								<h4 class="text-success font-weight-bold">
+									Zoo paradis
+								</h4>
+							</div>
+						</a>
+						<!-- ***** Logo End ***** -->
+
+						<!-- ***** Menu Start ***** -->
+						<ul class="nav">
+							{% if is_granted('ROLE_SUPER_ADMIN') %}
+								<li>
+									<a href="/admin" class="adminBtn px-2 rounded bg-danger">
+										Super Admin
+									</a>
+								</li>
+							{% elseif is_granted('ROLE_EMPLOYE') %}
+								<li>
+									<a href="/employee-admin" class="adminBtn px-2 rounded bg-warning">
+										Employé
+									</a>
+								</li>
+							{% elseif is_granted('ROLE_VETERINAIRE') %}
+								<li>
+									<a href="/veterinaire-admin" class="adminBtn px-2 rounded bg-info">
+										Vétérinaire
+									</a>
+								</li>
+							{% endif %}
+							<li class="scroll-to-section">
+								<a href="/">
+									Accueil
+								</a>
+							</li>
+							<li>
+								<a href="/about">
+									A propos
+								</a>
+							</li>
+							<li>
+								<a href="/" class="active">
+									Services
+								</a>
+							</li>
+							<li>
+								<a href="/habitats">
+									Les habitats
+								</a>
+							</li>
+							<li>
+								<a href="/contact">
+									Contact
+								</a>
+							</li>
+
+							{#<li class="scroll-to-section"><a href="#men">Eau</a></li></ul></li>#}
+						</ul>
+
+						<a class='menu-trigger'>
+							<span>
+								Menu
+							</span>
+						</a>
+						<!-- ***** Menu End ***** -->
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
     <!-- ***** Header Area End ***** -->
 
     <!-- ***** Main Banner Area Start ***** -->
@@ -68,7 +127,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="inner-content">
-                        <h2>Restauration</h2>
+                        <h2>Nos diferents Restaurants</h2>
                         <span>Awesome &amp; Creative HTML CSS layout by TemplateMo</span>
                     </div>
                 </div>
@@ -84,64 +143,48 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-heading">
-                        <h2>Nos visites guidées</h2>
-                        <span>Le paradis du Zoo vous propose aussi des visites guidées.</span>
+                        <h2>Nos restaurants</h2>
+                        <span>Le Zoo vous présente ses differents restarants</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
+            <div class="row">
+                <div class="col-lg-6">
                     <div class="item">
                         <div class="thumb">
                             <div class="hover-content">
                                 <ul>
-                                    <li><a href="/restauration"><i class="fa fa-eye"></i></a></li>
+                                    <li><a href="/restauration1"><i class="fa fa-eye"></i></a></li>
                                 </ul>
                             </div>
-                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
+                            <img src="{{ asset('/assets/images/restos/resto1.jpg') }}" alt="">
                         </div>
                         <div class="down-content">
-                            <h4>Visites des habitats</h4>
-                            <span>Nos habitats</span>
-                            <ul class="stars">
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                            </ul>
+                            <h4>Restaurantion du loup</h4>
+                            <span>Resto</span>
                         </div>
                     </div>
                 </div>
 
-                {#<div class="col-lg-6">
+                <div class="col-lg-6">
                     <div class="item">
                         <div class="thumb">
                             <div class="hover-content">
                                 <ul>
-                                    <li><a href="/restauration"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="/restauration"><i class="fa fa-star"></i></a></li>
-                                    <li><a href="/restauration"><i class="fa fa-shopping-cart"></i></a></li>
+                                    <li><a href="/restauration2"><i class="fa fa-eye"></i></a></li>
                                 </ul>
                             </div>
-                            <img src="{{ asset('/assets/images/terrestre/cameleon.jpeg') }}" alt="">
+                            <img src="{{ asset('/assets/images/restos/resto2.jpg') }}" alt="">
                         </div>
                         <div class="down-content">
                             <h4>La jungle sauvage</h4>
                             <span>notre restaurant la jungle sauvage est ouvert tous les jours de 11h00 à 21h00</span>
-                            <ul class="stars">
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                            </ul>
                         </div>
                     </div>
-                </div>#}
+                </div>
             </div>
     </section>
 

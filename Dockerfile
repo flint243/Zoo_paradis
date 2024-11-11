@@ -2,10 +2,15 @@
 FROM php:8.2-apache
 
 # Étape 2 : Installer les dépendances système nécessaires
-RUN apt-get update && apt-get install -y default-mysql-client \
+RUN apt-get update && apt-get install -y \
+    default-mysql-client \
     git \
     unzip \
     libicu-dev \
+    libgrpc-dev \
+    zlib1g-dev \
+    && pecl install grpc \
+    && docker-php-ext-enable grpc \
     && docker-php-ext-install pdo pdo_mysql intl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -18,9 +23,6 @@ WORKDIR /var/www/
 
 # Étape 5 : Copier les fichiers de l'application dans le conteneur
 COPY . .
-
-# Étape 6 : Installer les dépendances du projet avec Composer
-#RUN composer install --optimize-autoloader
 
 # Étape 7 : Modifier les permissions si nécessaire
 RUN chown -R www-data:www-data /var/www/

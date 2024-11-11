@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Contact {% endblock %}
+{% block title %}Zoo paradis | Contact {% endblock %}
 
 {% block body %}
 
@@ -17,62 +17,107 @@
     
     <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky">
-                <div class="connexion">
-                    {% if app.user %}
-                            <div class="mb-3 userConnect">
-                                Bonjour {{ app.user.nom }}
-                                {% if app.user.profileImage %}
-                                    <img src="/uploads/images/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px" />
-                                {% else %}
-                                <img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px" />
-                                {% endif %}
-                            </div>
+			<div class="connexion bg-light">
+				{% if app.user %}
+					<div class="mb-3 userConnect">
+						Bonjour
+						{{ app.user.nom }}
+						{% if app.user.profileImage %}
+							<img src="/uploadsUsers/imagesUsers/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px"/>
+						{% else %}
+							<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px"/>
+						{% endif %}
+					</div>
 
-                         <div class="deconnexionBtn btn btn-danger">
-                            <a href="{{ path('app_logout') }}">Déconnexion</a> 
-                         </div>
-                        
-                   {% else %}
-                        <a href="{{ path('app_register') }}" class="registerBtn">Pas encore inscrit c'est ici !</a>
-                        sinon
-                        <a href="{{ path('app_login') }}" class="connexionBtn">Connectez vous ici !</a>
-                    {% endif %}
-                </div> 
-                
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="main-nav">
-                
-                        <!-- ***** Logo Start ***** -->
-                        <a href="/" class="mt-2 logo">
-                            <div class="row p-2 bg-light rounded">
-                            <img src="{{ asset('/assets/images/avatar/avatar2.png') }}"class="rounded-circle" width="30px" height="30px" />
-                                <h4 class="text-success font-weight-bold">Zoo paradis</h4>
-                            </div>
-                        </a>
-                        <!-- ***** Logo End ***** -->
-                        <!-- ***** Menu Start ***** -->
-                        <ul class="nav">
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li class="adminBtn btn btn-warning btn-small"><a href="/admin">Admin</a></li>
-                        {% endif %}
-                            <li class="scroll-to-section"><a href="/">Accueil</a></li>
-                            <li class="scroll-to-section"><a href="/about">A propos</a></li>
-                            <li class="scroll-to-section"><a href="/services">Nos services</a></li>
-                            <li class="scroll-to-section"><a href="#" class="active">Contact</a></li>
-                        </ul>   
-                        
-                        <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a>
-                        <!-- ***** Menu End ***** -->
-                    </nav>
-                </div>
-        </div>
-                   
-        </div> 
-    </header>
+					<div class="deconnexionBtn btn btn-danger">
+						<a href="{{ path('app_logout') }}">
+							Déconnexion
+						</a>
+					</div>
+
+				{% else %}
+					<a href="{{ path('app_login') }}" class="connexionBtn">
+						Connexion ici
+					</a>
+				{% endif %}
+			</div>
+
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<nav
+							class="main-nav">
+
+							<!-- ***** Logo Start ***** -->
+							<a href="/" class="mt-2 logo">
+								<div class="row p-2 bg-light rounded">
+									<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle" width="30px" height="30px"/>
+									<h4 class="text-success font-weight-bold">
+										Zoo paradis
+									</h4>
+								</div>
+							</a>
+							<!-- ***** Logo End ***** -->
+
+							<!-- ***** Menu Start ***** -->
+							<ul class="nav">
+								{% if is_granted('ROLE_SUPER_ADMIN') %}
+									<li>
+										<a href="/admin" class="adminBtn px-2 rounded bg-danger">
+											Super Admin
+										</a>
+									</li>
+								{% elseif is_granted('ROLE_EMPLOYE') %}
+									<li>
+										<a href="/employee-admin" class="adminBtn px-2 rounded bg-warning">
+											Employé
+										</a>
+									</li>
+								{% elseif is_granted('ROLE_VETERINAIRE') %}
+									<li>
+										<a href="/veterinaire-admin" class="adminBtn px-2 rounded bg-info">
+											Vétérinaire
+										</a>
+									</li>
+								{% endif %}
+								<li class="scroll-to-section">
+									<a href="/">
+										Accueil
+									</a>
+								</li>
+								<li>
+									<a href="/about">
+										A propos
+									</a>
+								</li>
+								<li>
+									<a href="/services">
+										Nos services
+									</a>
+								</li>
+								<li>
+									<a href="/habitats">
+										Les habitats
+									</a>
+								</li>
+                                <li>
+									<a href="/" class="active">
+										Contact
+									</a>
+								</li>
+							</ul>
+
+							<a class='menu-trigger'>
+								<span>
+									Menu
+								</span>
+							</a>
+							<!-- ***** Menu End ***** -->
+						</nav>
+					</div>
+				</div>
+			</div>
+		</header>
     <!-- ***** Header End ***** -->
 
     <!-- ***** Main Banner Area Start ***** -->
@@ -104,37 +149,36 @@
                         <h2>Laissez nous un message</h2>
                         <span>Details to details is what makes Hexashop different from the other themes.</span>
                     </div>
-                    {{ form_start(ContactForm, {'attr': {'class': 'form'}}
-					) }}
+
+                     {% for label, messages in app.flashes %}
+                        {% if label == 'success_contact' %}
+                            {# Afficher uniquement les messages de succès du formulaire de contact #}
+                            {% for message in messages %}
+                                <div class="alert alert-success">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {{ form_start(ContactForm, {'attr': {'class': 'form'}}) }}
                         <div class="row">
                           <div class="col-lg-6">
                             <fieldset>
-                                {{ form_label(ContactForm.titre, null, {'label_attr': {'class': 'form-label'}}
-                                ) }}
-                                {{ form_widget(ContactForm.titre, {'attr': {'class': 'form-control'}}
-                                ) }}
-                                {{ form_errors(ContactForm.titre, {'attr': {'class': 'text-danger'}}
-                                ) }}
+                                {{ form_widget(ContactForm.titre, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(ContactForm.titre, {'attr': {'class': 'text-danger'}}) }}
                             </fieldset>
                           </div>
                           <div class="col-lg-6">
                             <fieldset>
-                                {{ form_label(ContactForm.email, null, {'label_attr': {'class': 'form-label'}}
-                                ) }}
-                                {{ form_widget(ContactForm.email, {'attr': {'class': 'form-control'}}
-                                ) }}
-                                {{ form_errors(ContactForm.email, {'attr': {'class': 'text-danger'}}
-                                ) }}
+                                {{ form_widget(ContactForm.email, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(ContactForm.email, {'attr': {'class': 'text-danger'}}) }}
                             </fieldset>
                           </div>
                           <div class="col-lg-12">
                             <fieldset>
-                                {{ form_label(ContactForm.description, null, {'label_attr': {'class': 'form-label'}}
-                                ) }}
-                                {{ form_widget(ContactForm.description, {'attr': {'class': 'form-control'}}
-                                ) }}
-                                {{ form_errors(ContactForm.description, {'attr': {'class': 'text-danger'}}
-                                ) }}
+                                {{ form_widget(ContactForm.description, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(ContactForm.description, {'attr': {'class': 'text-danger'}}) }}
                             </fieldset>
                           </div>
                           
@@ -146,57 +190,42 @@
     </div>
     <!-- ***** Contact Area Ends ***** -->
 
-    <!-- ***** Subscribe Area Starts ***** -->
-    {#<div class="subscribe">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="section-heading">
-                        <h2>By Subscribing To Our Newsletter You Can Get 30% Off</h2>
-                        <span>Details to details is what makes Hexashop different from the other themes.</span>
+    <div class="newsletter pt-2">
+        <div class="container pb-5 mb-5">
+                <div class="col justify-content-center">
+                    <h1>Inscrivez-vous à notre newsletter</h1>
+                    <div class="col messages">
+                        {% for label, messages in app.flashes %}
+                            {% if label == 'success_newsletter' %}
+                                {# Afficher uniquement les messages de succès du formulaire de newsletter #}
+                                {% for message in messages %}
+                                    <div class="alert alert-success">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% elseif label == 'warning_newsletter' %}
+                                {# Afficher un avertissement si l'email est déjà inscrit à la newsletter #}
+                                {% for message in messages %}
+                                    <div class="alert alert-warning">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
                     </div>
-                    <form id="subscribe" action="" method="get">
-                        <div class="row">
-                          <div class="col-lg-5">
-                            <fieldset>
-                              <input name="name" type="text" id="name" placeholder="Your Name" required="">
-                            </fieldset>
-                          </div>
-                          <div class="col-lg-5">
-                            <fieldset>
-                              <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your Email Address" required="">
-                            </fieldset>
-                          </div>
-                          <div class="col-lg-2">
-                            <fieldset>
-                              <button type="submit" id="form-submit" class="main-dark-button"><i class="fa fa-paper-plane"></i></button>
-                            </fieldset>
-                          </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-lg-4">
-                    <div class="row">
-                        <div class="col-6">
-                            <ul>
-                                <li>Store Location:<br><span>Sunny Isles Beach, FL 33160, United States</span></li>
-                                <li>Phone:<br><span>010-020-0340</span></li>
-                                <li>Office Location:<br><span>North Miami Beach</span></li>
-                            </ul>
-                        </div>
-                        <div class="col-6">
-                            <ul>
-                                <li>Work Hours:<br><span>07:30 AM - 9:30 PM Daily</span></li>
-                                <li>Email:<br><span>info@company.com</span></li>
-                                <li>Social Media:<br><span><a href="#">Facebook</a>, <a href="#">Instagram</a>, <a href="#">Behance</a>, <a href="#">Linkedin</a></span></li>
-                            </ul>
-                        </div>
+                    <div class="col-lg-6 formNews mb-5 pb-5">
+                        {{ form_start(formSub) }}
+                            {{ form_row(formSub.email) }}
+
+                            {{ form_row(formSub.consent) }}
+                            <button class="btn btn-primary mt-2">S'inscrire</button>
+                        {{ form_end(formSub) }}
                     </div>
                 </div>
-            </div>
         </div>
-    </div>#}
-    <!-- ***** Subscribe Area Ends ***** -->
+    </div>
+
+
 
    <!-- ***** Footer Start ***** -->
     <footer>

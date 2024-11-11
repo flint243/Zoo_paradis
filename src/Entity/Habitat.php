@@ -46,9 +46,6 @@ class Habitat
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTimeInterface $updatedAt = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $liste_animaux = null;
-
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
@@ -57,7 +54,6 @@ class Habitat
     public function __construct()
     {
         $this->animals = new ArrayCollection();
-        $this->liste_animaux = new ArrayCollection();
         $this->created_at = new \DateTimeImmutable();
     }
 
@@ -155,18 +151,6 @@ class Habitat
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getListeAnimaux(): ?string
-    {
-        return $this->liste_animaux;
-    }
-
-    public function setListeAnimaux(string $liste_animaux): static
-    {
-        $this->liste_animaux = $liste_animaux;
 
         return $this;
     }

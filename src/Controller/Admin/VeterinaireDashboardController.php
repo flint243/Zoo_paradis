@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Animal;
 use App\Entity\Habitat;
+use App\Entity\InfosVeto;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -40,7 +41,10 @@ class VeterinaireDashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Vétérinaire dashboard', 'fa fa-house-chimney-medical');
+        yield MenuItem::linkToDashboard(' '); yield MenuItem::linkToDashboard(' '); yield MenuItem::linkToDashboard(' ');
+
         yield MenuItem::linkToCrud('Animaux', 'fas fa-crow', Animal::class);
         yield MenuItem::linkToCrud('Habitats', 'fas fa-home', Habitat::class);
+        yield MenuItem::linkToCrud('Infos animaux', 'fas fa-home', InfosVeto::class);
     }
 }

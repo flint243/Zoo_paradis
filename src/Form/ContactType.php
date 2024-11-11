@@ -23,17 +23,17 @@ class ContactType extends AbstractType
                     'placeholder' => 'Entrez un titre'
                 ]
             ])
-            ->add('description', TextareaType::class, [
-                'required' => true,
-                'attr' => [
-                    'placeholder' => 'Entrez votre message'
-                ]
-            ])
             ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Entrez votre email'
+                ]
+            ])
+            ->add('description', TextareaType::class, [
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Entrez votre message'
                 ]
             ])
             ->add('submit', SubmitType::class, [

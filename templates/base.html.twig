@@ -1,32 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport"    content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="author"      content="">
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+        <!--OpenGrapht-->
+        <meta property="og:type"        content="website" />
+        <meta property="og:title"       content="Zooparadis | Zoo de Brocéliandre" />
+        <meta property="og:description" content="Zooparadis.com est le site internet du zoo de Brocéliandre" />
+        <meta property="og:image"       content="{{ asset('images/logo.png') }}" />
+        <meta property="og:image:width" content="144" />
+        <meta property="og:image:height"content="144" />
+        <!--twitter-->
+        <meta name="twitter:card"        content="{{ asset('images/logo.png') }}" />
+        <meta name="twitter:site"        content="https://zooparadis.com" />
+        <meta name="twitter:title"       content="Zooparadis | Zoo de Brocéliandre" />
+        <meta name="twitter:description" content="Zooparadis.com est le site internet du zoo de Brocéliandre"/>
+        <meta name="twitter:creator"     content="Ricardo" />
+        <meta name="twitter:image:src"   content="{{ asset('images/logo.png') }}" />
+        <!-- Windows 8 Tiles -->
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="msapplication-TileImage" content="{{ asset('images/logo.png') }}" />
+        <meta name="application-name"        content="Zooparadis">
+        <meta name="theme-color"             content="#ffffff" />
+        <!-- Apple Touch Icons -->
+        <link rel="apple-touch-icon" sizes="57x57"   href="{{ asset('images/logo.png') }}" />
+        <link rel="apple-touch-icon" sizes="60x60"   href="{{ asset('images/logo.png') }}" />
+        <link rel="apple-touch-icon" sizes="72x72"   href="{{ asset('images/logo.png') }}" />
+        <link rel="apple-touch-icon" sizes="76x76"   href="{{ asset('images/logo.png') }}" />
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('images/logo.png') }}" />
+        <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('images/logo.png') }}" />
+        <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('images/logo.png') }}" />
+        <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('images/logo.png') }}" />
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/logo.png') }}" />
+        <!-- Icone du site -->
+        <link rel="icon" type="image/png" sizes="180x180" href="{{ asset('images/logo.png') }}" />
 
         <title>{% block title %}Welcome!{% endblock %}</title>
 
         <!-- Stylesheets -->
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
-        <link rel="preload" href="{{ asset('assets/css/templatemo-hexashop.css') }}" as="style" onload="this.rel='stylesheet'">
+        <link rel="preload"    href="{{ asset('assets/css/templatemo-hexashop.css') }}" as="style" onload="this.rel='stylesheet'">
         <link rel="stylesheet" href="{{ asset('assets/css/owl-carousel.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/lightbox.css') }}">
 
         {% block stylesheets %}{% endblock %}
-        
-        <!-- Scripts in head if necessary -->
-         <script src="{{ asset('assets/js/jquery-2.1.0.min.js') }}"></script> 
+        <!-- Scripts in head if necessary -->       
     </head>
+     
+
+       
+
     <body>
-        {% block body %}{% endblock %}
-
-        <!-- jQuery -->
-        <script src="{{ asset('assets/js/jquery-2.1.0.min.js') }}"></script>
-
+        {% block body %} {% endblock %}
+        <script src="{{ asset('assets/js/jquery-2.1.0.min.js') }}"></script> 
+        <script src="{{ asset('assets/js/jquery.counterup.min.js') }}"></script>
+        
         <!-- Bootstrap -->
         <script src="{{ asset('assets/js/popper.js') }}"></script>
 
@@ -36,79 +69,59 @@
         <script src="{{ asset('assets/js/datepicker.js') }}"></script>
         <script src="{{ asset('assets/js/scrollreveal.min.js') }}"></script>
         <script src="{{ asset('assets/js/waypoints.min.js') }}"></script>
-        <script src="{{ asset('assets/js/jquery.counterup.min.js') }}"></script>
         <script src="{{ asset('assets/js/imgfix.min.js') }}"></script> 
         <script src="{{ asset('assets/js/slick.js') }}"></script> 
         <script src="{{ asset('assets/js/lightbox.js') }}"></script> 
-        <script src="{{ asset('assets/js/isotope.js') }}"></script> 
+        <script src="{{ asset('assets/js/isotope.js') }}"></script>
+        
         {#<script src="{{ asset('assets/js/slideClassAvis.js') }}"></script>#}
         {#<script src="{{ asset('assets/js/slideClassHabitats.js') }}"></script>#} 
         
         <!-- Global Init -->
         <script src="{{ asset('assets/js/custom.js') }}"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    let slides = document.querySelectorAll('#slider .slide');
+                    let currentSlide = 0;
 
-        {#<script>
-            $(function() {
-                var selectedClass = "";
-                $("p").click(function(){
-                    selectedClass = $(this).attr("data-rel");
-                    $("#portfolio").fadeTo(50, 0.1);
-                    $("#portfolio div").not("."+selectedClass).fadeOut();
-                    setTimeout(function() {
-                        $("."+selectedClass).fadeIn();
-                        $("#portfolio").fadeTo(50, 1);
-                    }, 500);
+                    function showSlide(index) {
+                        slides.forEach((slide, i) => {
+                            slide.style.display = i === index ? 'block' : 'none';
+                        });
+                    }
+
+                    function nextSlide() {
+                        currentSlide = (currentSlide + 1) % slides.length;
+                        showSlide(currentSlide);
+                    }
+
+                    setInterval(nextSlide, 5000); // Change la slide toutes les 5 secondes
+                    showSlide(currentSlide); // Affiche la première slide
                 });
-            });
-        </script>#}
+            </script>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                let slides = document.querySelectorAll('#slider .slide');
+            <script>
                 let currentSlide = 0;
+                    const slides = document.querySelectorAll('.slidereHabitat');
+                    const totalSlides = slides.length;
 
-                function showSlide(index) {
-                    slides.forEach((slide, i) => {
-                        slide.style.display = i === index ? 'block' : 'none';
-                    });
-                }
+                    function showSlide(slideIndex) {
+                        slides.forEach((slide, index) => {
+                            slide.style.display = (index === slideIndex) ? 'block' : 'none';
+                        });
+                    }
 
-                function nextSlide() {
-                    currentSlide = (currentSlide + 1) % slides.length;
+                    function nextSlide() {
+                        currentSlide = (currentSlide + 1) % totalSlides;
+                        showSlide(currentSlide);
+                    }
+
+                    // Initialiser le slider
                     showSlide(currentSlide);
-                }
 
-                setInterval(nextSlide, 5000); // Change la slide toutes les 5 secondes
-                showSlide(currentSlide); // Affiche la première slide
-            });
-
-        </script>
-
-        <script>
-
-            let currentSlide = 0;
-const slides = document.querySelectorAll('.slidereHabitat');
-const totalSlides = slides.length;
-
-function showSlide(slideIndex) {
-    slides.forEach((slide, index) => {
-        slide.style.display = (index === slideIndex) ? 'block' : 'none';
-    });
-}
-
-function nextSlide() {
-    currentSlide = (currentSlide + 1) % totalSlides;
-    showSlide(currentSlide);
-}
-
-// Initialiser le slider
-showSlide(currentSlide);
-
-// Changer de slide toutes les 3 secondes
-setInterval(nextSlide, 4000);
-
-        </script>
-
-        {% block javascripts %}{% endblock %}
+                    // Changer de slide toutes les 3 secondes
+                    setInterval(nextSlide, 4000);
+            </script>
+            {% block javascripts %}{% endblock %}
     </body>
 </html>

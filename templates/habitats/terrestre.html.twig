@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Habitat terretre{% endblock %}
+{% block title %}Zoo paradis | Habitat terretre{% endblock %}
 
 {% block body %}
 <!-- ***** Preloader Start ***** -->
@@ -16,85 +16,113 @@
     
     <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky">
-                <div class="connexion">
-                    {% if app.user %}
-                            <div class="mb-3 userConnect">
-                                Bonjour {{ app.user.nom }}
-                                {% if app.user.profileImage %}
-                                    <img src="/uploads/images/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px" />
-                                {% else %}
-                                <img src="{{ asset('/assets/images/avatar/avatar2.jpg') }}" width="20px" />
-                                {% endif %}
-                            </div>
+			<div class="connexion bg-light">
+				{% if app.user %}
+					<div class="mb-3 userConnect">
+						Bonjour
+						{{ app.user.nom }}
+						{% if app.user.profileImage %}
+							<img src="/uploadsUsers/imagesUsers/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px"/>
+						{% else %}
+							<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px"/>
+						{% endif %}
+					</div>
 
-                         <div class="deconnexionBtn">
-                            <a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a> 
-                         </div>
-                        
-                   {% else %}
-                        <a href="{{ path('app_register') }}" class="registerBtn">Pas encore inscrit c'est <span class="text-danger">ici</span> !</a>
-                        sinon
-                        <a href="{{ path('app_login') }}" class="connexionBtn">Connectez vous ici !</a>
-                    {% endif %}
-                </div> 
-                
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="main-nav">
+					<div class="deconnexionBtn btn btn-danger">
+						<a href="{{ path('app_logout') }}">
+							Déconnexion
+						</a>
+					</div>
 
-                        <!-- ***** Logo Start ***** -->
-                        <a href="/" class="logo">
-                        <div class="col mt-4">
-                            <h4 class="text-success">Zoo paradis</h4>
-                        </div>
-                        </a>
-                        <!-- ***** Logo End ***** -->
-                        <!-- ***** Menu Start ***** -->
-                        <ul class="nav">
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li class="btn btn-warning btn-small"><a href="/admin">Admin</a></li>
-                        {% endif %}
-                            <li class="scroll-to-section"><a href="/" class="active">Accueil</a></li>
-                            <li class="scroll-to-section"><a href="#men">Eau</a></li>
-                            <li class="scroll-to-section"><a href="#women">Terre</a></li>
-                            <li class="scroll-to-section"><a href="#kids">Ciel</a></li>
-                            <li class="submenu">
-                                <a href="javascript:;">Pages</a>
-                                <ul>
-                                    <li><a href="/about">A propos</a></li>
-                                    <li><a href="/products">Nos services</a></li>
-                                    <li><a href="/habitats">Les habitats</a></li>
-                                    <li><a href="/contact/us">Contact</a></li>
-                                </ul>
-                            </li>
-                            <li class="submenu">
-                                <a href="javascript:;">Features</a>
-                                <ul>
-                                    <li><a href="#">Features Page 1</a></li>
-                                    <li><a href="#">Features Page 2</a></li>
-                                    <li><a href="#">Features Page 3</a></li>
-                                    <li><a rel="nofollow" href="https://templatemo.com/page/4" target="_blank">Template Page 4</a></li>
-                                </ul>
-                            </li>
-                            <li class="scroll-to-section"><a href="#explore">Explore</a></li>
-                        </ul>   
-                        
-                        <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a>
-                        <!-- ***** Menu End ***** -->
-                    </nav>
-                </div>
-            </div>
-                   
-        </div> 
+				{% else %}
+					<a href="{{ path('app_login') }}" class="connexionBtn">
+						Connexion ici
+					</a>
+				{% endif %}
+			</div>
 
-    </header>
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<nav
+							class="main-nav">
+
+							<!-- ***** Logo Start ***** -->
+							<a href="/" class="mt-2 logo">
+								<div class="row p-2 bg-light rounded">
+									<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle" width="30px" height="30px"/>
+									<h4 class="text-success font-weight-bold">
+										Zoo paradis
+									</h4>
+								</div>
+							</a>
+							<!-- ***** Logo End ***** -->
+
+							<!-- ***** Menu Start ***** -->
+							<ul class="nav">
+								{% if is_granted('ROLE_SUPER_ADMIN') %}
+									<li>
+										<a href="/admin" class="adminBtn px-2 rounded bg-danger">
+											Super Admin
+										</a>
+									</li>
+								{% elseif is_granted('ROLE_EMPLOYE') %}
+									<li>
+										<a href="/employee-admin" class="adminBtn px-2 rounded bg-warning">
+											Employé
+										</a>
+									</li>
+								{% elseif is_granted('ROLE_VETERINAIRE') %}
+									<li>
+										<a href="/veterinaire-admin" class="adminBtn px-2 rounded bg-info">
+											Vétérinaire
+										</a>
+									</li>
+								{% endif %}
+								<li class="scroll-to-section">
+									<a href="/">
+										Accueil
+									</a>
+								</li>
+								<li>
+									<a href="/about">
+										A propos
+									</a>
+								</li>
+								<li>
+									<a href="/services">
+										Nos services
+									</a>
+								</li>
+                                <li>
+									<a href="/habitats" class="active">
+										Nos habitats
+									</a>
+								</li>
+								<li>
+									<a href="/contact">
+										Contact
+									</a>
+								</li>
+
+								{#<li class="scroll-to-section"><a href="#men">Eau</a></li></ul></li>#}
+							</ul>
+
+							<a class='menu-trigger'>
+								<span>
+									Menu
+								</span>
+							</a>
+							<!-- ***** Menu End ***** -->
+						</nav>
+					</div>
+				</div>
+			</div>
+		</header>
     <!-- ***** Header Area End ***** -->
 
     <!-- ***** Main Banner Area Start ***** -->
-    <div class="page-heading" id="top">
+    <div class="page-heading terrestre" id="top">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -121,37 +149,36 @@
             </div>
         </div>
             <div class="container">
-                        <div class="col-lg-12">
-                            <div class="women-item-carousel">
-                                <div class="owl-women-item owl-carousel">
-                                    {% for terrestre in terrestre %}
-                                    <div class="item">
-                                        <div class="thumb">
-                                            <div class="hover-content">
-                                                <ul>
-                                                    <li>
-                                                        <a href="{{ path('terrestre_show', {id: terrestre.id}) }}">
-                                                            <i class="fa fa-eye"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <img src="{{ asset('uploadsAnimals/imagesAnimals/' ~ terrestre.imagesAnimal) }}" alt="Image de {{ terrestre.prenom }}">
-                                            {{ terrestre.prenom }}
-                                        </div>
-                                        <div class="down-content">
-                                            <h4>{{ terrestre.race }}</h4>
-                                            <span>{{ loop.index }}</span>
-                                        </div>
+                <div class="col-lg-12">
+                    <div class="women-item-carousel">
+                        <div class="owl-women-item owl-carousel">
+                            {% for terrestre in terrestre %}
+                            <div class="item">
+                                <div class="thumb">
+                                    <div class="hover-content">
+                                        <ul>
+                                            <li>
+                                                <a href="{{ path('show_terrestreId', {id: terrestre.id}) }}" class="clickableImage" data-id="{{ terrestre.id }}">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                {% endfor %}
+                                    <img src="{{ asset('uploadsAnimals/imagesAnimals/' ~ terrestre.imagesAnimal) }}"alt="Image de {{ terrestre.prenom }}">
+                                </div>
+                                <div class="down-content">
+                                     {{ terrestre.prenom }}
+                                    <h4>{{ terrestre.race }}</h4>
+                                </div>
                             </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
     <!-- ***** Habitat terrestre Ends ***** -->
                 
    
@@ -216,4 +243,38 @@
                 </div>
             </div>
     </footer>
+
+    {% block javascripts %}
+
+        <script>
+            document.querySelectorAll('.clickableImage').forEach(image => {
+                image.addEventListener('click', function() {
+                    const terrestreId = this.getAttribute('data-id');
+
+                    fetch('/increment-click-terrestre', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ terrestreId: terrestreId })
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(`Image ${terrestreId} clicked! New count:`, data.new_count);
+                        
+                        // Redirige l'utilisateur vers la page correspondante après l'incrémentation
+                        window.location.href = this.href;
+                    })
+                    .catch(error => console.error('Error:', error));
+                });
+            });
+    </script>
+
+    {% endblock %}
+
     {% endblock %}

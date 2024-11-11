@@ -2,7 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Avis;
 use App\Entity\Animal;
+use App\Entity\Contact;
 use App\Entity\Habitat;
 use App\Entity\Services;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +31,6 @@ class EmployeDashboardController extends AbstractDashboardController
 
         // Redirection vers une entité ou un CRUD spécifique
         return $this->render('admin/dashboard.html.twig');
-        
     }
 
     public function configureDashboard(): Dashboard
@@ -39,15 +40,18 @@ class EmployeDashboardController extends AbstractDashboardController
         
          return Dashboard::new()
          ->setTitle('<a href="' . $homeUrl . '">ZooParadis</a>');
-        
     }
 
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Tableau de bord Employé', 'fa fa-home');
-        yield MenuItem::linkToDashboard('');yield MenuItem::linkToDashboard('');yield MenuItem::linkToDashboard('');
+        yield MenuItem::linkToDashboard('');yield MenuItem::linkToDashboard('');
+        yield MenuItem::linkToDashboard('');
+        
         yield MenuItem::linkToCrud('Habitats', 'fas fa-house-flag', Habitat::class);
         yield MenuItem::linkToCrud('Animaux', 'fas fa-paw', Animal::class);
         yield MenuItem::linkToCrud('Services', 'fas fa-utensils', Services::class);
+        yield MenuItem::linkToCrud('Contacts', 'fas fa-utensils', Contact::class);
+        yield MenuItem::linkToCrud('Avis', 'fas fa-utensils', Avis::class);
     }
 }

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Habitat terrestre{% endblock %}
+{% block title %}Zoo paradis | Habitat terrestre{% endblock %}
 
 {% block body %}
 
@@ -14,9 +14,10 @@
         </div>
         <div class="col-12 bg-light text-center py-4">
             <h4> {{ terrestre.prenom }}</h4>
-            <img src="{{ asset('uploadsAnimals/imagesAnimals/' ~ terrestre.imagesanimal) }}" width="100%" height="500px" alt="Image de {{ terrestre.prenom }}">
+            <img src="{{ asset('uploadsAnimals/imagesAnimals/' ~ terrestre.imagesanimal) }}" class="singleImage" alt="Image de {{ terrestre.prenom }}">
                 <div class="down-content">
                     <span>{{ terrestre.race }}</span>
+                    <p>{{ clickCount }} <i class="fa fa-eye"></i></p>
                 </div>            
         </div>
         </div>

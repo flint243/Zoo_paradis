@@ -31,9 +31,9 @@ class Animal
     private ?string $race = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $images_animal = null;
+    private ?string $imagesanimal = null;
 
-    #[Vich\UploadableField(mapping: 'animal_uploads_images', fileNameProperty: 'images_animal')]
+    #[Vich\UploadableField(mapping: 'animal_uploads_images', fileNameProperty: 'imagesanimal')]
     private ?File $images_animal_File = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
@@ -101,12 +101,12 @@ class Animal
 
     public function getImagesAnimal(): ?string
     {
-        return $this->images_animal;
+        return $this->imagesanimal;
     }
 
-    public function setImagesAnimal(string $images_animal): self
+    public function setImagesAnimal(string $imagesanimal): self
     {
-        $this->images_animal = $images_animal;
+        $this->imagesanimal = $imagesanimal;
 
         return $this;
     }

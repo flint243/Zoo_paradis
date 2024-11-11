@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Habitat aquatique{% endblock %}
+{% block title %}Zoo paradis | Habitat aquatique{% endblock %}
 
 {% block body %}
 
@@ -14,9 +14,10 @@
         </div>
         <div class="col-12 bg-light text-center py-4">
             <h4> {{ aquatique.prenom }}</h4>
-            <img src="{{ asset('uploadsAnimals/imagesAnimals/' ~ aquatique.imagesanimal) }}" width="100%" height="500px" alt="Image de {{ aquatique.prenom }}">
+            <img src="{{ asset('uploadsAnimals/imagesAnimals/' ~ aquatique.imagesanimal) }}" class="singleImage" alt="Image de {{ aquatique.prenom }}">
                 <div class="down-content">
                     <span>{{ aquatique.race }}</span>
+                    <p>{{ clickCount }} <i class="fa fa-eye"></i></p>
                 </div>            
         </div>
         </div>

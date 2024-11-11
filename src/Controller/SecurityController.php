@@ -4,15 +4,23 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
+
 
 class SecurityController extends AbstractController
 {
     #[Route(path: '/connexion', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils, Security $security): Response
+    public function login(Request $request, AuthenticationUtils $authenticationUtils, Security $security, RateLimiterFactory $loginLimiter): Response
     {
+        $limiter = $loginLimiter->create($request->getClientIp());
+    
+    if (!$limiter->consume(1)->isAccepted()) {
+        $error = ('Trop de tentatives de connexion. Veuillez réessayer plus tard.');
+    }
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 

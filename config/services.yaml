@@ -27,7 +27,8 @@ services:
 
     App\Service\FirebaseService:
         arguments:
-            - '%kernel.project_dir%/config/firebase/credentials.json.dist'
+            $factory: '@Kreait\Firebase\Factory'
+            $logger: '@logger'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
