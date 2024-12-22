@@ -20,27 +20,32 @@ class NewsletterSubscriberType extends AbstractType
                 'required' => true,
 
                 'attr' => [
-                    'placeholder' => 'Entrez votre email'
+                    'placeholder' => 'Entrez votre email',
+                    'trim' => true,
                 ],
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Veuillez entrer une adresse e-mail.'
+                        'message' => 'Veuillez entrer une adresse e-mail.',
+                        //'trim' => true,
                     ]),
                     new Assert\Email([
-                        'message' => 'L\'adresse e-mail n\'est pas valide.'
+                        'message' => 'L\'adresse e-mail n\'est pas valide.',
+                        //'trim' => true,
                     ]),
                     new Assert\Regex([
                         'pattern' => '/^[\w\.\-]+@[a-zA-Z\d\.\-]+\.[a-zA-Z]{2,}$/',
                         'message' => 'Veuillez entrer une adresse e-mail valide.',
+                        //'trim' => true,
                     ]),
                 ],
             ])
-            ->add('consent', CheckboxType::class, [
-                'label' => 'Je consens à la collecte de mes données pour recevoir la newsletter (RGPD).',
+            ->add('rgpd', CheckboxType::class, [
+                'label' => 'Je consens à la collecte de mes données et que celles ci soient utilisées conformément à notre politique de confidentialité.',
                 'mapped' => false,
                 'constraints' => [
                     new Assert\IsTrue([
                         'message' => 'Vous devez consentir à la collecte de vos données pour vous inscrire.',
+                        //'trim' => true,
                     ]),
                 ],
             ]);

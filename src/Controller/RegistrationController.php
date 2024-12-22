@@ -33,8 +33,6 @@ class RegistrationController extends AbstractController
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface $entityManager,
-        /*UserAuthenticatorInterface $userAuthenticator,
-        UserAuthenticator $authenticator,*/
         SluggerInterface $slugger
     ): Response {
         $user = new User();

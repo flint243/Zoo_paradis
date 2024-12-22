@@ -40,12 +40,19 @@ class InfosVeto
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    /**
+     * @var Collection<int, Animal>
+     */
+    #[ORM\OneToMany(targetEntity: Animal::class, mappedBy: 'infosVeto')]
+    private Collection $animal_id;
+
     
 
     public function __construct()
     {
         $this->animal = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
+        $this->animal_id = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -151,6 +158,36 @@ class InfosVeto
     public function setDetailAnimal(string $detail_animal): static
     {
         $this->detail_animal = $detail_animal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Animal>
+     */
+    public function getAnimalId(): Collection
+    {
+        return $this->animal_id;
+    }
+
+    public function addAnimalId(Animal $animalId): static
+    {
+        if (!$this->animal_id->contains($animalId)) {
+            $this->animal_id->add($animalId);
+            $animalId->setInfosVeto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimalId(Animal $animalId): static
+    {
+        if ($this->animal_id->removeElement($animalId)) {
+            // set the owning side to null (unless already changed)
+            if ($animalId->getInfosVeto() === $this) {
+                $animalId->setInfosVeto(null);
+            }
+        }
 
         return $this;
     }

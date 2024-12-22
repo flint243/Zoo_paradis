@@ -20,7 +20,7 @@ class AvisCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('nom'),
+            TextField::new('pseudo'),
             TextareaField::new('commentaire'),
             BooleanField::new('isValidated'),
             DateTimeField::new('createdAt')->hideOnForm(),

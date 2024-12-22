@@ -65,6 +65,6 @@ class ContactController extends AbstractController
             'ContactForm' => $form->createView(),
             'formSub' => $formSub->createView(),
         ]);
-    }
+        }
     }
  

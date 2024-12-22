@@ -26,9 +26,9 @@
 					Bonjour
 					{{ app.user.nom }}
 					{% if app.user.profileImage %}
-						<img src="/uploadsUsers/imagesUsers/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px"/>
+						<img src="/uploadsUsers/imagesUsers/{{ app.user.profileImage }}" class="rounded-circle" alt="Photo profile" width="40px" height="35px"/>
 					{% else %}
-						<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px"/>
+						<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" alt="Photo profile par defaut" width="30px" height="30px"/>
 					{% endif %}
 				</div>
 
@@ -51,7 +51,7 @@
 						<!-- ***** Logo Start ***** -->
 						<a href="/" class="mt-2 logo">
 							<div class="row p-2 bg-light rounded">
-								<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle" width="30px" height="30px"/>
+								<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle" alt="Photo profile" width="30px" height="30px"/>
 								<h4 class="text-success font-weight-bold">
 									Zoo paradis
 								</h4>

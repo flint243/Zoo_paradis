@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator\RgpdConsent;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 class NewsletterSubscriber
@@ -14,17 +16,18 @@ class NewsletterSubscriber
     private $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\Email(message: 'L\'adresse email doit être valide.')]
     private $email;
 
-    #[ORM\Column]
-    private ?int $rgpd = null;
+    #[ORM\Column(type: 'boolean')]
+    #[Assert\IsTrue(message: 'Le consentement RGPD doit être donné.')]
+    private bool $rgpd = true;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()
     {
-        // Définit la date de création à la date actuelle par défaut
         $this->createdAt = new \DateTimeImmutable();
     }
 
@@ -44,15 +47,14 @@ class NewsletterSubscriber
         return $this;
     }
 
-    public function getRgpd(): ?int
+    public function getRgpd(): bool
     {
         return $this->rgpd;
     }
 
-    public function setRgpd(int $rgpd): static
+    public function setRgpd(bool $rgpd): static
     {
         $this->rgpd = $rgpd;
-
         return $this;
     }
 
@@ -64,8 +66,6 @@ class NewsletterSubscriber
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
-
 }

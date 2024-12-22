@@ -9,39 +9,45 @@ security:
                 property: email
 
     firewalls:
-
-        # Firewall pour les employés
         employee_admin:
+            login_throttling:
+                max_attempts: 5
             pattern: ^/employe_admin
             provider: app_user_provider
             form_login:
                 login_path: employe_login
                 check_path: employe_login
+                enable_csrf: true
             logout:
                 path: employe_logout
                 target: employe_login
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
+            host: ^(localhost|127\.0\.0\.1|dev\.example\.com)$
             security: false
         main:
+            login_throttling:
+                max_attempts: 5
             lazy: true
-            provider: app_user_provider  # Utilisation correcte du fournisseur
+            provider: app_user_provider
             form_login:
                 login_path: app_login
                 check_path: app_login
+                username_parameter: _username
+                password_parameter: _password
                 enable_csrf: true
             logout:
                 path: app_logout
 
     role_hierarchy:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_EMPLOYE, ROLE_VETERINAIRE]
-        ROLE_EMPLOYE: [ROLE_EMPLOYE]
         ROLE_VETERINAIRE: [ROLE_VETERINAIRE]
 
     access_control:
-    - { path: ^/admin/veterinaire/super, roles: ROLE_SUPER_ADMIN }
+    - { path: ^/public, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/admin/veterinaire, roles: ROLE_ADMIN }
     - { path: ^/employe-admin, roles: ROLE_EMPLOYE }
     - { path: ^/veterinaire, roles: ROLE_VETERINAIRE }
-    - { path: ^/admin, roles: ROLE_ADMIN }
+    - { path: ^/admin/super, roles: ROLE_SUPER_ADMIN }
     - { path: ^/profile, roles: ROLE_USER }
-
+   

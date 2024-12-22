@@ -6,6 +6,8 @@
 parameters:
     firebase_credentials: '%env(FIREBASE_CREDENTIALS)%'
     images_directory: '%kernel.project_dir%//public/uploads/images'
+
+    kernel.secret: '%env(APP_SECRET)%'
    
    
 
@@ -32,3 +34,6 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Validator\RgpdConsentValidator:
+        tags: [validator.constraint_validator]

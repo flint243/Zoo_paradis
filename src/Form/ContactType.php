@@ -20,26 +20,30 @@ class ContactType extends AbstractType
                 'label' => 'Titre',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Entrez un titre'
+                    'placeholder' => 'Entrez un titre',
+                    'trim' => true,
                 ]
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Entrez votre email'
+                    'placeholder' => 'Entrez votre email',
+                    'trim' => true,
                 ]
             ])
             ->add('description', TextareaType::class, [
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Entrez votre message'
+                    'placeholder' => 'Entrez votre message',
+                    'trim' => true,
                 ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer',
                 'attr' => [
-                    'class' => 'btn btn-primary'
+                    'class' => 'btn btn-primary',
+                    'trim' => true,
                 ]
             ]);
             ;

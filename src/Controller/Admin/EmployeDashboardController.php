@@ -7,6 +7,7 @@ use App\Entity\Animal;
 use App\Entity\Contact;
 use App\Entity\Habitat;
 use App\Entity\Services;
+use App\Entity\InfosVeto;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -51,6 +52,7 @@ class EmployeDashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Habitats', 'fas fa-house-flag', Habitat::class);
         yield MenuItem::linkToCrud('Animaux', 'fas fa-paw', Animal::class);
         yield MenuItem::linkToCrud('Services', 'fas fa-utensils', Services::class);
+        yield MenuItem::linkToCrud('Infos animaux', 'fas fa-home', InfosVeto::class);
         yield MenuItem::linkToCrud('Contacts', 'fas fa-utensils', Contact::class);
         yield MenuItem::linkToCrud('Avis', 'fas fa-utensils', Avis::class);
     }

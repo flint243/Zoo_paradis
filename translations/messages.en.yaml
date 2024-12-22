@@ -11,3 +11,7 @@ Entrez votre email: "Entrez votre email"
 Description: "Déscription"
 Entrez votre message: "Entrez votre message"
 Envoyer: "Envoyer"
+
+errors:
+    too_many_attempts: "Trop de tentatives de connexion. Veuillez réessayer plus tard."
+    invalid_credentials: "Adresse e-mail ou mot de passe incorrect."

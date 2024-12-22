@@ -61,6 +61,9 @@ class Animal
     #[ORM\OneToMany(targetEntity: LogerAnimal::class, mappedBy: 'animal_id')]
     private Collection $logerAnimals;
 
+    #[ORM\ManyToOne(inversedBy: 'animal_id')]
+    private ?InfosVeto $infosVeto = null;
+
 
 
     public function __construct()
@@ -243,6 +246,18 @@ class Animal
                 $image->setAnimal(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInfosVeto(): ?InfosVeto
+    {
+        return $this->infosVeto;
+    }
+
+    public function setInfosVeto(?InfosVeto $infosVeto): static
+    {
+        $this->infosVeto = $infosVeto;
 
         return $this;
     }

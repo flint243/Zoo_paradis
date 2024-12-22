@@ -29,8 +29,9 @@ class RegistrationFormType extends AbstractType
                     'message' => 'Veuillez entrer un pseudo.',
                 ]),
                 new Regex([
-                    'pattern' => '/^[a-zA-Z0-9_]+$/', // Exemple de regex: lettres, chiffres, et underscores seulement
+                    'pattern' => '/^[a-zA-Z0-9_]+$/', // Un regex acceptant lettres, chiffres, et underscores seulement
                     'message' => 'Le pseudo ne peut contenir que des lettres, des chiffres et des underscores.',
+                    'trim' => true,
                 ]),
             ],
         ])
@@ -38,9 +39,11 @@ class RegistrationFormType extends AbstractType
             'constraints' => [
                 new NotBlank([
                     'message' => 'Veuillez entrer un email.',
+                    'trim' => true,
                 ]),
                 new Email([
                     'message' => 'Veuillez entrer un email valide.',
+                    'trim' => true,
                 ]),
             ],
         ])
@@ -52,12 +55,14 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => 'saisissez un mot de passe',
+                        'trim' => true,
                     ]),
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} characters',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
+                        'trim' => true,
                     ]),
                 ],
             ])

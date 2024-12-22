@@ -47,8 +47,8 @@ class Employe
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // S'assurer que tous les employés ont au moins le rôle ROLE_EMPLOYEE
-        $roles[] = 'ROLE_EMPLOYEE';
+        // S'assurer que tous les employés ont au moins le rôle ROLE_EMPLOYE
+        $roles[] = 'ROLE_EMPLOYE';
         return array_unique($roles);
     }
 

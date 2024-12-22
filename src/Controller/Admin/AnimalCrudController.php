@@ -8,6 +8,7 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class AnimalCrudController extends AbstractCrudController
@@ -22,6 +23,11 @@ class AnimalCrudController extends AbstractCrudController
         return [
             TextField::new('Prenom'),
             TextField::new('Race'),
+
+            // Champ pour habitat_id (relation ManyToOne avec Habitat)
+            AssociationField::new('habitat')
+            ->setFormTypeOption('choice_label', 'nom')  // 'name' correspond à une propriété de l'entité Habitat
+            ->onlyOnForms(),  // Afficher seulement dans le formulaire
 
             // Affiche une seule image sur la page index
             ImageField::new('images_animal')

@@ -14,7 +14,6 @@
     </div>  
     <!-- ***** Preloader End ***** -->
     
-    
     <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky">
 			<div class="connexion bg-light">
@@ -162,7 +161,7 @@
                     {% endfor %}
 
                     {{ form_start(ContactForm, {'attr': {'class': 'form'}}) }}
-                        <div class="row">
+                        <div class="row p-3">
                           <div class="col-lg-6">
                             <fieldset>
                                 {{ form_widget(ContactForm.titre, {'attr': {'class': 'form-control'}}) }}
@@ -181,7 +180,6 @@
                                 {{ form_errors(ContactForm.description, {'attr': {'class': 'text-danger'}}) }}
                             </fieldset>
                           </div>
-                          
                         </div>
                       {{ form_end(ContactForm) }}
                 </div>
@@ -190,38 +188,41 @@
     </div>
     <!-- ***** Contact Area Ends ***** -->
 
-    <div class="newsletter pt-2">
-        <div class="container pb-5 mb-5">
-                <div class="col justify-content-center">
-                    <h1>Inscrivez-vous à notre newsletter</h1>
-                    <div class="col messages">
-                        {% for label, messages in app.flashes %}
-                            {% if label == 'success_newsletter' %}
-                                {# Afficher uniquement les messages de succès du formulaire de newsletter #}
-                                {% for message in messages %}
-                                    <div class="alert alert-success">
-                                        {{ message }}
-                                    </div>
-                                {% endfor %}
-                            {% elseif label == 'warning_newsletter' %}
-                                {# Afficher un avertissement si l'email est déjà inscrit à la newsletter #}
-                                {% for message in messages %}
-                                    <div class="alert alert-warning">
-                                        {{ message }}
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
+    <div class="col newsSection pt-2 justify-content-center">
+        <div class="container newsletter mt-2">
+            <h1>Inscrivez-vous à notre newsletter</h1>
+            <div class="col messages">
+                {% for label, messages in app.flashes %}
+                    {% if label == 'success_newsletter' %}
+                        {# Afficher uniquement les messages de succès du formulaire de newsletter #}
+                        {% for message in messages %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
                         {% endfor %}
-                    </div>
-                    <div class="col-lg-6 formNews mb-5 pb-5">
-                        {{ form_start(formSub) }}
-                            {{ form_row(formSub.email) }}
+                    {% elseif label == 'warning_newsletter' %}
+                        {# Afficher un avertissement si l'email est déjà inscrit à la newsletter #}
+                        {% for message in messages %}
+                            <div class="alert alert-warning">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
 
-                            {{ form_row(formSub.consent) }}
-                            <button class="btn btn-primary mt-2">S'inscrire</button>
-                        {{ form_end(formSub) }}
+            <div class="col-lg-6 form mt-5 p-3">
+                {{ form_start(formSub) }}
+                    {{ form_row(formSub.email) }}
+                    {{ form_row(formSub.rgpd) }}
+                    <div class="row">
+                    <p class="rgpd-info">Pour plus d'informations sur la gestion de vos données personnelles et pour exercer vos droits,
+                    consultez notre <a href="{{ path('Accueil') }}" target="_blank">politique de confidentialité</a>
+                    </p>
                     </div>
-                </div>
+                    <button class="btn btn-primary mt-2">S'inscrire</button>
+                {{ form_end(formSub) }}
+             </div>
         </div>
     </div>
 

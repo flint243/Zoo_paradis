@@ -10,25 +10,36 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 
-
 class SecurityController extends AbstractController
 {
     #[Route(path: '/connexion', name: 'app_login')]
-    public function login(Request $request, AuthenticationUtils $authenticationUtils, Security $security, RateLimiterFactory $loginLimiter): Response
-    {
+    public function login(
+        Request $request,
+        AuthenticationUtils $authenticationUtils,
+        Security $security,
+        RateLimiterFactory $loginLimiter
+    ): Response {
         $limiter = $loginLimiter->create($request->getClientIp());
-    
-    if (!$limiter->consume(1)->isAccepted()) {
-        $error = ('Trop de tentatives de connexion. Veuillez réessayer plus tard.');
-    }
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
+        
+        // Gestion des erreurs de connexion
+        if (!$limiter->consume(1)->isAccepted()) {
+            $error = 'Trop de tentatives de connexion. Veuillez réessayer plus tard.';
+        } else {
+            $error = $authenticationUtils->getLastAuthenticationError();
+        }
 
-        // last username entered by the user
+        // Dernier identifiant saisi
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        // Récupération de l'utilisateur connecté (si présent)
         $user = $security->getUser();
-    //dump($user->getRoles()); 
+        if ($user) {
+            // Redirection conditionnelle en fonction des rôles
+            if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+                return $this->redirectToRoute('admin_dashboard');
+            }
+            return $this->redirectToRoute('user_dashboard');
+        }
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
@@ -39,8 +50,6 @@ class SecurityController extends AbstractController
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
-        throw new \LogicException('
-            This method can be blank - it will be intercepted by the logout key on your firewall.'
-        );
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

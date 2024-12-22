@@ -2,6 +2,6 @@ global:
   scrape_interval: 15s  # Fréquence de collecte des métriques
 
 scrape_configs:
-  - job_name: 'symfony_app'
+  - job_name: 'symfony_zoo_app'
     static_configs:
       - targets: ['symfony:80']  # Assurez-vous que ce nom correspond au service Symfony dans votre fichier docker-compose.yml

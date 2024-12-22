@@ -12,7 +12,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
-
 class VeterinaireDashboardController extends AbstractDashboardController
 {
     private UrlGeneratorInterface $urlGenerator;
