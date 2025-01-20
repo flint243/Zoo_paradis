@@ -32,8 +32,10 @@ class DashboardController extends AbstractDashboardController
     public function index(): Response
     {
         // Redirection vers une entité ou un CRUD spécifique
-        $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
+        /*$adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
         return $this->redirect($adminUrlGenerator->setController(UserCrudController::class)->generateUrl());
+        */
+        return $this->render('admin/dashboardAdmin.html.twig');
     }
 
     public function configureDashboard(): Dashboard
@@ -70,20 +72,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Gestion des animaux');
         yield MenuItem::linkToCrud('Nos animaux', 'fas fa-users', Animal::class);
 
-        // Section "Gestion des habitats aérien"
-        yield MenuItem::section('Gestion des habitats aérien');
-        yield MenuItem::linkToCrud('Habitats célestes', 'fas fa-users', Aerien::class);
-
-        
-        // Section "Gestion des animaux"
-        yield MenuItem::section('Gestion des animaux terrestres');
-        yield MenuItem::linkToCrud('Habitats terretres', 'fas fa-users', Terrestre::class);
-
-        // Section "Gestion des animaux"
-        yield MenuItem::section('Gestion des animaux aquatiques');
-        yield MenuItem::linkToCrud('Habitats aquatiques', 'fas fa-users', Aquatique::class);
-        
-        
         // Section "Gestion des avis"
         yield MenuItem::section('Gestion des avis');
         yield MenuItem::linkToCrud('Les avis', 'fas fa-users', Avis::class);

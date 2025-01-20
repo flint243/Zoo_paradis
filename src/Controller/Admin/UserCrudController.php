@@ -26,7 +26,6 @@ class UserCrudController extends AbstractCrudController
     private $emailService;
     private $mailer;
 
-
     public function __construct(UserPasswordHasherInterface $passwordHasher, EmailService $emailService, MailerInterface $mailer)
     {
         $this->passwordHasher = $passwordHasher;
@@ -80,8 +79,7 @@ class UserCrudController extends AbstractCrudController
                 // Utiliser ChoiceField pour afficher les rôles avec sélection multiple
                 ChoiceField::new('roles', 'Rôles')
                 ->setChoices([
-                    'Admin' => 'ROLE_ADMIN',
-                    'User' => 'ROLE_USER',
+                    'Super_Admin' => 'ROLE_SUPER_ADMIN',
                     'Employe' => 'ROLE_EMPLOYE',
                     'Veterinaire' => 'ROLE_VETERINAIRE',
                 ])

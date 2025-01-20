@@ -4,56 +4,37 @@
 
 {% block body %}
     <!-- ***** Main Banner Area Start ***** -->
-    <div class="page-heading p-3" id="top">
-        <div class="container justify-content-center">
+    <div class="container-fluid p-3" id="top">
 
-     <div class="col">
-            <a href="/" class="btn btn-success">Accueil</a>
-        </div>
+            <div class="col-1 justify-content-center">
+                <a href="/" class="btn btn-success">Accueil</a>
+            </div>
 
-            <div class="col mt-5">
-                <h2>Page de connexion</h2>
-                <p>Restez connecter pour être informé...</p>
-            <div class="col p-3">
-
-                {% if error %}
-                    <div class="alert alert-danger">
-                        {{ error }}
+            <div class="row justify-content-center mt-5">
+                <div class="col-4 justify-content-center mt-5">
+                    <div class="col">
+                        <h2>Page de connexion</h2>
+                        <p>Restez connecter pour être informé...</p>
                     </div>
-                {% endif %}
 
-                    <form action="{{ path('app_login') }}" method="post">
-                        <div class="col p-3 alert-secondary rounded">
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+
+                        <form action="{{ path('app_login') }}" method="post" class="col p-3 alert-secondary rounded">
                             <label for="username">Email</label>
                             <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus><br>
                             <label for="password">Mot de passe</label>
                             <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
                             <input type="hidden" name="_csrf_token"value="{{ csrf_token('authenticate') }}">
-
-                        {#
-                            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-                            See https://symfony.com/doc/current/security/remember_me.html
-
-                            <div class="checkbox mb-3">
-                                <input type="checkbox" name="_remember_me" id="_remember_me">
-                                <label for="_remember_me">Remember me</label>
-                            </div>
-                        #}
-                        <button class="btn btn-lg btn-primary mt-3" type="submit">
-                            Connexion
-                        </button>
-                    </form>
+                            <button class="btn btn-lg btn-primary mt-3" type="submit">
+                                Connexion
+                            </button>
+                        </form>
                 </div>
             </div>
-        </div>
     </div>
-    <!-- ***** Main Banner Area End ***** -->
-    
-<div class="container">
-
-        <div class="row m-0">
-                
-            </div>
-        </div>
-</div>      
+       
 {% endblock %}

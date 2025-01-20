@@ -26,10 +26,6 @@ class UserAuthenticator extends AbstractAuthenticator
         $this->translator = $translator;
     }
 
-    /**
-     * Appelée sur chaque requête pour décider si cet authentificateur doit être utilisé.
-     * Si `false` est renvoyé, l'authentificateur est ignoré pour cette requête.
-     */
     public function supports(Request $request): ?bool
     {
         // Authentification basée sur l'existence d'un en-tête 'X-AUTH-TOKEN'
@@ -53,18 +49,12 @@ class UserAuthenticator extends AbstractAuthenticator
         return new SelfValidatingPassport(new UserBadge($user->getEmail()));
     }
 
-    /**
-     * Gérée lors de la réussite de l'authentification.
-     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         // Laisser la requête continuer en cas de succès d'authentification
         return null;
     }
 
-    /**
-     * Gérée lors de l'échec de l'authentification.
-     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         $data = [

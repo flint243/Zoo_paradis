@@ -28,11 +28,9 @@
 						{% endif %}
 					</div>
 
-					<div class="deconnexionBtn btn btn-danger">
-						<a href="{{ path('app_logout') }}">
+						<a href="{{ path('app_logout') }}" class="deconnexionBtn btn btn-danger">
 							Déconnexion
 						</a>
-					</div>
 
 				{% else %}
 					<a href="{{ path('app_login') }}" class="connexionBtn">

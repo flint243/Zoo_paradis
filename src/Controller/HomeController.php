@@ -22,70 +22,70 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'Accueil')]
-public function index(
-    AuthenticationUtils $authenticationUtils, 
-    AvisRepository $avisRepository,
-    ServicesRepository $servicesRepository,
-    HabitatRepository $habitatRepository, 
-    Request $request, 
-    EntityManagerInterface $entityManager, 
-    Security $security
-): Response {
-    // Récupérer l'erreur d'authentification (le cas échéant)
-    $error = $authenticationUtils->getLastAuthenticationError();
+    public function index(
+        AuthenticationUtils $authenticationUtils, 
+        AvisRepository $avisRepository,
+        ServicesRepository $servicesRepository,
+        HabitatRepository $habitatRepository, 
+        Request $request, 
+        EntityManagerInterface $entityManager, 
+        Security $security
+    ): Response {
+        // Récupérer l'erreur d'authentification (le cas échéant)
+        $error = $authenticationUtils->getLastAuthenticationError();
 
-    // Dernier nom d'utilisateur saisi
-    $lastUsername = $authenticationUtils->getLastUsername();
-    
-    // Création du formulaire d'avis
-    $avis = new Avis();
-    $form = $this->createForm(AvisType::class, $avis);    
-
-    // Gestion du formulaire
-    $form->handleRequest($request);
-   
-    // Récupérer tous les avis existants
-    $avisList = $avisRepository->findAll();
-
-    // Récupérer tous les services existants
-    $habitat1 = $habitatRepository->findBy(['nom'=> 'aerien']);
-    $habitat2 = $habitatRepository->findBy(['nom'=> 'terrestre']);
-    $habitat3 = $habitatRepository->findBy(['nom'=> 'aquatique']);
-
-    //Récupérer tous les services existants
-    $services = $servicesRepository->findBy(['nom'=> 'Restauration']);
-    $services2 = $servicesRepository->findBy(['nom'=> 'Habitats']);
-    $services3 = $servicesRepository->findBy(['nom'=> 'Visites']);
-
-    // Vérifier si le formulaire a été soumis et est valide
-    if ($form->isSubmitted() && $form->isValid()) {
+        // Dernier nom d'utilisateur saisi
+        $lastUsername = $authenticationUtils->getLastUsername();
         
-        // Définir la date de création et marquer l'avis comme validé
-        $avis->setCreatedAt(new \DateTimeImmutable());
-        $avis->setIsValidated(false);
+        // Création du formulaire d'avis
+        $avis = new Avis();
+        $form = $this->createForm(AvisType::class, $avis);    
 
-        // Persister l'avis
-        $entityManager->persist($avis);
-        $entityManager->flush();
+        // Gestion du formulaire
+        $form->handleRequest($request);
+    
+        // Récupérer tous les avis existants
+        $avisList = $avisRepository->findAll();
 
-        // Redirection après soumission
-        return $this->redirectToRoute('Accueil');
-    }
+        // Récupérer tous les services existants
+        $habitat1 = $habitatRepository->findBy(['nom'=> 'aerien']);
+        $habitat2 = $habitatRepository->findBy(['nom'=> 'terrestre']);
+        $habitat3 = $habitatRepository->findBy(['nom'=> 'aquatique']);
 
-    // Rendre la vue avec les données
-    return $this->render('home/index.html.twig', [
-        'last_username'   => $lastUsername,
-        'error'           => $error,
-        'form'            => $form->createView(),
-        'avisList'        => $avisList,
-        'services'    => $services,
-        'services2'    => $services2,
-        'services3'    => $services3,
+        //Récupérer tous les services existants
+        $services = $servicesRepository->findBy(['nom'=> 'Restauration']);
+        $services2 = $servicesRepository->findBy(['nom'=> 'Habitats']);
+        $services3 = $servicesRepository->findBy(['nom'=> 'Visites']);
 
-        'habitat1'    => $habitat1,
-        'habitat2'    => $habitat2,
-        'habitat3'    => $habitat3,
-    ]);
+        // Vérifier si le formulaire a été soumis et est valide
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            // Définir la date de création et marquer l'avis comme validé
+            $avis->setCreatedAt(new \DateTimeImmutable());
+            $avis->setIsValidated(false);
+
+            // Persister l'avis
+            $entityManager->persist($avis);
+            $entityManager->flush();
+
+            // Redirection après soumission
+            return $this->redirectToRoute('Accueil');
+        }
+
+        // Rendre la vue avec les données
+        return $this->render('home/index.html.twig', [
+            'last_username'   => $lastUsername,
+            'error'           => $error,
+            'form'            => $form->createView(),
+            'avisList'        => $avisList,
+            'services'     => $services,
+            'services2'    => $services2,
+            'services3'    => $services3,
+
+            'habitat1'    => $habitat1,
+            'habitat2'    => $habitat2,
+            'habitat3'    => $habitat3,
+        ]);
 }
 
 
@@ -98,58 +98,22 @@ public function about(): Response
     ]);
 }
 
-
-
-#[Route('/contact', name: 'contact')]
-public function contact(EntityManagerInterface $entityManager, Request $request,): Response
+#[Route('/api/avis', name: 'api_avis_list')]
+public function list(AvisRepository $avisRepository): JsonResponse
 {
-    $contact = new Contact();
-    $form = $this->createForm(ContactType::class, $contact);
+    // Récupère tous les avis
+    $avisList = $avisRepository->findAll();
 
-    $form->handleRequest($request);
+        // Transforme les données en JSON
+        $avisData = [];
+        foreach ($avisList as $avis) {
+            //$imagePath = $potentialPath = '/' . $avis->getNom();
+        }
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        $contact->setCreatedAt(new \DateTimeImmutable());
-        $entityManager->persist($contact);
-        $entityManager->flush();
-    }
-
-    return $this->render('home/contact.html.twig', [
-        'ContactForm' => $form->createView(),
+    return $this->render('home/index.html.twig', [
+        'avisList' => $avisList,
     ]);
 }
-
-
-
-    #[Route('/api/avis', name: 'api_avis_list')]
-    public function list(AvisRepository $avisRepository): JsonResponse
-    {
-        // Récupère tous les avis
-        $avisList = $avisRepository->findAll();
-
-         // Transforme les données en JSON
-         $avisData = [];
-         foreach ($avisList as $avis) {
-             $imagePath = $potentialPath = '/' . $avis->getNom();
-     
-             // Ensuite on vérifie si une image spécifique existe
-             foreach (['.jpg', '.png', '.jpeg'] as $extension) {
-                 
-                 if (file_exists($potentialPath)) {
-                     $imagePath = $potentialPath;
-                     break;
-                 }
-             }
-             $avisData[] = [
-                 'comnnetaire' => $avis->getCommentaire(),
-                 'image_habitat' => $imagePath,
-             ];
-         }
-
-        return $this->render('home/index.html.twig', [
-            'avisList' => $avisList,
-        ]);
-    }
 
     #[Route('/habitats/aerien/{id}', name: 'animal_aerien_show')]
     public function showaerien(AnimalRepository $aerienRepository, $id): Response

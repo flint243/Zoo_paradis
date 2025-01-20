@@ -16,6 +16,13 @@ class AvisRepository extends ServiceEntityRepository
         parent::__construct($registry, Avis::class);
     }
 
+    // AvisRepository.php
+public function findAll(): array
+{
+    return $this->findBy([], ['createdAt' => 'DESC']);
+}
+
+
     //    /**
     //     * @return Avis[] Returns an array of Avis objects
     //     */

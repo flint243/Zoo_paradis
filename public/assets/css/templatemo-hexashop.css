@@ -1579,7 +1579,7 @@ Products Page
 }
 .page-heading.aerien{
   height: 650px;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
   background-image: url(../images/aerien/oiseaux-tropicaux-drôle.jpeg);
   background-position: center center;
   background-size: cover;
@@ -1587,15 +1587,15 @@ Products Page
 }
 .page-heading.terrestre{
   height: 650px;
-  margin-bottom: 30px;
-  background-image: url(../images/terrestre/zebres-1.jpg);
+  margin-bottom: 0px;
+  background-image: url(../images/terrestre/zebre1.jpg);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
 }
 .page-heading.aquatique{
   height: 650px;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
   background-image: url(../images/aquatique/otari\ 2.jpg);
   background-position: center center;
   background-size: cover;
@@ -2365,7 +2365,8 @@ responsive
     left: 15%;
   }
 
-  .connexion a{
+  .connexion a {
+    color: black;
     position: absolute;
     right: 1px;
   }
@@ -2485,7 +2486,7 @@ html, body{
   z-index: 1000;
 }
 .connexion a{
-  color:white;
+  color:grey;
   position: absolute;
   right: 190px;
 }

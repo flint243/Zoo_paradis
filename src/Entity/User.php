@@ -20,6 +20,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[UniqueEntity(fields: ['email'], message: 'Il y a déjà un compte avec cet email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    #[ORM\Column]
+    private array $roles = ["ROLE_SUPER_ADMIN"];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -42,9 +45,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Vich\UploadableField(mapping: 'user_uploads_images', fileNameProperty: 'profileImage')]
     private ?File $profileImageFile = null;
 
-    #[ORM\Column]
-    private array $roles = [];
-
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private ?string $confirmationToken = null;
 
@@ -55,6 +55,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
+    /**
+     * @var Collection<int, Animal>
+     */
+    #[ORM\OneToMany(targetEntity: Animal::class, mappedBy: 'user')]
+    private Collection $animals;
+
 
     /**
      * @Assert\Length(min=6, max=4096)
@@ -79,6 +86,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+    }
+
+    public function getRoles(): array
+    {
+        return $this->roles ?? ['ROLE_SUPER_ADMIN'];
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+        return $this;
     }
 
     public function getId(): ?int
@@ -157,19 +175,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
-        return $this;
-    }
     
     public function setConfirmationToken(?string $confirmationToken): self
     {
@@ -200,6 +205,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->createdAt = $createdAt;
         return $this;
     }
+
+    /**
+     * @return Collection<int, Animal>
+     */
+    public function getAnimals(): Collection
+    {
+        return $this->animals;
+    }
+
+    public function addAnimal(Animal $animal): static
+    {
+        if (!$this->animals->contains($animal)) {
+            $this->animals->add($animal);
+        }
+
+        return $this;
+    }
+
 
     /**
      * Cette méthode remplace getUsername() depuis Symfony 5.3.

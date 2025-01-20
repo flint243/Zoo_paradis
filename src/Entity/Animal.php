@@ -46,36 +46,32 @@ class Animal
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'animal')]
-    private ?Veterinaire $veterinaire = null;
-
     #[ORM\ManyToOne(inversedBy: 'animals')]
-    private ?Employe $employe = null;
+    private ?User $user = null;
 
-    #[ORM\OneToMany(targetEntity: AnimalImage::class, mappedBy: 'animal', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: AnimalImage::class, mappedBy: 'animals', cascade: ['persist', 'remove'])]
     private Collection $images;
 
-    /**
-     * @var Collection<int, LogerAnimal>
-     */
-    #[ORM\OneToMany(targetEntity: LogerAnimal::class, mappedBy: 'animal_id')]
-    private Collection $logerAnimals;
-
-    #[ORM\ManyToOne(inversedBy: 'animal_id')]
-    private ?InfosVeto $infosVeto = null;
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
 
 
 
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
-        $this->logerAnimals = new ArrayCollection();
         $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function getPrenom(): ?string
@@ -165,56 +161,14 @@ class Animal
         return $this;
     }
 
-    public function getVeterinaire(): ?Veterinaire
+    public function getUser(): ?User
     {
-        return $this->veterinaire;
+        return $this->user;
     }
 
-    public function setVeterinaire(?Veterinaire $veterinaire): static
+    public function setUser(?User $user): static
     {
-        $this->veterinaire = $veterinaire;
-
-        return $this;
-    }
-
-    public function getEmploye(): ?Employe
-    {
-        return $this->employe;
-    }
-
-    public function setEmploye(?Employe $employe): static
-    {
-        $this->employe = $employe;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, LogerAnimal>
-     */
-    public function getLogerAnimals(): Collection
-    {
-        return $this->logerAnimals;
-    }
-
-    public function addLogerAnimal(LogerAnimal $logerAnimal): static
-    {
-        if (!$this->logerAnimals->contains($logerAnimal)) {
-            $this->logerAnimals->add($logerAnimal);
-            $logerAnimal->setAnimalId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLogerAnimal(LogerAnimal $logerAnimal): static
-    {
-        if ($this->logerAnimals->removeElement($logerAnimal)) {
-            // set the owning side to null (unless already changed)
-            if ($logerAnimal->getAnimalId() === $this) {
-                $logerAnimal->setAnimalId(null);
-            }
-        }
+        $this->user = $user;
 
         return $this;
     }
@@ -250,14 +204,14 @@ class Animal
         return $this;
     }
 
-    public function getInfosVeto(): ?InfosVeto
+    public function getNom(): ?string
     {
-        return $this->infosVeto;
+        return $this->nom;
     }
 
-    public function setInfosVeto(?InfosVeto $infosVeto): static
+    public function setNom(string $nom): static
     {
-        $this->infosVeto = $infosVeto;
+        $this->nom = $nom;
 
         return $this;
     }

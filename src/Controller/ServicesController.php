@@ -33,7 +33,6 @@ class ServicesController extends AbstractController
     #[Route('/restauration', name: 'restauration')]
     public function resto(): Response
     {
-       
 
         return $this->render('nos-services/restauration.html.twig');
     }
@@ -42,7 +41,6 @@ class ServicesController extends AbstractController
     public function resto1(): Response
     {
        
-
         return $this->render('nos-services/restauration1.html.twig');
     }
 
@@ -50,7 +48,6 @@ class ServicesController extends AbstractController
     public function resto2(): Response
     {
        
-
         return $this->render('nos-services/restauration2.html.twig');
     }
 

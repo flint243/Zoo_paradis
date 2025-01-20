@@ -15,8 +15,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
-
-
 class EmployeDashboardController extends AbstractDashboardController
 {
     private UrlGeneratorInterface $urlGenerator;
@@ -31,7 +29,7 @@ class EmployeDashboardController extends AbstractDashboardController
     {
 
         // Redirection vers une entité ou un CRUD spécifique
-        return $this->render('admin/dashboard.html.twig');
+        return $this->render('admin/dashboardEmploye.html.twig');
     }
 
     public function configureDashboard(): Dashboard
@@ -52,7 +50,6 @@ class EmployeDashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Habitats', 'fas fa-house-flag', Habitat::class);
         yield MenuItem::linkToCrud('Animaux', 'fas fa-paw', Animal::class);
         yield MenuItem::linkToCrud('Services', 'fas fa-utensils', Services::class);
-        yield MenuItem::linkToCrud('Infos animaux', 'fas fa-home', InfosVeto::class);
         yield MenuItem::linkToCrud('Contacts', 'fas fa-utensils', Contact::class);
         yield MenuItem::linkToCrud('Avis', 'fas fa-utensils', Avis::class);
     }

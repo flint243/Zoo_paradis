@@ -16,55 +16,59 @@ class ContactController extends AbstractController
 {
 
     #[Route('/contact', name: 'app_contact')]
-    public function contact(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $contact = new Contact();
-        $subscriber = new NewsletterSubscriber();
+public function contact(Request $request): Response
+{
+    $contactForm = $this->createForm(ContactType::class);
+    $newsletterForm = $this->createForm(NewsletterSubscriberType::class);
 
-        $form = $this->createForm(ContactType::class, $contact);
-        $formSub = $this->createForm(NewsletterSubscriberType::class, $subscriber);
+    return $this->render('home/contact.html.twig', [
+        'ContactForm' => $contactForm->createView(),
+        'formSub' => $newsletterForm->createView(),
+    ]);
+}
 
-        $form->handleRequest($request);
-        $formSub->handleRequest($request);
+#[Route('/contact/submit', name: 'app_contact_submit', methods: ['POST'])]
+public function submitContactForm(Request $request, EntityManagerInterface $entityManager): Response
+{
+    $contact = new Contact();
+    $form = $this->createForm(ContactType::class, $contact);
 
-        // Traitement du formulaire de contact
-        if ($form->isSubmitted() && $form->isValid()) {
-            $contact->setCreatedAt(new \DateTimeImmutable());
+    $form->handleRequest($request);
 
-            // Enregistrement dans la base de données
-            $entityManager->persist($contact);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $contact->setCreatedAt(new \DateTimeImmutable());
+        $entityManager->persist($contact);
+        $entityManager->flush();
+
+        $this->addFlash('success_contact', 'Votre message a été envoyé avec succès !');
+    }
+
+    return $this->redirectToRoute('app_contact');
+}
+
+#[Route('/newsletter/submit', name: 'app_newsletter_submit', methods: ['POST'])]
+public function submitNewsletterForm(Request $request, EntityManagerInterface $entityManager): Response
+{
+    $subscriber = new NewsletterSubscriber();
+    $form = $this->createForm(NewsletterSubscriberType::class, $subscriber);
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $existingSubscriber = $entityManager->getRepository(NewsletterSubscriber::class)
+            ->findOneBy(['email' => $subscriber->getEmail()]);
+
+        if ($existingSubscriber) {
+            $this->addFlash('warning_newsletter', 'Cet email est déjà inscrit à la newsletter.');
+        } else {
+            $entityManager->persist($subscriber);
             $entityManager->flush();
-
-            // Ajouter un message flash pour le formulaire de contact
-            $this->addFlash('success_contact', 'Votre message a été envoyé avec succès !');
-
-            return $this->redirectToRoute('app_contact');
+            $this->addFlash('success_newsletter', 'Inscription à la newsletter réussie !');
         }
+    }
 
-        // Traitement du formulaire de newsletter
-        if ($formSub->isSubmitted() && $formSub->isValid()) {
-            // Vérification si l'email existe déjà
-            $existingSubscriber = $entityManager->getRepository(NewsletterSubscriber::class)
-                ->findOneBy(['email' => $subscriber->getEmail()]);
+    return $this->redirectToRoute('app_contact');
+}
 
-            if ($existingSubscriber) {
-                // Message flash pour un email déjà existant
-                $this->addFlash('warning_newsletter', 'Cet email est déjà inscrit à la newsletter.');
-            } else {
-                $entityManager->persist($subscriber);
-                $entityManager->flush();
-
-                // Message flash pour une inscription réussie
-                $this->addFlash('success_newsletter', 'Inscription à la newsletter réussie !');
-            }
-
-            return $this->redirectToRoute('app_contact');
-        }
-
-        return $this->render('home/contact.html.twig', [
-            'ContactForm' => $form->createView(),
-            'formSub' => $formSub->createView(),
-        ]);
-        }
     }
  

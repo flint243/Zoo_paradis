@@ -35,10 +35,16 @@ class SecurityController extends AbstractController
         $user = $security->getUser();
         if ($user) {
             // Redirection conditionnelle en fonction des rôles
-            if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+            if (in_array('ROLE_SUPER_ADMIN', $user->getRoles(), true)) {
                 return $this->redirectToRoute('admin_dashboard');
             }
-            return $this->redirectToRoute('user_dashboard');
+            #return $this->redirectToRoute('user_dashboard');
+            /*if (in_array('ROLE_EMPLOYE', $user->getRoles(), true)) {
+                return $this->redirectToRoute('admin_dashboard');
+            }
+            if (in_array('ROLE_VETERINAIRE', $user->getRoles(), true)) {
+                return $this->redirectToRoute('admin_dashboard');
+            }*/
         }
 
         return $this->render('security/login.html.twig', [
