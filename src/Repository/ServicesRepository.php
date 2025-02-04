@@ -16,6 +16,18 @@ class ServicesRepository extends ServiceEntityRepository
         parent::__construct($registry, Services::class);
     }
 
+    /**
+     * @return int/mixed/string
+     */
+    public function countAllServices()
+    {
+        return $this->createQueryBuilder('a')
+                    ->select('COUNT(a.id) as value')
+                    ->getQuery()
+                    ->getOneOrNullResult();
+
+    }
+
     //    /**
     //     * @return ServicesZoo[] Returns an array of ServicesZoo objects
     //     */

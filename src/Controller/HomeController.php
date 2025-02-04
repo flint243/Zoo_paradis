@@ -115,18 +115,12 @@ public function list(AvisRepository $avisRepository): JsonResponse
     ]);
 }
 
-    #[Route('/habitats/aerien/{id}', name: 'animal_aerien_show')]
-    public function showaerien(AnimalRepository $aerienRepository, $id): Response
-    {
-        $aerien = $aerienRepository->find($id);
-
-        // Vérifiez si l'animal existe
-        if (!$aerien) {
-            throw $this->createNotFoundException('Cet animal n\'existe pas');
-        }
-        return $this->render('animal/show.html.twig', [
-            'aerien' => $aerien,
-        ]);
-    }
+    #[Route('/mentions', name: 'mentions')]
+public function mentions(): Response
+{
+    return $this->render('home/mentions.html.twig', [
+        'controller_name' => 'AboutController',
+    ]);
+}
 
 }

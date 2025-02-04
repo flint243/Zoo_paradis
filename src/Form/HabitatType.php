@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class HabitatType extends AbstractType
@@ -19,20 +20,9 @@ class HabitatType extends AbstractType
         $builder
             ->add('nom')
             ->add('description_habitat')
-            ->add('imageFile', FileType::class, [
+            ->add('habitat_image', TextType::class, [
                 'required' => false,
-                'mapped' => false, // Si vous utilisez un champ d'image temporaire
-                'constraints' => [
-                    new File([
-                        'maxSize' => '5M',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png',
-                            'image/gif',
-                        ],
-                        'mimeTypesMessage' => 'Veuillez télécharger une image valide (jpeg, png, gif).',
-                    ])
-                ],
+                'empty_data' => '',
             ])
             ->add('images', CollectionType::class, [
                 'entry_type' => FileType::class,

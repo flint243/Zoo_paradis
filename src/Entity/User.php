@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
@@ -20,47 +21,60 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[UniqueEntity(fields: ['email'], message: 'Il y a déjà un compte avec cet email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Column]
-    private array $roles = ["ROLE_SUPER_ADMIN"];
-
+    public function __toString(): string
+    {
+        return $this->nom;
+    }
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: "Le nom est obligatoire.")]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+    #[Assert\NotBlank(message: "L'email est obligatoire.")]
+    #[Assert\Email(message: "L'email '{{ value }}' n'est pas valide.")]
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
+    #[Assert\NotBlank(message: "Le mot de passe est obligatoire.")]
+    #[Assert\Length(min: 8, minMessage: "Le mot de passe doit contenir au moins 8 caractères.")]
     #[ORM\Column]
     private ?string $password = null;
 
     private $passwordHasher;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $profileImage = null;
-
-    #[Vich\UploadableField(mapping: 'user_uploads_images', fileNameProperty: 'profileImage')]
-    private ?File $profileImageFile = null;
-
-    #[ORM\Column(type: 'string', length: 100, nullable: true)]
-    private ?string $confirmationToken = null;
-
     private $plainPassword;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTimeInterface $updatedAt = null;
+    #[ORM\Column]
+    private array $roles = ["ROLE_SUPER_ADMIN"];
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
 
     /**
      * @var Collection<int, Animal>
      */
     #[ORM\OneToMany(targetEntity: Animal::class, mappedBy: 'user')]
     private Collection $animals;
+
+    #[ORM\ManyToOne(inversedBy: 'userId')]
+    private ?Animal $animal = null;
+
+    #[ORM\ManyToOne(inversedBy: 'userId')]
+    private ?Habitat $habitat = null;
+
+    #[ORM\ManyToOne(inversedBy: 'userId')]
+    private ?Services $services = null;
+
+    #[ORM\ManyToOne(inversedBy: 'userId')]
+    private ?InfosAnimal $infosAnimal = null;
 
 
     /**
@@ -78,26 +92,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
     
-    public function getConfirmationToken(): ?string
-    {
-        return $this->confirmationToken;
-    }
 
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
     }
 
-    public function getRoles(): array
-    {
-        return $this->roles ?? ['ROLE_SUPER_ADMIN'];
-    }
-
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
-        return $this;
-    }
+    
 
     public function getId(): ?int
     {
@@ -149,39 +150,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getProfileImageFile(): ?File
+    public function getRoles(): array
     {
-        return $this->profileImageFile;
+        return $this->roles ?? ['ROLE_SUPER_ADMIN'];
     }
 
-    public function setProfileImageFile(?File $profileImageFile = null): void
+    public function setRoles(array $roles): static
     {
-        $this->profileImageFile = $profileImageFile;
-
-        if ($profileImageFile) {
-            // Si un fichier est téléchargé, on met à jour updatedAt
-            $this->updatedAt = new \DateTime('now');
-        }
-    }
-
-    public function getProfileImage(): ?string
-    {
-        return $this->profileImage;
-    }
-
-    public function setProfileImage(?string $profileImage): self
-    {
-        $this->profileImage = $profileImage;
-
+        $this->roles = $roles;
         return $this;
     }
-    
-    public function setConfirmationToken(?string $confirmationToken): self
-    {
-        $this->confirmationToken = $confirmationToken;
 
-        return $this;
-    }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
@@ -242,9 +221,52 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // Efface des informations sensibles si nécessaire (ex: mots de passe en clair).
     }
 
-    public function getAvis(): Collection
+    public function getAnimal(): ?Animal
     {
-        return $this->avis;
+        return $this->animal;
+    }
+
+    public function setAnimal(?Animal $animal): static
+    {
+        $this->animal = $animal;
+
+        return $this;
+    }
+
+    public function getHabitat(): ?Habitat
+    {
+        return $this->habitat;
+    }
+
+    public function setHabitat(?Habitat $habitat): static
+    {
+        $this->habitat = $habitat;
+
+        return $this;
+    }
+
+    public function getServices(): ?Services
+    {
+        return $this->services;
+    }
+
+    public function setServices(?Services $services): static
+    {
+        $this->services = $services;
+
+        return $this;
+    }
+
+    public function getInfosAnimal(): ?InfosAnimal
+    {
+        return $this->infosAnimal;
+    }
+
+    public function setInfosAnimal(?InfosAnimal $infosAnimal): static
+    {
+        $this->infosAnimal = $infosAnimal;
+
+        return $this;
     }
 
 

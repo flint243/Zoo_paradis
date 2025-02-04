@@ -21,10 +21,8 @@
 					<div class="mb-3 userConnect">
 						Bonjour
 						{{ app.user.nom }}
-						{% if app.user.profileImage %}
-							<img src="/uploadsUsers/imagesUsers/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px"/>
-						{% else %}
-							<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px"/>
+						{% if app.user %}
+							<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px" alt="Image profile par defaut"/>
 						{% endif %}
 					</div>
 
@@ -32,7 +30,7 @@
 						Déconnexion
 					</a>
 				{% else %}
-					<a href="{{ path('app_login') }}" class="connexionBtn">
+					<a href="{{ path('app_login') }}" class="connexionBtn btn btn-success text-light">
 						Connexion staff
 					</a>
 				{% endif %}
@@ -150,7 +148,7 @@
                         <div class="">
                             <h4 class="mb-3 text-center">Habitat {{ imageAerien.nom }}</h4>
                             <a href="/habitats/aerien">
-                                <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageAerien.habitatimage) }}" alt="Image du">
+                                <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageAerien.habitatimage) }}" alt="Image du"{{ imageAerien.nom }}>
                             </a>        
                                 <div id="bandeauHabitatHabitatAerien">
                                     <div id="InfoHabitatAerien">
@@ -168,7 +166,7 @@
                             <div class="HabitatTerresrtre">
                                 <h4 class="mb-3 text-center">Habitat {{ imageTerre.nom }}</h4>
                                 <a href="/habitats/terrestre">
-                                    <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageTerre.habitatimage) }}" alt="Image du slider">
+                                    <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageTerre.habitatimage) }}" alt="Image du" {{ imageTerre.nom }}>
                                 </a>        
                                 <div id="bandeauHabitatTerrestre">
                                     <div id="InfoHabitatTerrestre">
@@ -186,7 +184,7 @@
                                 <div class="HabitatAquatique">
                                     <h4 class="mb-3 text-center">Habitat {{ imageAquatique.nom }}</h4>
                                     <a href="/habitats/aquatique">
-                                        <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageAquatique.habitatimage) }}" alt="Image du slider">
+                                        <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageAquatique.habitatimage) }}" alt="Image du" {{ imageAquatique.nom }}>
                                     </a>        
                                     <div id="bandeauHabitatAquatique">
                                         <div id="InfoHabitatAquatique">
@@ -198,7 +196,8 @@
                     </div>
                 </div>
             </div>
-         </div>
+        </div>
+
     </section>
 
      <!-- ***** Footer Start ***** -->
@@ -208,7 +207,7 @@
                 <div class="col-lg-3">
                     <div class="first-item">
                             <div class="row logo justify-content-around">
-                            <img src="{{ asset('/assets/images/avatar/avatar2.png') }}" width="30px" height="30px" />
+                            <img src="{{ asset('/assets/images/avatar/avatar2.png') }}" width="30px" height="30px"alt="logo du site" />
                                 <h3 class="text-success font-weight-bold">Zoo paradis</h3>
                             </div>
                         <ul>

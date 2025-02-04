@@ -66,7 +66,7 @@ services:
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=123456
-      - GF_DATABASE_HOST=mysql:33:06
+      - GF_DATABASE_HOST=mysql:3306
       - GF_DATABASE_NAME=symfony_zoo_db
       - GF_DATABASE_USER=symfo
       - GF_DATABASE_PASSWORD=nbvcxw

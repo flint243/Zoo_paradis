@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class HabitatCrudController extends AbstractCrudController
@@ -25,8 +26,15 @@ class HabitatCrudController extends AbstractCrudController
             TextareaField::new('description'),
             
             ImageField::new('habitat_image')
-                ->setBasePath('/uploadsHabitat/imagesHabitat')
+                ->setBasePath('/uploadsHabitats/imagesHabitats')
                 ->onlyOnIndex(),
+            
+                TextField::new('user'),
+                AssociationField::new('user')
+                ->setFormTypeOptions([
+                    'choice_label' => 'nom', // Remplace 'nom' par le champ affiché dans le select
+                ])
+                ->onlyOnForms(),
 
             Field::new('habitat_image_file', 'Image')
             ->setFormType(VichImageType::class) 

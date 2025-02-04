@@ -89,29 +89,19 @@ class UserCrudController extends AbstractCrudController
                 TextField::new('password')
                     ->setFormType(PasswordType::class)
                     ->hideOnIndex(),
-            
-                // Champ pour l'image de profil, avec un chemin pour afficher l'image dans la liste
-                ImageField::new('imageProfile')
-                    ->setBasePath('/uploadsUsers/imagesUsers')
-                    ->onlyOnIndex(),
-            
-                // Champ pour uploader l'image dans le formulaire
-                Field::new('profileImageFile', 'Image')
-                    ->setFormType(FileType::class)
-                    ->onlyOnForms(),
-            
-                // Champ pour la date de mise à jour, affiché uniquement dans la liste
-                DateTimeField::new('updatedAt')
-                    ->setFormat('Y-MM-dd HH:mm:ss')
-                    ->hideOnForm(),
-            
+
                 // Champ pour la date de création, affiché uniquement dans la liste
                 DateTimeField::new('createdAt')
                     ->setFormat('Y-MM-dd HH:mm:ss')
                     ->hideOnForm(),
+
+            
+                // Champ pour la date de mise à jour, affiché uniquement dans la liste
+                DateTimeField::new('updatedAt')
+                ->setFormat('Y-MM-dd HH:mm:ss')
+                ->hideOnForm(),
+        
             ];
     }
-
-    
 
 }

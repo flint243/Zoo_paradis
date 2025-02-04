@@ -19,34 +19,14 @@ class ContactType extends AbstractType
             ->add('titre', TextType::class, [
                 'label' => 'Titre',
                 'required' => true,
-                'attr' => [
-                    'placeholder' => 'Entrez un titre',
-                    'trim' => true,
-                ]
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'required' => true,
-                'attr' => [
-                    'placeholder' => 'Entrez votre email',
-                    'trim' => true,
-                ]
             ])
             ->add('description', TextareaType::class, [
                 'required' => true,
-                'attr' => [
-                    'placeholder' => 'Entrez votre message',
-                    'trim' => true,
-                ]
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Envoyer',
-                'attr' => [
-                    'class' => 'btn btn-primary',
-                    'trim' => true,
-                ]
             ]);
-            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

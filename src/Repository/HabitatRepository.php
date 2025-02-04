@@ -16,6 +16,17 @@ class HabitatRepository extends ServiceEntityRepository
         parent::__construct($registry, Habitat::class);
     }
 
+    /**
+     * @return int/mixed/string
+     */
+    public function countAllHabitat()
+    {
+        return $this->createQueryBuilder('a')
+                    ->select('COUNT(a.id) as value')
+                    ->getQuery()
+                    ->getOneOrNullResult();
+    }
+
     //    /**
     //     * @return Habitat[] Returns an array of Habitat objects
     //     */

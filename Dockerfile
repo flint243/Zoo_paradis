@@ -16,32 +16,40 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install intl mbstring pdo_mysql zip
 
-RUN pecl install apcu && docker-php-ext-enable apcu
+# Étape 2 : Installer les extensions PHP et PECL
+#RUN intl mbstring zip 
 
 RUN echo "apc.enable_cli=1" > /usr/local/etc/php/conf.d/apcu.ini
 
-# Étape 2 : Installer Node.js et Yarn
-RUN apt-get install -y nodejs npm && npm install -g yarn
+# Étape 3 : Installer Node.js et Yarn
+RUN apt-get update && apt-get install -y --no-install-recommends nodejs npm \
+    && npm install -g yarn \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Étape 3 : Installer Composer
+# Étape 4 : Installer Composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-# Étape 4 : Configurer le répertoire de travail
+# Étape 5 : Configurer le répertoire de travail
 WORKDIR /var/www/
 
-# Étape 5 : Copier les fichiers de l'application
+# Étape 6 : Copier les fichiers nécessaires pour optimiser le cache
+COPY composer.json composer.lock package.json ./
+#RUN composer install --no-dev --prefer-dist --no-progress --no-suggest \
+   # && yarn install --frozen-lockfile
+
+# Étape 7 : Copier le reste des fichiers
 COPY . .
 
-# Étape 6 : Configurer les permissions
+# Étape 8 : Configurer les permissions
 RUN chown -R www-data:www-data /var/www/
 
-# Étape 7 : Copier les fichiers de configuration Apache
+# Étape 9 : Copier les fichiers de configuration Apache
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
-# Étape 8 : Exposer le port 80
+# Étape 10 : Exposer le port 80
 EXPOSE 80
 
-# Étape 9 : Lancer Apache
+# Étape 11 : Lancer Apache
 CMD ["apache2-foreground"]

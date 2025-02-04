@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ServicesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -42,10 +44,20 @@ class Services
     )]
     private ?File $servicesImageFile = null;
 
+    #[ORM\ManyToOne(inversedBy: 'services')]
+    private ?User $user = null;
+
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'services')]
+    private Collection $userId;
+
     public function __construct()
     {
         // Initialisation automatique de la date de création
         $this->createdAt = new \DateTimeImmutable();
+        $this->userId = new ArrayCollection();
     }
 
 
@@ -127,6 +139,48 @@ class Services
             // Si un fichier est téléchargé, on met à jour updatedAt
             $this->updatedAt = new \DateTime('now');
         }
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUserId(): Collection
+    {
+        return $this->userId;
+    }
+
+    public function addUserId(User $userId): static
+    {
+        if (!$this->userId->contains($userId)) {
+            $this->userId->add($userId);
+            $userId->setServices($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserId(User $userId): static
+    {
+        if ($this->userId->removeElement($userId)) {
+            // set the owning side to null (unless already changed)
+            if ($userId->getServices() === $this) {
+                $userId->setServices(null);
+            }
+        }
+
+        return $this;
     }
 
 }

@@ -21,9 +21,7 @@
 				<div class="mb-3 userConnect">
 					Bonjour
 					{{ app.user.nom }}
-					{% if app.user.profileImage %}
-						<img src="/uploadsUsers/imagesUsers/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px"/>
-					{% else %}
+					{% if app.user %}
 						<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px"/>
 					{% endif %}
 				</div>
@@ -32,7 +30,7 @@
 						Déconnexion
 					</a>
 			{% else %}
-				<a href="{{ path('app_login') }}" class="connexionBtn">
+				<a href="{{ path('app_login') }}" class="connexionBtn btn btn-success text-light">
 					Connexion ici
 				</a>
 			{% endif %}
@@ -119,7 +117,7 @@
     <!-- ***** Header Area End ***** -->
 
     <!-- ***** Main Banner Area Start ***** -->
-    <div class="page-heading" id="top">
+    <div class="page-heading services" id="top">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">

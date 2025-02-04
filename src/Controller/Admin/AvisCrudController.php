@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Avis;
 use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
@@ -24,6 +25,7 @@ class AvisCrudController extends AbstractCrudController
             TextareaField::new('commentaire'),
             BooleanField::new('isValidated'),
             DateTimeField::new('createdAt')->hideOnForm(),
+            Field::new('token'),
         ];
     }
 

@@ -6,4 +6,23 @@
         Vétérinaire Admin
         <a href="{{ path('Accueil') }}" class="btn btn-primary">Retour au site</a>
     </h1>
+
+    <div class="container">
+        <div class="col mt-4 bg-success p-3 rounded-3 text-center">
+            <div class="row m-0 mb-5">
+                <h1>Total de données pour chaque table</h1>
+            </div>
+            <div class="col-6 p-1 mb-3 bg-warning rounded-3">
+                <h1 class="text-dark">Nombre d'animaux = 
+                <span class="display-6 text-bold-2 text-danger">{{ countAllAnimal['value'] }}</span></h1>
+            </div>
+            <div class="col-6 p-1 mb-3 bg-light rounded-3">
+                <h1 class="text-dark">Nombre d'habitat's = 
+                <span class="display-6 text-bold-2 text-danger">{{ countAllHabitat['value'] }}</span></h1>
+            </div>
+            <div class="col-6 p-1 mb-3 bg-info rounded-3">
+                <h1 class="text-dark">Nombre d'animaux = 
+                <span class="display-6 text-bold-2 text-danger">{{ countAllInfosAnimal['value'] }}</span></h1>
+            </div>
+        </div>
 {% endblock %}

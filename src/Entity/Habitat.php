@@ -49,12 +49,22 @@ class Habitat
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
+    #[ORM\ManyToOne(inversedBy: 'habitat')]
+    private ?User $user = null;
+
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'habitat')]
+    private Collection $userId;
+
     
 
     public function __construct()
     {
         $this->animals = new ArrayCollection();
         $this->created_at = new \DateTimeImmutable();
+        $this->userId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -121,7 +131,7 @@ class Habitat
         return $this->habitat_image;
     }
 
-    public function setHabitatImage(string $habitat_image): static
+    public function setHabitatImage(?string $habitat_image): self
     {
         $this->habitat_image = $habitat_image;
 
@@ -163,6 +173,49 @@ class Habitat
     public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+    
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUserId(): Collection
+    {
+        return $this->userId;
+    }
+
+    public function addUserId(User $userId): static
+    {
+        if (!$this->userId->contains($userId)) {
+            $this->userId->add($userId);
+            $userId->setHabitat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserId(User $userId): static
+    {
+        if ($this->userId->removeElement($userId)) {
+            // set the owning side to null (unless already changed)
+            if ($userId->getHabitat() === $this) {
+                $userId->setHabitat(null);
+            }
+        }
 
         return $this;
     }

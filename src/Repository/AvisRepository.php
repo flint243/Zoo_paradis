@@ -22,6 +22,18 @@ public function findAll(): array
     return $this->findBy([], ['createdAt' => 'DESC']);
 }
 
+/**
+     * @return int/mixed/string
+     */
+    public function countAllAvis()
+    {
+        return $this->createQueryBuilder('a')
+                    ->select('COUNT(a.id) as value')
+                    ->getQuery()
+                    ->getOneOrNullResult();
+
+    }
+
 
     //    /**
     //     * @return Avis[] Returns an array of Avis objects

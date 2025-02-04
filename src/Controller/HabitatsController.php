@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Animal;
 use App\Entity\Habitat;
+use App\Entity\InfosAnimal;
 use Doctrine\DBAL\Exception;
 use Psr\Log\LoggerInterface;
 use Doctrine\DBAL\Connection;
@@ -45,6 +46,38 @@ class HabitatsController extends AbstractController
     }
 
 /************************ HABITAT AERIEN  **************************/
+
+    #[Route('/habitats/aerien', name: 'show_aerien')]
+    public function aerien(AnimalRepository $animalRepository): Response
+    {
+        $aerien = $aerien = $animalRepository->findBy(["habitat" => 1]);
+
+        return $this->render('habitats/aerien.html.twig', [
+            'aerien' => $aerien,
+        ]);
+    }
+
+
+    #[Route('/habitats/aerien/{id}', name: 'show_aerienId')]
+    public function aerienId(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $aerien = $aerien = $entityManager->getRepository(Animal::class)->find($id);
+
+        $infos = $infos = $entityManager->getRepository(InfosAnimal::class)->find($id);
+
+        // Récupérer le compteur de clics depuis Firebase
+        $database = $this->firebaseService->getDatabase();
+        $ref = $database->getReference('uploadsAnimals/imagesAnimals/' . $id);
+        $clickCount = $ref->getSnapshot()->getValue()['click_count'] ?? 0;
+        //dump($aerien);
+
+        return $this->render('animal/show.html.twig', [
+            'aerien' => $aerien,
+            'clickCount' => $clickCount,
+            'infos' => $infos,
+        ]);
+    }
+
      
     #[Route("/increment-click-aerien", name: "increment_click_aerien", methods: ["POST"])]     
     public function incrementClickAerien(Request $request): JsonResponse {
@@ -84,35 +117,9 @@ class HabitatsController extends AbstractController
         return new JsonResponse(['error' => 'Internal Server Error', 'message' => $e->getMessage()], 500);
     }
 }
-
-    #[Route('/habitats/aerien', name: 'show_aerien')]
-    public function aerien(EntityManagerInterface $entityManager): Response
-    {
-        $aerien = $aerien = $entityManager->getRepository(Animal::class)->findBy(["habitat" => 1]);
-
-        return $this->render('habitats/aerien.html.twig', [
-            'aerien' => $aerien,
-        ]);
-    }
-
-    #[Route('/habitats/aerien/{id}', name: 'show_aerienId')]
-    public function aerienId(EntityManagerInterface $entityManager, int $id): Response
-    {
-        $aerien = $aerien = $entityManager->getRepository(Animal::class)->find($id);
-
-         // Récupérer le compteur de clics depuis Firebase
-         $database = $this->firebaseService->getDatabase();
-         $ref = $database->getReference('uploadsAnimals/imagesAnimals/' . $id);
-         $clickCount = $ref->getSnapshot()->getValue()['click_count'] ?? 0;
-        //dump($aerien);
-
-        return $this->render('animal/show.html.twig', [
-            'aerien' => $aerien,
-            'clickCount' => $clickCount,
-        ]);
-    }
-
 /******************** FIN AERIENS **********************/
+
+
 
     #[Route('/habitats/terrestre', name: 'terrestre_show')]
     public function habitatTerrestre(AnimalRepository $animalRepository): Response
@@ -120,6 +127,23 @@ class HabitatsController extends AbstractController
        $terrestre = $animalRepository->findBy(["habitat" => 2]);
         return $this->render('habitats/terrestre.html.twig', [
            'terrestre' => $terrestre,
+        ]);
+    }
+
+    #[Route('/habitats/terrestre/{id}', name: 'show_terrestreId')]
+    public function terrestreId(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $terrestre = $terrestre = $entityManager->getRepository(Animal::class)->find($id);
+
+         // Récupérer le compteur de clics depuis Firebase
+         $database = $this->firebaseService->getDatabase();
+         $ref = $database->getReference('uploadsAnimals/imagesAnimals/' . $id);
+         $clickCount = $ref->getSnapshot()->getValue()['click_count'] ?? 0;
+        //dump($terrestre);
+
+        return $this->render('animal/show_terrestre.html.twig', [
+            'terrestre' => $terrestre,
+            'clickCount' => $clickCount,
         ]);
     }
 
@@ -162,26 +186,8 @@ class HabitatsController extends AbstractController
         return new JsonResponse(['error' => 'Internal Server Error', 'message' => $e->getMessage()], 500);
     }
 }
-
-
-#[Route('/habitats/terrestre/{id}', name: 'show_terrestreId')]
-    public function terrestreId(EntityManagerInterface $entityManager, int $id): Response
-    {
-        $terrestre = $terrestre = $entityManager->getRepository(Animal::class)->find($id);
-
-         // Récupérer le compteur de clics depuis Firebase
-         $database = $this->firebaseService->getDatabase();
-         $ref = $database->getReference('uploadsAnimals/imagesAnimals/' . $id);
-         $clickCount = $ref->getSnapshot()->getValue()['click_count'] ?? 0;
-        //dump($terrestre);
-
-        return $this->render('animal/show_terrestre.html.twig', [
-            'terrestre' => $terrestre,
-            'clickCount' => $clickCount,
-        ]);
-    }
-
 /******************** FIN TERRESTRE **********************/
+
     
     #[Route('/habitats/aquatique', name: 'aquatique')]
     public function aquatique(AnimalRepository $animalRepository): Response
@@ -191,6 +197,23 @@ class HabitatsController extends AbstractController
 
         return $this->render('habitats/aquatique.html.twig', [
             "aquatique" => $aquatique,
+        ]);
+    }
+
+    #[Route('/habitats/aquatique/{id}', name: 'show_aquatiqueId')]
+    public function aquatiqueId(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $aquatique = $aquatique = $entityManager->getRepository(Animal::class)->find($id);
+
+         // Récupérer le compteur de clics depuis Firebase
+         $database = $this->firebaseService->getDatabase();
+         $ref = $database->getReference('uploadsAnimals/imagesAnimals/' . $id);
+         $clickCount = $ref->getSnapshot()->getValue()['click_count'] ?? 0;
+        //dump($aquatique);
+
+        return $this->render('animal/show_aquatique.html.twig', [
+            'aquatique' => $aquatique,
+            'clickCount' => $clickCount,
         ]);
     }
 
@@ -231,25 +254,7 @@ class HabitatsController extends AbstractController
         $this->logger->error('Erreur lors de l\'incrémentation : ' . $e->getMessage());
         return new JsonResponse(['error' => 'Internal Server Error', 'message' => $e->getMessage()], 500);
     }
-}
-
-
-    #[Route('/habitats/aquatique/{id}', name: 'show_aquatiqueId')]
-    public function aquatiqueId(EntityManagerInterface $entityManager, int $id): Response
-    {
-        $aquatique = $aquatique = $entityManager->getRepository(Animal::class)->find($id);
-
-         // Récupérer le compteur de clics depuis Firebase
-         $database = $this->firebaseService->getDatabase();
-         $ref = $database->getReference('uploadsAnimals/imagesAnimals/' . $id);
-         $clickCount = $ref->getSnapshot()->getValue()['click_count'] ?? 0;
-        //dump($aquatique);
-
-        return $this->render('animal/show_aquatique.html.twig', [
-            'aquatique' => $aquatique,
-            'clickCount' => $clickCount,
-        ]);
-    }
+}  
 
 /******************** FIN AQUATIQUE **********************/
 

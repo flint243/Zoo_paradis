@@ -7,12 +7,19 @@ use App\Entity\User;
 use App\Entity\Animal;
 use App\Entity\Habitat;
 use App\Entity\Services;
-use App\Entity\Aquatique;
-use App\Entity\Aerien;
-use App\Entity\Terrestre;
+use App\Repository\AvisRepository;
+use App\Repository\UserRepository;
+use App\Repository\AnimalRepository;
+use App\Repository\ContactRepository;
+use App\Repository\HabitatRepository;
+use App\Repository\ServicesRepository;
+use App\Repository\InfosAnimalRepository;
+use App\Controller\Admin\UserCrudController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -21,11 +28,39 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
 {
-    private UrlGeneratorInterface $urlGenerator;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+protected $userRepository;
+protected $avisRepository;
+protected $animalRepository;
+protected $contactRepository;
+protected $habitatRepository;
+protected $infosAnimalRepository;
+protected $servicesRepository;
+private UrlGeneratorInterface $urlGenerator;
+
+    public function __construct(
+        UrlGeneratorInterface $urlGenerator,
+
+        UserRepository $userRepository,
+        AvisRepository $avisRepository,
+        AnimalRepository $animalRepository,
+        ContactRepository $contactRepository,
+        HabitatRepository $habitatRepository,
+        InfosAnimalRepository $infosAnimalRepository,
+        ServicesRepository $servicesRepository
+    )
     {
         $this->urlGenerator = $urlGenerator;
+
+        $this->userRepository = $userRepository;
+        $this->avisRepository = $avisRepository;
+        $this->animalRepository = $animalRepository;
+        $this->contactRepository = $contactRepository;
+        $this->habitatRepository = $habitatRepository;
+        $this->infosAnimalRepository = $infosAnimalRepository;
+        $this->servicesRepository = $servicesRepository;
+
+        
     }
 
     #[Route('/admin', name: 'admin')]
@@ -35,7 +70,16 @@ class DashboardController extends AbstractDashboardController
         /*$adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
         return $this->redirect($adminUrlGenerator->setController(UserCrudController::class)->generateUrl());
         */
-        return $this->render('admin/dashboardAdmin.html.twig');
+        return $this->render('admin/dashboardAdmin.html.twig', [
+
+            'countAllUser' => $this->userRepository->countAllUser(),
+            'countAllAvis' => $this->avisRepository->countAllAvis(),
+            'countAllAnimal' => $this->animalRepository->countAllAnimal(),
+            'countAllContact' => $this->contactRepository->countAllContact(),
+            'countAllHabitat' => $this->habitatRepository->countAllHabitat(),
+            'countAllInfosAnimal' => $this->infosAnimalRepository->countAllInfosAnimal(),
+            'countAllServices' => $this->servicesRepository->countAllServices(),
+    ]);
     }
 
     public function configureDashboard(): Dashboard
@@ -47,6 +91,15 @@ class DashboardController extends AbstractDashboardController
         ->setTitle('<a href="' . $homeUrl . '">Zoo Paradis</a>')
         ->setFaviconPath('favicon.ico'); // Optionnel : ajouter un favicon personnalisé
     }
+
+    public function configureFields(string $pageName): iterable
+        {
+            return [
+                IdField::new('id')->hideOnForm(),
+                TextField::new('email', 'Email'), // Vérifie que c'est bien un TextField
+            ];
+        }
+
 
     public function configureMenuItems(): iterable
     {

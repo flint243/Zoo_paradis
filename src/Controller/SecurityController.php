@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
+use App\Form\UserType;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
@@ -19,39 +21,39 @@ class SecurityController extends AbstractController
         Security $security,
         RateLimiterFactory $loginLimiter
     ): Response {
+        // Gestion du rate limiter (limite de tentatives de connexion)
         $limiter = $loginLimiter->create($request->getClientIp());
-        
-        // Gestion des erreurs de connexion
+
         if (!$limiter->consume(1)->isAccepted()) {
-            $error = 'Trop de tentatives de connexion. Veuillez réessayer plus tard.';
+            $customErrorMessage = 'Trop de tentatives de connexion. Veuillez réessayer plus tard.';
         } else {
+            // Récupération de l'erreur de connexion
             $error = $authenticationUtils->getLastAuthenticationError();
+            $customErrorMessage = null;
+
+            if ($error) {
+                if ($error->getMessageKey() === 'Invalid credentials.') {
+                    $customErrorMessage = "Email ou mot de passe incorrect. Veuillez réessayer.";
+                } else {
+                    $customErrorMessage = "Une erreur s'est produite. Veuillez réessayer.";
+                }
+            }
         }
 
         // Dernier identifiant saisi
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        // Récupération de l'utilisateur connecté (si présent)
-        $user = $security->getUser();
-        if ($user) {
-            // Redirection conditionnelle en fonction des rôles
-            if (in_array('ROLE_SUPER_ADMIN', $user->getRoles(), true)) {
-                return $this->redirectToRoute('admin_dashboard');
-            }
-            #return $this->redirectToRoute('user_dashboard');
-            /*if (in_array('ROLE_EMPLOYE', $user->getRoles(), true)) {
-                return $this->redirectToRoute('admin_dashboard');
-            }
-            if (in_array('ROLE_VETERINAIRE', $user->getRoles(), true)) {
-                return $this->redirectToRoute('admin_dashboard');
-            }*/
+        // Redirection si l'utilisateur est déjà connecté
+        if ($security->getUser()) {
+            return $this->redirectToRoute('Accueil');
         }
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
-            'error' => $error,
+            'error' => $customErrorMessage,
         ]);
     }
+
 
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void

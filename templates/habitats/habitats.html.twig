@@ -21,10 +21,8 @@
 					<div class="mb-3 userConnect">
 						Bonjour
 						{{ app.user.nom }}
-						{% if app.user.profileImage %}
-							<img src="/uploadsUsers/imagesUsers/{{ app.user.profileImage }}" class="rounded-circle" width="40px" height="35px"/>
-						{% else %}
-							<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px"/>
+						{% if app.user %}
+							<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" width="30px" height="30px" alt="image profile par defaut"/>
 						{% endif %}
 					</div>
 
@@ -32,7 +30,7 @@
 						Déconnexion
 					</a>
 				{% else %}
-					<a href="{{ path('app_login') }}" class="connexionBtn">
+					<a href="{{ path('app_login') }}" class="connexionBtn btn btn-success text-light">
 						Connexion ici
 					</a>
 				{% endif %}
@@ -47,7 +45,7 @@
 							<!-- ***** Logo Start ***** -->
 							<a href="/" class="mt-2 logo">
 								<div class="row p-2 bg-light rounded">
-									<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle" width="30px" height="30px"/>
+									<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle" width="30px" height="30px"alt="logo du site"/>
 									<h4 class="text-success font-weight-bold">
 										Zoo paradis
 									</h4>
@@ -155,11 +153,11 @@
                         <div class="">
                             <h2 class="mb-3 ">Habitat {{ imageAerien.nom }}</h2>
                             <a href="/habitats/aerien">
-                                <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageAerien.habitatimage) }}" alt="Image du">
+                                <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageAerien.habitatimage) }}" alt="Image du "{{ imageAerien.nom }}>
                             </a>        
                                 <div id="bandeauHabitatHabitatAerien">
                                     <div id="InfoHabitatAerien">
-                                        <h5 class="">{{ imageAerien.description }}</h5>
+                                        <h5 class="text-justify bg-light">{{ imageAerien.description }}</h5>
                                     </div>
                                 </div>
                         </div>
@@ -173,11 +171,11 @@
                             <div class="HabitatTerresrtre">
                                 <h2 class="mb-3 ">Habitat {{ imageTerre.nom }}</h2>
                                 <a href="/habitats/terrestre">
-                                    <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageTerre.habitatimage) }}" alt="Image du slider">
+                                    <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageTerre.habitatimage) }}" height="150px" alt="Image du "{{ imageTerre.nom }}>
                                 </a>        
                                 <div id="bandeauHabitatTerrestre">
                                     <div id="InfoHabitatTerrestre">
-                                        <h5 class="">{{ imageTerre.description }}</h5>
+                                        <h5 class="text-justify bg-light">{{ imageTerre.description }}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -191,11 +189,11 @@
                                 <div class="HabitatAquatique">
                                     <h2 class="mb-3 ">Habitat {{ imageAquatique.nom }}</h2>
                                     <a href="/habitats/aquatique">
-                                        <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageAquatique.habitatimage) }}" alt="Image du slider">
+                                        <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageAquatique.habitatimage) }}" alt="Image du" {{ imageAquatique.nom }}>
                                     </a>        
                                     <div id="bandeauHabitatAquatique">
                                         <div id="InfoHabitatAquatique">
-                                            <h5 class="">{{ imageAquatique.description }}</h5>
+                                            <h5 class="text-justify bg-light">{{ imageAquatique.description }}</h5>
                                         </div>
                                     </div>
                                 </div>

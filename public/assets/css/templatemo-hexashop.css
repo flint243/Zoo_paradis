@@ -1,33 +1,3 @@
-/*
-
-TemplateMo 571 Hexashop
-
-https://templatemo.com/tm-571-hexashop
-
-*/
-
-/* ---------------------------------------------
-Table of contents
-------------------------------------------------
-01. font & reset css
-02. reset
-03. global styles
-04. header
-05. banner
-06. features
-07. testimonials
-08. contact
-09. footer
-10. preloader
-11. search
-12. portfolio
-
---------------------------------------------- */
-/* 
----------------------------------------------
-font & reset css
---------------------------------------------- 
-*/
 @import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
 
 @font-face {
@@ -1430,7 +1400,8 @@ Subscribe
 */
 
 .subscribe {
-  margin-top: 90px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .subscribe .section-heading {
@@ -1486,6 +1457,10 @@ Subscribe
 
 .subscribe ul li span a:hover {
   color: #2a2a2a;
+}
+
+#avis_commentaire{
+  height: 150px;
 }
 
 
@@ -1568,11 +1543,33 @@ footer .under-footer a:hover {
 Products Page
 --------------------------------------------- 
 */
+.page-heading.services{
+  height: 650px;
+  position: relative;
+  margin-bottom: 50px;
+  top: 100px;
+  background-image: url(../images/frises/frise1.jpg);
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.page-heading.contact{
+  height: 650px;
+  position: relative;
+  margin-bottom: 150px;
+  top: 100px;
+  background-image: url(../images/frises/frise3.jpg);
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 
 .page-heading.habitats{
   height: 650px;
-  margin-bottom: 10px;
-  background-image: url(../images/banieres/oil-painting-elephants-birds-flying-sky_14117-17101.avif);
+  position: relative;
+  margin-bottom: 0px;
+  top: 100px;
+  background-image: url(../images/frises/frise2.jpg);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -1580,7 +1577,7 @@ Products Page
 .page-heading.aerien{
   height: 650px;
   margin-bottom: 0px;
-  background-image: url(../images/aerien/oiseaux-tropicaux-drôle.jpeg);
+  background-image: url(../images/habitat_aerien/oiseaux-tropicaux-drôle.jpeg);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -1588,15 +1585,17 @@ Products Page
 .page-heading.terrestre{
   height: 650px;
   margin-bottom: 0px;
-  background-image: url(../images/terrestre/zebre1.jpg);
+  background-image: url(../images/habitat_terrestre/zebre1.jpg);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
 }
 .page-heading.aquatique{
   height: 650px;
+  position: relative;
   margin-bottom: 0px;
-  background-image: url(../images/aquatique/otari\ 2.jpg);
+  top: 100px;
+  background-image: url(../images/habitat_aquatique/croccodile.webp);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -2384,6 +2383,35 @@ responsive
     padding-left: 20px;
   }
 
+  .container-fluid{
+    padding: inherit;
+  }
+  .large{
+    padding: inherit;
+  }
+
+  .cadreSingle{
+    display:inherit;
+    width: 200%;
+    left: 0px;
+    justify-content: inherit;
+    padding: inherit;
+  }
+  .cadreSingleInt{
+    display:inherit;
+    width: 200%;
+    padding: inherit;
+  }
+
+  .singleImage{
+    width: 200%;
+  }
+
+  .boutons{
+    background-color: rgba(255, 255, 255, 0.446);
+    justify-content: center;
+  }
+
 }
 
 
@@ -2535,12 +2563,16 @@ html, body{
 }
 
 /*.......................  SLIDER  AVIS ..................*/
+.temoignages{
+  background-color: rgba(4, 92, 15, 0.6);
+}
+
 #slideShowAvis{
   width: 100%;
   height: 400px;
   position: relative;
   overflow: hidden;
-  background-color: rgb(88 239 6 / 12%);
+  background-color: rgba(143, 104, 4, 0.361);
   margin-bottom: 50px;
 }
 #slider{
@@ -2602,7 +2634,7 @@ img.slideImg{
   padding-bottom: 100px;
 }
 .row.habitats img{
-  max-height: 280px;
+  max-height: 186px;
 }
 
 .leftSide {
@@ -2648,7 +2680,11 @@ img.slideImg{
   font-weight: bold;
 }
 
-.singleImage{
-  min-width: 800px;
-  max-height: 500px;
+.row.cadreSingle{
+  width: 100%;
 }
+
+.singleImage{
+  width: 100%;
+}
+

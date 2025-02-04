@@ -25,18 +25,15 @@
 				<div class="mb-3 userConnect">
 					Bonjour
 					{{ app.user.nom }}
-					{% if app.user.profileImage %}
-						<img src="/uploadsUsers/imagesUsers/{{ app.user.profileImage }}" class="rounded-circle" alt="Photo profile" width="40px" height="35px"/>
-					{% else %}
+					{% if app.user %}
 						<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="rounded-circle bg-light" alt="Photo profile par defaut" width="30px" height="30px"/>
 					{% endif %}
 				</div>
-
 					<a href="{{ path('app_logout') }}" class="deconnexionBtn btn btn-danger">
 						Déconnexion
 					</a>
 			{% else %}
-				<a href="{{ path('app_login') }}" class="connexionBtn">
+				<a href="{{ path('app_login') }}" class="connexionBtn btn btn-success text-light">
 					Connexion ici
 				</a>
 			{% endif %}
@@ -47,7 +44,6 @@
 				<div class="col-12">
 					<nav
 						class="main-nav">
-
 						<!-- ***** Logo Start ***** -->
 						<a href="/" class="mt-2 logo">
 							<div class="row p-2 bg-light rounded">
@@ -105,8 +101,6 @@
 									Contact
 								</a>
 							</li>
-
-							{#<li class="scroll-to-section"><a href="#men">Eau</a></li></ul></li>#}
 						</ul>
 
 						<a class='menu-trigger'>
@@ -150,20 +144,14 @@
 									<div class="thumb">
 										<div class="inner-content">
 											<h4>
-												{{ habitat1.nom }}
+												Habitat {{ habitat1.nom }}
 											</h4>
-											<span>
-												{{ habitat1.description }}
-											</span>
 										</div>
 										<div class="hover-content">
 											<div class="inner">
 												<h4>
-													{{ habitat1.nom }}
+													Habitat {{ habitat1.nom }}
 												</h4>
-												<p>
-													Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.
-												</p>
 												<div class="main-border-button">
 													<a href="/habitats/aerien">
 														Explorer
@@ -186,20 +174,14 @@
 									<div class="thumb">
 										<div class="inner-content">
 											<h4>
-												{{ habitat2.nom }}
+												Habitat {{ habitat2.nom }}
 											</h4>
-											<span>
-												{{ habitat2.description }}
-											</span>
 										</div>
 										<div class="hover-content">
 											<div class="inner">
 												<h4>
-													{{ habitat2.nom }}
+													Habitat {{ habitat2.nom }}
 												</h4>
-												<p>
-													Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.
-												</p>
 												<div class="main-border-button">
 													<a href="/habitats/terrestre">
 														Explorer
@@ -223,20 +205,14 @@
 									<div class="thumb">
 										<div class="inner-content">
 											<h4>
-												{{ habitat3.nom }}
+												Habitat {{ habitat3.nom }}
 											</h4>
-											<span>
-												{{ habitat3.description }}
-											</span>
 										</div>
 										<div class="hover-content">
 											<div class="inner">
 												<h4>
-													{{ habitat3.nom }}
+													Habitat {{ habitat3.nom }}
 												</h4>
-												<p>
-													Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.
-												</p>
 												<div class="main-border-button">
 													<a href="/habitats/aquatique">
 														Explorer
@@ -268,7 +244,7 @@
                 <div class="col-lg-12 p-0 mt-0">
                     <div class="section-heading p-0 mb-0">
                         <h2>Nos services</h2>
-                        <span>Check out all of our products.</span>
+                        <span>Consultez nos services.</span>
                     </div>
                 </div>
             </div>
@@ -347,13 +323,13 @@
 			<div class="row">
 
 				<!--*****  SECTION   AVIS *****-->
-				<div class="col-lg-4">
+				<div class="col temoignages ">
 					<h3>
 						Témoignages
 					</h3>
-					<p>
+					<h3>
 						Nos invités sont ravis
-					</p>
+					</h3>
 				</div>
 
 				<!--***** slider *****-->
@@ -363,19 +339,16 @@
 							{% if avis.isValidated and (avis.id) %}
 								<div
 									class="slide">
-									{#<img src="{{ asset('/images/profile/' ~ avis.user.profileImage) }}" name="slideImg" class="slideImg" alt="Image du Client" width="40px" height="35px">#}
 									<img src="{{ asset('/assets/images/avatar/avatar2.png') }}" class="bg-light border border-2 rounded-circle" width="35px" height="100px"/>
 									<i class="fa-solid fa-quote-left"></i>
-									<p>
-
+									<p class="text-light text-bold mt-5">
 										{{ avis.commentaire }}
-
 										<br>
 										<strong>
-											{{ avis.pseudo }}
+											Nom: {{ avis.pseudo }}
 										</strong>
 									</p>
-									<p>
+									<p class="text-light text-bold">
 										Date :
 										{{ avis.createdAt|date('d-m-Y') }}
 									</p>
@@ -495,47 +468,45 @@
 			</div>
 		</div>
 	</section>
+
 		<!-- ***** Réseuax sociaux Ends ***** -->
 
 		<!-- ***** Vos avis Start ***** -->
 	<div class="subscribe">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8">
-					<div class="section-heading">
-						<h2>
-							Donnez votre avis
-						</h2>
-						<span>
-							Votre avis compte.
-						</span>
-					</div>
-					<div class="col-lg-6">
-						<form action="{{ path('Accueil') }}" method="post">
-							{{ form_start(form, {'attr': {'class': 'form'}}) }}
-							<div
-								class="mb-3">
-								{# Le reste du formulaire d'avis #}
-								{{ form_row(form.pseudo, {'attr': {'class': 'form-control'}}) }}
-							</div>
+			<div class="row m-0 p-3 ">
+				<h2>
+					Donnez votre avis
+				</h2>
+			</div>
+			
+			<div class="row m-0 justify-content-around">
+				<img src="{{ asset('/assets/images/habitat_aerien/paon/paon3.jpg') }}" class="col-sm-4" alt="Photo profile par defaut"/>
+				<div class="col-sm-4 bg-info">
+					<form action="{{ path('Accueil') }}" method="post">
+						{{ form_start(form, {'attr': {'class': 'form'}}) }}
+						<div
+							class="mb-3">
+							{# Le reste du formulaire d'avis #}
+							{{ form_row(form.pseudo, {'attr': {'class': 'form-control'}}) }}
+						</div>
 
-							<div
-								class="mb-3">
-								{# Le reste du formulaire d'avis #}
-								{{ form_row(form.commentaire, {'attr': {'class': 'form-control'}}) }}
-							</div>
+						<div
+							class="mb-3">
+							{# Le reste du formulaire d'avis #}
+							{{ form_row(form.commentaire, {'attr': {'class': 'form-control'}}) }}
+						</div>
 
-							<button class="btn btn-success mb-3" type="submit">
-								Envoyer
-							</button>
+						<button class="btn btn-success" type="submit">
+							Envoyer
+						</button>
 
-							{{ form_end(form) }}
-						</form>
-					</div>
+						{{ form_end(form) }}
+					</form>
 				</div>
-				<div class="col-lg-4">
-					<div class="row">
-						<div class="col-6">
+			
+				<div class="col-sm-4">
+					<div class="row mt-5 p-3 justify-content-around">
+						<div class="col">
 							<ul>
 								<li>
 									Notre boutique souvenir:
@@ -560,7 +531,7 @@
 								</li>
 							</ul>
 						</div>
-						<div class="col-6">
+						<div class="col">
 							<ul>
 								<li>
 									Horaires:
@@ -602,7 +573,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
 	</div>
 		<!-- ***** Vos avis Ends ***** -->
 
@@ -670,7 +640,7 @@
 
 							<br>
 							
-							<a href="https://themewagon.com" target="_blank" title="free & premium responsive templates">
+							<a href="mentions" target="_blank" title="free & premium responsive templates">
 								Mentions Légales
 							</a>
 							<br>

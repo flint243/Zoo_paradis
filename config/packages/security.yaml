@@ -34,9 +34,8 @@ security:
         ROLE_VETERINAIRE: [ROLE_VETERINAIRE]
 
     access_control:
-    - { path: ^/public, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/super/admin, roles: ROLE_SUPER_ADMIN }
     - { path: ^/employe, roles: ROLE_EMPLOYE }
     - { path: ^/veterinaire, roles: ROLE_VETERINAIRE }
-    - { path: ^/profile, roles: ROLE_USER }
    

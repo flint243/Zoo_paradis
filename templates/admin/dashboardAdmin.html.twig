@@ -6,4 +6,37 @@
         Super Admin
         <a href="{{ path('Accueil') }}" class="btn btn-primary">Retour au site</a>
     </h1>
+
+    <div class="container">
+        <div class="col mt-4 bg-secondary p-3 rounded-3 ">
+            <div class="row m-0 mb-5 text-center">
+                <h1>Total de données pour chaque table</h1>
+            </div>
+            <div class="col-6 p-1 mb-3 bg-warning rounded-3">
+                <h1 class="text-dark">Nombre d'utilisateurs inscris =
+                <span class="display-6 text-bold-2 text-danger">{{ countAllUser['value'] }}</span>
+                </h1>
+            </div>
+            <div class="col-6 p-1 mb-3 bg-info rounded-3">
+                <h1 class="text-dark">Nombre de services = 
+                <span class="display-6 text-bold-2 text-danger">{{ countAllServices['value'] }}</span></h1>
+            </div>
+            <div class="col-6 p-1 mb-3 bg-info rounded-3">
+                <h1 class="text-dark">Nombre d'habitats = 
+                <span class="display-6 text-bold-2 text-danger">{{ countAllHabitat['value'] }}</span></h1>
+            </div>
+            <div class="col-6 p-1 mb-3 bg-warning rounded-3">
+                <h1 class="text-dark">Nombre d'animaux = 
+                <span class="display-6 text-bold-2 text-danger">{{ countAllAnimal['value'] }}</span></h1>
+            </div>
+            <div class="col-6 p-1 mb-3 bg-success rounded-3">
+                <h1 class="text-dark">Nombre de messages = 
+                <span class="display-6 text-bold-2 text-danger">{{ countAllContact['value'] }}</span></h1>
+            </div>
+            <div class="col-6 p-1 mb-3 bg-info rounded-3">
+                <h1 class="text-dark">Nombre d'avis = 
+                <span class="display-6 text-bold-2 text-danger">{{ countAllAvis['value'] }}</span></h1>
+            </div>
+        </div>
+    </div>
 {% endblock %}
