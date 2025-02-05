@@ -31,16 +31,20 @@ class AnimalCrudController extends AbstractCrudController
             ])  // 'name' correspond à une propriété de l'entité Habitat
             ->onlyOnForms(),*/
 
-            AssociationField::new('user')
-            ->setFormTypeOption(
-                'choice_label', 'nom' // Remplace 'nom' par le champ affiché dans le select
-            )
-            ->onlyOnIndex(),
+            TextField::new('user'),
+                AssociationField::new('user')
+                ->setFormTypeOptions([
+                    'choice_label' => 'nom', // Remplace 'nom' par le champ affiché dans le select
+                ])
+                ->onlyOnForms(),
 
-            // Champ pour habitat_id (relation ManyToOne avec Habitat)
-            /*AssociationField::new('habitat')
-            ->setFormTypeOption('choice_label', 'nom')  // 'name' correspond à une propriété de l'entité Habitat
-            ->onlyOnForms(),  // Afficher seulement dans le formulaire*/
+                TextField::new('habitat'),
+            // Champ pour habitat (relation ManyToOne avec Habitat)
+            AssociationField::new('habitat')
+            ->setFormTypeOptions([
+                'choice_label' => 'nom', // Remplace 'nom' par le champ affiché dans le select
+            ])
+            ->onlyOnForms(),  // Afficher seulement dans le formulaire
 
             // Affiche une seule image sur la page index
             ImageField::new('images_animal')

@@ -17,7 +17,7 @@ class Habitat
 {
     public function __toString(): string
     {
-        return $this->id;
+        return $this->nom;
     }
 
     #[ORM\Id]
@@ -84,7 +84,7 @@ class Habitat
     {
         if (!$this->animals->contains($animal)) {
             $this->animals->add($animal);
-            $animal->setHabitat($this);
+            $animal->setHabitatId(null);
         }
 
         return $this;
@@ -94,8 +94,8 @@ class Habitat
     {
         if ($this->animals->removeElement($animal)) {
             // set the owning side to null (unless already changed)
-            if ($animal->getHabitat() === $this) {
-                $animal->setHabitat(null);
+            if ($animal->getHabitatId() === $this) {
+                $animal->setHabitatId(null);
             }
         }
 

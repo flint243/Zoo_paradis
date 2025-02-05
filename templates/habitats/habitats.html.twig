@@ -122,36 +122,34 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="inner-content">
-                        <h2 class="text-light">Nos habitats</h2>
-                        <span class="text-light">Un havre de paix pour nos animaux</span>
+                        <h2 class="text-warning">Nos habitats</h2>
+                        <span class="text-warning">Un havre de paix pour nos animaux</span>
                     </div>
                 </div>
             </div>
         </div>
-        
     </div>
     <!-- ***** Main Banner Area End ***** -->
 
     <!-- ***** Products Area Starts ***** -->
-    <section class="section" id="products">
+    <section class="section mt-5" id="products">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 mt-5">
                     <div class="section-heading">
-                        <h2>Nos habitats</h2>
-                        <span>Ici nous vous présentons les differents habitats de nos animaux. Cliquez sur une image pour voir les detailles</span>
+                        <h2 class="text-warning">Voici la liste de nos differents habitats</h2>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="container mesHabitats">
-            <div class="row habitats">
+            <div class="row habitats bg-success p-2 rounded-lg">
                 <div class="col-sm-4">
                     <div class="habitatCol">
                         {% for imageAerien in habitatAerien %}
-                        <div class="">
-                            <h2 class="mb-3 ">Habitat {{ imageAerien.nom }}</h2>
+                        <div class="bg-danger rounded-lg p-3 mb-3">
+                            <h2 class="mb-3 text-center">Habitat {{ imageAerien.nom }}</h2>
                             <a href="/habitats/aerien">
                                 <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageAerien.habitatimage) }}" alt="Image du "{{ imageAerien.nom }}>
                             </a>        
@@ -168,8 +166,8 @@
                 <div class="col-sm-4">
                     <div class="habitatCol">
                         {% for imageTerre in habitatTerrestre %}
-                            <div class="HabitatTerresrtre">
-                                <h2 class="mb-3 ">Habitat {{ imageTerre.nom }}</h2>
+                            <div class="HabitatTerresrtre bg-danger p-3 rounded-lg mb-3">
+                                <h2 class="mb-3 text-center">Habitat {{ imageTerre.nom }}</h2>
                                 <a href="/habitats/terrestre">
                                     <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageTerre.habitatimage) }}" height="150px" alt="Image du "{{ imageTerre.nom }}>
                                 </a>        
@@ -186,8 +184,8 @@
                 <div class="col-sm-4">
                     <div class="habitatCol">
                         {% for imageAquatique in habitatAquatique %}
-                                <div class="HabitatAquatique">
-                                    <h2 class="mb-3 ">Habitat {{ imageAquatique.nom }}</h2>
+                                <div class="HabitatAquatique bg-danger p-3 rounded-lg">
+                                    <h2 class="mb-3 text-center">Habitat {{ imageAquatique.nom }}</h2>
                                     <a href="/habitats/aquatique">
                                         <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageAquatique.habitatimage) }}" alt="Image du" {{ imageAquatique.nom }}>
                                     </a>        

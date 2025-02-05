@@ -24,7 +24,7 @@ class ContactType extends AbstractType
                 'label' => 'Email',
                 'required' => true,
             ])
-            ->add('description', TextareaType::class, [
+            ->add('message', TextareaType::class, [
                 'required' => true,
             ]);
     }

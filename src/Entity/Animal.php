@@ -21,47 +21,52 @@ class Animal
     
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $nom = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $race = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable:true)]
     private ?string $imagesanimal = null;
 
     #[Vich\UploadableField(mapping: 'animal_uploads_images', fileNameProperty: 'imagesanimal')]
     private ?File $images_animal_File = null;
-    #[ORM\ManyToOne(inversedBy: 'animalId')]
-    private ?User $user = null;
-
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'animal')]
-    private Collection $userId;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTimeInterface $updatedAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'animals')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Habitat $habitat = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    
+    #[ORM\ManyToOne(inversedBy: 'animals')]
+    private ?User $user = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
 
 
 
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
+        $this->animals = new ArrayCollection();
         $this->userId = new ArrayCollection();
+        $this->updatedAt = new \DateTime('now');
+        $this->created_at = new \DateTimeImmutable();
+        $this->user = new ArrayCollection();
+        $this->habitat = new ArrayCollection();
+        $this->imagesanimal = new ArrayCollection();
+        $this->nom = new ArrayCollection();
+        $this->prenom = new ArrayCollection();
+        
     }
 
     public function getId(): ?int
@@ -72,18 +77,6 @@ class Animal
     public function setId(int $id)
     {
         $this->id = $id;
-        return $this;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): static
-    {
-        $this->nom = $nom;
-
         return $this;
     }
 
@@ -116,7 +109,7 @@ class Animal
         return $this->imagesanimal;
     }
 
-    public function setImagesAnimal(?string $imagesanimal): self
+    public function setImagesAnimal(string $imagesanimal): self
     {
         $this->imagesanimal = $imagesanimal;
 
@@ -138,49 +131,6 @@ class Animal
         }
     }
 
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUserId(): Collection
-    {
-        return $this->userId;
-    }
-
-    public function addUserId(User $userId): static
-    {
-        if (!$this->userId->contains($userId)) {
-            $this->userId->add($userId);
-            $userId->setAnimal($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserId(User $userId): static
-    {
-        if ($this->userId->removeElement($userId)) {
-            // set the owning side to null (unless already changed)
-            if ($userId->getAnimal() === $this) {
-                $userId->setAnimal(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
@@ -189,6 +139,18 @@ class Animal
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getHabitat(): ?Habitat
+    {
+        return $this->habitat;
+    }
+
+    public function setHabitat(?Habitat $habitat): self
+    {
+        $this->habitat = $habitat;
 
         return $this;
     }
@@ -204,4 +166,31 @@ class Animal
 
         return $this;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+
 }
