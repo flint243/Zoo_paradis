@@ -47,8 +47,12 @@ class AnimalCrudController extends AbstractCrudController
             ->onlyOnForms(),  // Afficher seulement dans le formulaire
 
             // Affiche une seule image sur la page index
-            ImageField::new('images_animal')
+            ImageField::new('imagesanimal')
                 ->setBasePath('/uploadsAnimals/imagesAnimals')
+                ->setUploadDir('uploadsAnimals/imagesAnimals') // Chemin côté serveur
+                ->setUploadedFileNamePattern('[randomhash].[extension]')
+                ->setRequired(false) // Permet de ne pas obliger à fournir une image
+                ->setFormTypeOptions(['allow_delete' => true]) // Permet de supprimer une image
                 ->onlyOnIndex(),
 
             Field::new('images_animal_File', 'Image')

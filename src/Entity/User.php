@@ -64,18 +64,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Animal::class, mappedBy: 'user')]
     private Collection $animals;
 
-    #[ORM\ManyToOne(inversedBy: 'userId')]
-    private ?Animal $animal = null;
+    /**
+     * @var Collection<int, Habitat>
+     */
+    #[ORM\OneToMany(targetEntity: Habitat::class, mappedBy: 'user')]
+    private Collection $habitats;
 
-    #[ORM\ManyToOne(inversedBy: 'userId')]
-    private ?Habitat $habitat = null;
+    
+    /**
+     * @var Collection<int, Services>
+     */
+    #[ORM\OneToMany(targetEntity: Services::class, mappedBy: 'user')]
+    private Collection $services;
 
-    #[ORM\ManyToOne(inversedBy: 'userId')]
-    private ?Services $services = null;
 
-    #[ORM\ManyToOne(inversedBy: 'userId')]
-    private ?InfosAnimal $infosAnimal = null;
-
+    /**
+     * @var Collection<int, InfosAnimal>
+     */
+    #[ORM\OneToMany(targetEntity: InfosAnimal::class, mappedBy: 'user')]
+    private Collection $infosAnimals;
 
     /**
      * @Assert\Length(min=6, max=4096)
@@ -193,7 +200,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->animals;
     }
 
-    public function addAnimal(Animal $animal): static
+    public function addAnimals(Animal $animal): static
     {
         if (!$this->animals->contains($animal)) {
             $this->animals->add($animal);
@@ -201,6 +208,74 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
+    /**
+     * @return Collection<int, Habitat>
+     */
+    public function getHabitats(): Collection
+    {
+        return $this->habitats;
+    }
+
+    public function addHabitats(Habitat $habitat): static
+    {
+        if (!$this->habitats->contains($habitat)) {
+            $this->habitats->add($habitat);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @return Collection<int, Services>
+     */
+    public function getServices(): Collection
+    {
+        return $this->services;
+    }
+
+    public function addServices(Services $service): static
+    {
+        if (!$this->services->contains($service)) {
+            $this->services->add($service);
+        }
+
+        return $this;
+    }
+
+
+
+    /**
+     * @return Collection<int, InfosAnimal>
+     */
+    public function getInfosAnimals(): Collection
+    {
+        return $this->infosAnimals;
+    }
+
+    public function addInfosAnimal(InfosAnimal $infosAnimal): static
+    {
+        if (!$this->infosAnimals->contains($infosAnimal)) {
+            $this->infosAnimals->add($infosAnimal);
+            $infosAnimal->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInfosAnimal(InfosAnimal $infosAnimal): static
+{
+    if ($this->infosAnimals->removeElement($infosAnimal)) {
+        if ($infosAnimal->getUser() === $this) {
+            $infosAnimal->setUser(null);
+        }
+    }
+
+    return $this;
+}
+
 
 
     /**
@@ -221,6 +296,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // Efface des informations sensibles si nécessaire (ex: mots de passe en clair).
     }
 
+    /*
     public function getAnimal(): ?Animal
     {
         return $this->animal;
@@ -268,6 +344,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
+*/
 
 }

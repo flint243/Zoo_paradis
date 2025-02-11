@@ -2,20 +2,20 @@
 
 namespace App\Form;
 
-use App\Entity\InfosVeto;
+use App\Entity\InfosAnimal;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class InfosVeto1Type extends AbstractType
+class InfosAnimalType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('etat_animal')
-            ->add('nourriture_proposee')
+            ->add('etat')
+            ->add('nourriture')
             ->add('commentaire_habitat')
-            ->add('detail_animal')
+            ->add('detail')
             ->add('datePassage', null, [
                 'widget' => 'single_text',
             ])
@@ -28,7 +28,7 @@ class InfosVeto1Type extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => InfosVeto::class,
+            'data_class' => InfosAnimal::class,
         ]);
     }
 }

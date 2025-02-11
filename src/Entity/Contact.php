@@ -18,7 +18,7 @@ class Contact
     private ?string $titre = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
+    private ?string $message = null;
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
@@ -49,14 +49,14 @@ class Contact
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getMessage(): ?string
     {
-        return $this->description;
+        return $this->message;
     }
 
-    public function setDescription(string $description): static
+    public function setMessage(string $message): static
     {
-        $this->description = $description;
+        $this->message = $message;
 
         return $this;
     }

@@ -144,18 +144,18 @@
         </div>
 
         <div class="container mesHabitats">
-            <div class="row habitats bg-success p-2 rounded-lg">
+            <div class="row habitats p-2 rounded-lg">
                 <div class="col-sm-4">
                     <div class="habitatCol">
                         {% for imageAerien in habitatAerien %}
-                        <div class="bg-danger rounded-lg p-3 mb-3">
+                        <div class="cadreIntHabitat rounded-lg p-3 mb-3">
                             <h2 class="mb-3 text-center">Habitat {{ imageAerien.nom }}</h2>
                             <a href="/habitats/aerien">
                                 <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageAerien.habitatimage) }}" alt="Image du "{{ imageAerien.nom }}>
                             </a>        
-                                <div id="bandeauHabitatHabitatAerien">
-                                    <div id="InfoHabitatAerien">
-                                        <h5 class="text-justify bg-light">{{ imageAerien.description }}</h5>
+                                <div id="bandeauHabitat">
+                                    <div id="InfoHabitat">
+                                        <h5 class="text-justify">{{ imageAerien.description }}</h5>
                                     </div>
                                 </div>
                         </div>
@@ -166,14 +166,14 @@
                 <div class="col-sm-4">
                     <div class="habitatCol">
                         {% for imageTerre in habitatTerrestre %}
-                            <div class="HabitatTerresrtre bg-danger p-3 rounded-lg mb-3">
+                            <div class="cadreIntHabitat p-3 rounded-lg mb-3">
                                 <h2 class="mb-3 text-center">Habitat {{ imageTerre.nom }}</h2>
                                 <a href="/habitats/terrestre">
                                     <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageTerre.habitatimage) }}" height="150px" alt="Image du "{{ imageTerre.nom }}>
                                 </a>        
-                                <div id="bandeauHabitatTerrestre">
-                                    <div id="InfoHabitatTerrestre">
-                                        <h5 class="text-justify bg-light">{{ imageTerre.description }}</h5>
+                                <div id="bandeauHabitat">
+                                    <div id="InfoHabitat">
+                                        <h5 class="text-justify">{{ imageTerre.description }}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -184,14 +184,14 @@
                 <div class="col-sm-4">
                     <div class="habitatCol">
                         {% for imageAquatique in habitatAquatique %}
-                                <div class="HabitatAquatique bg-danger p-3 rounded-lg">
+                                <div class="cadreIntHabitat p-3 rounded-lg">
                                     <h2 class="mb-3 text-center">Habitat {{ imageAquatique.nom }}</h2>
                                     <a href="/habitats/aquatique">
                                         <img src="{{ asset('uploadsHabitats/imagesHabitats/' ~ imageAquatique.habitatimage) }}" alt="Image du" {{ imageAquatique.nom }}>
                                     </a>        
-                                    <div id="bandeauHabitatAquatique">
-                                        <div id="InfoHabitatAquatique">
-                                            <h5 class="text-justify bg-light">{{ imageAquatique.description }}</h5>
+                                    <div id="bandeauHabitat">
+                                        <div id="InfoHabitat">
+                                            <h5 class="text-justify">{{ imageAquatique.description }}</h5>
                                         </div>
                                     </div>
                                 </div>

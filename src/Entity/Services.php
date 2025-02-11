@@ -47,17 +47,13 @@ class Services
     #[ORM\ManyToOne(inversedBy: 'services')]
     private ?User $user = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'services')]
-    private Collection $userId;
+    
 
     public function __construct()
     {
         // Initialisation automatique de la date de création
         $this->createdAt = new \DateTimeImmutable();
-        $this->userId = new ArrayCollection();
+        //$this->userId = new ArrayCollection();
     }
 
 
@@ -153,34 +149,5 @@ class Services
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUserId(): Collection
-    {
-        return $this->userId;
-    }
-
-    public function addUserId(User $userId): static
-    {
-        if (!$this->userId->contains($userId)) {
-            $this->userId->add($userId);
-            $userId->setServices($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserId(User $userId): static
-    {
-        if ($this->userId->removeElement($userId)) {
-            // set the owning side to null (unless already changed)
-            if ($userId->getServices() === $this) {
-                $userId->setServices(null);
-            }
-        }
-
-        return $this;
-    }
-
+ 
 }

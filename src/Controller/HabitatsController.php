@@ -50,7 +50,7 @@ class HabitatsController extends AbstractController
     #[Route('/habitats/aerien', name: 'show_aerien')]
     public function aerien(AnimalRepository $animalRepository): Response
     {
-        $aerien = $aerien = $animalRepository->findBy(["habitat" => 1]);
+        $aerien = $aerien = $animalRepository->findBy(["habitat" => 1], ['created_at' => 'DESC']);
 
         return $this->render('habitats/aerien.html.twig', [
             'aerien' => $aerien,
@@ -124,7 +124,7 @@ class HabitatsController extends AbstractController
     #[Route('/habitats/terrestre', name: 'terrestre_show')]
     public function habitatTerrestre(AnimalRepository $animalRepository): Response
     {
-       $terrestre = $animalRepository->findBy(["habitat" => 2]);
+       $terrestre = $animalRepository->findBy(["habitat" => 2], ['created_at' => 'DESC']);
         return $this->render('habitats/terrestre.html.twig', [
            'terrestre' => $terrestre,
         ]);
@@ -192,7 +192,7 @@ class HabitatsController extends AbstractController
     #[Route('/habitats/aquatique', name: 'aquatique')]
     public function aquatique(AnimalRepository $animalRepository): Response
     {
-        $aquatique = $animalRepository->findBy(["habitat" => 3]);
+        $aquatique = $animalRepository->findBy(["habitat" => 3], ['created_at' => 'DESC']);
        
 
         return $this->render('habitats/aquatique.html.twig', [

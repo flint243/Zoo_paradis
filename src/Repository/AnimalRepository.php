@@ -16,6 +16,8 @@ class AnimalRepository extends ServiceEntityRepository
         parent::__construct($registry, Animal::class);
     }
 
+
+
     /**
      * Récupérer les animaux par catégorie (habitat)
      */

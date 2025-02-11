@@ -33,28 +33,17 @@ class InfosAnimal
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'habitat')]
-    private ?User $user = null;
-
-    #[ORM\ManyToOne(inversedBy: 'animal')]
+    #[ORM\ManyToOne(inversedBy: 'animals')]
     private ?Animal $animal = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'infosAnimal')]
-    private Collection $userId;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'infosAnimals')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
-    /**
-     * @var Collection<int, Animal>
-     */
-    #[ORM\OneToMany(targetEntity: Animal::class, mappedBy: 'infosAnimal')]
-    private Collection $animalId;
+
 
     public function __construct()
     {
-        $this->userId = new ArrayCollection();
-        $this->animalId = new ArrayCollection();
         $this->updated_at = new \DateTimeImmutable();
         $this->created_at = new \DateTimeImmutable();
     }
@@ -132,66 +121,6 @@ class InfosAnimal
     public function setAnimal(?Animal $animal): static
     {
         $this->animal = $animal;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUserId(): Collection
-    {
-        return $this->userId;
-    }
-
-    public function addUserId(User $userId): static
-    {
-        if (!$this->userId->contains($userId)) {
-            $this->userId->add($userId);
-            $userId->setInfosAnimal($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserId(User $userId): static
-    {
-        if ($this->userId->removeElement($userId)) {
-            // set the owning side to null (unless already changed)
-            if ($userId->getInfosAnimal() === $this) {
-                $userId->setInfosAnimal(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Animal>
-     */
-    public function getAnimalId(): Collection
-    {
-        return $this->animalId;
-    }
-
-    public function addAnimalId(Animal $animalId): static
-    {
-        if (!$this->animalId->contains($animalId)) {
-            $this->animalId->add($animalId);
-            $animalId->setInfosAnimal($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAnimalId(Animal $animalId): static
-    {
-        if ($this->animalId->removeElement($animalId)) {
-            // set the owning side to null (unless already changed)
-            if ($animalId->getInfosAnimal() === $this) {
-                $animalId->setInfosAnimal(null);
-            }
-        }
 
         return $this;
     }

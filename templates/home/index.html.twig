@@ -59,7 +59,7 @@
 						<ul class="nav">
 							{% if is_granted('ROLE_SUPER_ADMIN') %}
 								<li>
-									<a href="/admin" class="adminBtn px-2 rounded bg-danger">
+									<a href="/admin" class="adminBtn px-2 rounded text-danger bg-light">
 										Super Admin
 									</a>
 								</li>
@@ -101,12 +101,32 @@
 									Contact
 								</a>
 							</li>
+
+								<li><a></a></li>
+							
 						</ul>
 
 						<a class='menu-trigger'>
 							<span>
-								Menu
+								
 							</span>
+							
+							<li class="connexionTrigger bg-light">
+									{% if app.user %}
+									<li>
+										<a href="{{ path('app_logout') }}" class="deconnexionBtnTrigger btn btn-danger">
+											Déconnexion
+										</a>
+									</li>
+									{% else %}
+									
+									<li>
+										<a href="{{ path('app_login') }}" class="connexionBtnTrigger btn btn-success text-light">
+											Connexion ici
+										</a>
+									</li>
+									{% endif %}
+								</li>
 						</a>
 						<!-- ***** Menu End ***** -->
 					</nav>

@@ -49,14 +49,8 @@ class Habitat
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'habitat')]
+    #[ORM\ManyToOne(inversedBy: 'habitats')]
     private ?User $user = null;
-
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'habitat')]
-    private Collection $userId;
 
     
 
@@ -64,7 +58,7 @@ class Habitat
     {
         $this->animals = new ArrayCollection();
         $this->created_at = new \DateTimeImmutable();
-        $this->userId = new ArrayCollection();
+        //$this->userId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,7 +78,7 @@ class Habitat
     {
         if (!$this->animals->contains($animal)) {
             $this->animals->add($animal);
-            $animal->setHabitatId(null);
+            $animal->setHabitat(null);
         }
 
         return $this;
@@ -94,8 +88,8 @@ class Habitat
     {
         if ($this->animals->removeElement($animal)) {
             // set the owning side to null (unless already changed)
-            if ($animal->getHabitatId() === $this) {
-                $animal->setHabitatId(null);
+            if ($animal->getHabitat() === $this) {
+                $animal->setHabitat(null);
             }
         }
 
@@ -189,35 +183,4 @@ class Habitat
         return $this;
     }
     
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUserId(): Collection
-    {
-        return $this->userId;
-    }
-
-    public function addUserId(User $userId): static
-    {
-        if (!$this->userId->contains($userId)) {
-            $this->userId->add($userId);
-            $userId->setHabitat($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserId(User $userId): static
-    {
-        if ($this->userId->removeElement($userId)) {
-            // set the owning side to null (unless already changed)
-            if ($userId->getHabitat() === $this) {
-                $userId->setHabitat(null);
-            }
-        }
-
-        return $this;
-    }
-
 }

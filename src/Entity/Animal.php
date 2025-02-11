@@ -57,12 +57,12 @@ class Animal
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
-        $this->animals = new ArrayCollection();
-        $this->userId = new ArrayCollection();
+        //$this->animals = new ArrayCollection();
+        //$this->userId = new ArrayCollection();
         $this->updatedAt = new \DateTime('now');
         $this->created_at = new \DateTimeImmutable();
-        $this->user = new ArrayCollection();
-        $this->habitat = new ArrayCollection();
+        //$this->user = new ArrayCollection();
+        //$this->habitat = new ArrayCollection();
         $this->imagesanimal = new ArrayCollection();
         $this->nom = new ArrayCollection();
         $this->prenom = new ArrayCollection();
@@ -109,7 +109,7 @@ class Animal
         return $this->imagesanimal;
     }
 
-    public function setImagesAnimal(string $imagesanimal): self
+    public function setImagesAnimal(?string $imagesanimal): self
     {
         $this->imagesanimal = $imagesanimal;
 

@@ -63,7 +63,6 @@ html, body {
   font-weight: 400;
   background-color: #fff;
   font-size: 16px;
-  -ms-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -250,7 +249,7 @@ header
 }
 
 .background-header .nav {
-  margin-top: 20px !important;
+  margin-top: 50px !important;
 }
 
 .header-area .main-nav .nav {
@@ -378,6 +377,15 @@ header
   z-index: 1;
   transform: translateY(0%);
   transition-delay: 0s, 0s, 0.3s;
+}
+
+/********** connexionBtnTrigger ***********/
+.connexionBtnTrigger{
+  display: none;
+}
+/********** deconnexionBtnTrigger ***********/
+.deconnexionBtnTrigger{
+  display: none;
 }
 
 .header-area .main-nav .menu-trigger {
@@ -1918,6 +1926,7 @@ Single Product Page
  .quantity input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
+  appearance: none;
   margin: 0; }
   
   .quantity.buttons_added .minus:focus,
@@ -2364,11 +2373,38 @@ responsive
     left: 15%;
   }
 
-  .connexion a {
+  a.connexion{
     color: black;
     position: absolute;
-    right: 1px;
+    right: 10px;
+    color: red;
   }
+.connexionBtn{
+    display: none;
+  }
+a.connexionBtnTrigger{
+    display: block;
+    position: relative;
+    top: -50px;
+    height: 50px;
+    z-index: 999;
+}
+
+.deconnexionBtn{
+  display: none;
+}
+.deconnexionBtnTrigger{
+  display: block;
+  position: relative;
+  top: -50px;
+  height: 50px;
+  z-index: 999;
+}
+
+  .userConnect {
+    left: 30px;
+    width: 70%;
+}
     .main-banner .left-content img {
       height: 400px;
   }
@@ -2631,10 +2667,29 @@ img.slideImg{
   background-color: rgba(0, 128, 0, 0.722);
 }
 .mesHabitats{
-  padding-bottom: 100px;
+  padding-bottom: 50px;
 }
-.row.habitats img{
-  max-height: 186px;
+.habitats{
+  background-color: rgba(127, 255, 212, 0.326);
+}
+.cadreIntHabitat img{
+  max-height: 163px;
+}
+
+.cadreIntHabitat{
+  width: 100%;
+  background-color: rgba(255, 166, 0, 0.458);
+  position: relative;
+  margin-bottom: 20px;
+}
+
+#bandeauHabitat{
+  position: relative;
+  top: 10px;
+}
+#InfoHabitat h5{
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.554);
 }
 
 .leftSide {
